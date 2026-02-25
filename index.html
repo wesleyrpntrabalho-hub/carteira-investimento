@@ -311,7 +311,6 @@
       }
     ];
 
-    // --- NOVOS DADOS: INSTITUIÇÕES FINANCEIRAS ---
     const INSTITUICOES_DATA = [
       {
         id: 'bancos_multiplos',
@@ -346,7 +345,7 @@
         whatTheyDo: 'Instituição com características de Banco Comercial, mas com forte apelo social. Tem o monopólio exclusivo de diversas operações públicas no Brasil.',
         requisitos: 'Empresa Pública federal (100% do governo). Segue regras do Bacen e também atende a diretrizes de ministérios e políticas de Estado.',
         compromissos: 'Centralizar o Fundo de Garantia (FGTS), administrar as loterias federais, deter o monopólio do penhor civil (empréstimo sob joias) e ser o principal operador do Sistema Financeiro da Habitação (Minha Casa Minha Vida).',
-        exemplo: 'Caixa Econômica Federal (CEF). (É a única que restou no Brasil, antigamente os estados também tinham suas "Caixas").',
+        exemplo: 'Caixa Econômica Federal (CEF).',
         case: 'O governo federal decide lançar um programa de construção de 1 milhão de casas populares subsidiadas. O dinheiro do fundo público é repassado para a Caixa Econômica, que fará a triagem das famílias, liberará os contratos de financiamento super baratos e pagará as construtoras.'
       },
       {
@@ -383,7 +382,7 @@
         requisitos: 'Todos os bancos e financeiras são OBRIGADOS a ser associados ao FGC e pagar uma contribuição mensal de 0,01% sobre todos os depósitos de clientes para encher o "cofre" do Fundo.',
         compromissos: 'Em caso de intervenção ou falência de um banco, o FGC garante a devolução do dinheiro aos clientes, com um limite de até R$ 250.000,00 por CPF/CNPJ por banco (limitado a R$ 1 milhão total a cada 4 anos).',
         exemplo: 'FGC. E para cooperativas, existe a versão delas, o FGCoop.',
-        case: 'Você tem R$ 100 mil no Banco Neon e R$ 100 mil na NuConta. O Banco Neon quebra e as portas fecham. Você não perde um centavo. Em algumas semanas, o FGC aciona o seguro, pede seus dados e transfere seus R$ 100 mil originais (mais juros devidos até a data da quebra) para o seu outro banco.'
+        case: 'Você tem R$ 100 mil no Banco Neon e R$ 100 mil na NuConta. O Banco Neon quebra e as portas fecham. Você não perde um centavo. Em algumas semanas, o FGC aciona o seguro, pede seus dados e transfere seus R$ 100 mil originais para o seu outro banco.'
       },
       {
         id: 'corretoras',
@@ -411,6 +410,166 @@
         compromissos: 'Diminuir o déficit habitacional brasileiro. (Nota histórica: Hoje quase todas foram compradas por Bancos Múltiplos, que incorporaram a carteira Imobiliária, mas a figura jurídica ainda existe).',
         exemplo: 'Poupex (Associação de Poupança e Empréstimo), Companhia Hipotecária Brasileira (CHB).',
         case: 'Um Sargento do Exército quer comprar a casa própria. Em vez do banco tradicional, ele vai à Poupex (uma APE forte no meio militar), que capta dinheiro da caderneta de poupança para oferecer a ele uma taxa de financiamento da casa em 30 anos subsidiada pelo governo.'
+      }
+    ];
+
+    // --- NOVOS DADOS: ESTRUTURA DO SFN ---
+    const SFN_DATA = [
+      {
+        id: 'sfn',
+        title: 'SFN (Sistema Financeiro Nacional)',
+        whatItIs: 'É o conjunto de órgãos, entidades e instituições que regulamentam, fiscalizam e operam a circulação de dinheiro no Brasil.',
+        whatTheyDo: 'O papel principal do SFN é fazer a intermediação financeira: pegar o dinheiro de quem tem sobrando (agentes superavitários) e repassar de forma segura para quem está precisando de dinheiro (agentes deficitários), promovendo o desenvolvimento do país.',
+        howTheyDoIt: 'Através de uma estrutura hierárquica dividida em 3 camadas: Órgãos Normativos (criam as regras), Entidades Supervisoras (fiscalizam e punem) e Operadores (bancos e corretoras que atendem o público).',
+        composition: 'Todo o mercado financeiro do país: CMN, Bacen, CVM, todos os bancos, corretoras, cooperativas e até as seguradoras.',
+        cases: [
+          'Case 1: Quando você deposita R$ 1.000 na poupança, você é o agente superavitário. O SFN pega esse dinheiro e o banco empresta para alguém financiar uma casa (agente deficitário).',
+          'Case 2: Se não existisse o SFN, quem precisasse de dinheiro teria que ir de porta em porta pedir emprestado, correndo altos riscos de calote. O SFN formaliza, garante e padroniza esse processo.'
+        ]
+      },
+      {
+        id: 'cmn',
+        title: 'CMN (Conselho Monetário Nacional)',
+        whatItIs: 'É o chefe supremo do Sistema Financeiro. O órgão normativo máximo. Ele manda, os outros obedecem.',
+        whatTheyDo: 'Ele não coloca a mão na massa. O CMN cria as leis gerais, fixa a meta de inflação anual, direciona o crédito (ex: quanto os bancos devem destinar ao agronegócio) e cria as regras para o funcionamento dos bancos.',
+        howTheyDoIt: 'Realiza reuniões mensais onde os membros votam e publicam "Resoluções CMN" com força de lei para o mercado financeiro.',
+        composition: 'É um conselho enxuto formado por apenas 3 pessoas: Ministro da Fazenda (Presidente do CMN), Ministro do Planejamento e o Presidente do Banco Central.',
+        cases: [
+          'Case 1: O CMN percebe que a economia precisa de freio. Eles definem que a meta de inflação para o próximo ano será de 3%. O Banco Central terá que se virar para cumprir essa meta imposta pelo CMN.',
+          'Case 2: O CMN decide, por resolução, que a partir de amanhã o limite de juros do cheque especial não pode passar de 8% ao mês. Todos os bancos do Brasil são obrigados a acatar a regra do chefe máximo.'
+        ]
+      },
+      {
+        id: 'bacen',
+        title: 'BACEN ou BCB (Banco Central do Brasil)',
+        whatItIs: 'É a entidade supervisora executiva do mercado de moeda, crédito, câmbio e capitais. É o "leão de chácara" do CMN.',
+        whatTheyDo: 'Garante o poder de compra da moeda (combate a inflação), emite papel-moeda, autoriza o funcionamento dos bancos, fiscaliza e pune quem sai da linha. Também gerencia as reservas internacionais do Brasil em Dólar.',
+        howTheyDoIt: 'Através do COPOM (que define a Taxa Selic para controlar a inflação), operações de mercado aberto (comprando e vendendo títulos), controle de redes de bancos e fiscalizações surpresas.',
+        composition: 'Autarquia federal independente. É comandado por um Presidente (indicado pelo Presidente da República e aprovado pelo Senado) e diretores técnicos.',
+        cases: [
+          'Case 1: A inflação está subindo muito. O Bacen, através do Copom, aumenta a Taxa Selic. Isso encarece os empréstimos, as pessoas compram menos, e os preços caem.',
+          'Case 2: Um banco pequeno começa a fazer operações fraudulentas. O Bacen descobre na fiscalização, aplica uma multa milionária e cassa a licença do banco, fechando suas portas para proteger a economia.'
+        ]
+      },
+      {
+        id: 'cvm',
+        title: 'CVM (Comissão de Valores Mobiliários)',
+        whatItIs: 'É o "xerife" do Mercado de Capitais (Bolsa de Valores e Fundos). Uma autarquia vinculada (mas não subordinada) ao Ministério da Fazenda.',
+        whatTheyDo: 'Protege os investidores contra fraudes e manipulação de mercado. Fiscaliza empresas de capital aberto (S.A.), corretoras, fundos de investimento e a B3.',
+        howTheyDoIt: 'Obriga as empresas da bolsa a publicarem seus balanços de forma transparente, cria regras para fundos e julga processos contra quem usa "informação privilegiada" (insider trading).',
+        composition: 'Comandada por um Presidente e quatro Diretores, todos nomeados pelo Presidente da República com aprovação do Senado.',
+        cases: [
+          'Case 1: O diretor de uma empresa de petróleo descobre antes de todos que a empresa achou um poço gigante. Ele compra ações escondido antes de dar a notícia. A CVM rastreia, o condena por "Insider Trading" e aplica uma multa gigantesca.',
+          'Case 2: Uma empresa decide abrir capital na Bolsa (fazer IPO). Ela precisa enviar um calhamaço de documentos comprovando que não é fraude para a CVM. Só após o "carimbo" da CVM as ações podem ser vendidas ao público.'
+        ]
+      },
+      {
+        id: 'cnsp_susep',
+        title: 'CNSP e SUSEP (Mercado de Seguros)',
+        whatItIs: 'São os órgãos que mandam no mercado de Seguros, Previdência Aberta (PGBL/VGBL) e Capitalização (Telesena, Títulos de banco).',
+        whatTheyDo: 'O CNSP (Conselho Nac. de Seguros Privados) é o órgão NORMATIVO (cria as regras). A SUSEP (Superintendência de Seguros Privados) é o órgão EXECUTIVO (fiscaliza as seguradoras para garantir que elas terão dinheiro para pagar os sinistros).',
+        howTheyDoIt: 'A Susep obriga as seguradoras a manterem reservas matemáticas altas. Se você bate o carro, a Susep garante que a seguradora não gastou seu dinheiro e terá como pagar o conserto.',
+        composition: 'O CNSP é composto pelo Ministro da Fazenda, Susep, Bacen, CVM. A Susep é uma autarquia gerida por diretores.',
+        cases: [
+          'Case 1: O CNSP cria uma regra dizendo que todo seguro de carro deve cobrir alagamento por padrão. A Susep vai a campo fiscalizar se a Porto Seguro e a SulAmérica mudaram seus contratos para obedecer a regra.',
+          'Case 2: Uma empresa de previdência (que vende PGBL) começa a dar prejuízo. A Susep intervém na empresa antes dela falir para proteger o dinheiro da aposentadoria dos clientes.'
+        ]
+      },
+      {
+        id: 'cnpc_previc',
+        title: 'CNPC e PREVIC (Previdência Fechada)',
+        whatItIs: 'São os órgãos exclusivos para cuidar dos "Fundos de Pensão" (Previdência Complementar FECHADA - exclusiva para funcionários de uma mesma empresa, como a Petros da Petrobras ou Previ do Banco do Brasil).',
+        whatTheyDo: 'O CNPC (Conselho Nac. de Previdência Complementar) cria as regras (Normativo). A PREVIC (Superintendência) fiscaliza e pune os fundos de pensão (Executivo).',
+        howTheyDoIt: 'Verificam rigorosamente onde os gestores estão investindo o dinheiro dos funcionários. O objetivo é impedir desvios ou apostas arriscadas com o dinheiro da aposentadoria dos trabalhadores.',
+        composition: 'CNPC tem representantes do governo, das empresas patrocinadoras e dos trabalhadores. A Previc é uma autarquia.',
+        cases: [
+          'Case 1: O CNPC lança uma regra de que fundos de pensão não podem investir mais de 10% do dinheiro em ações de alto risco. A Previc exige relatórios mensais para garantir o cumprimento.',
+          'Case 2: O gestor do fundo de pensão dos Correios (Postalis) faz negócios ilegais com o dinheiro dos carteiros. A Previc entra com uma auditoria, afasta o gestor e intervém no fundo.'
+        ]
+      },
+      {
+        id: 'pib',
+        title: 'PIB (Produto Interno Bruto)',
+        whatItIs: 'Não é uma instituição, mas é o indicador macroeconômico mais importante de um país. Representa a soma (em dinheiro) de todos os bens e serviços finais produzidos no país durante um ano.',
+        whatTheyDo: 'Mede o tamanho e a riqueza da economia. Se o PIB cresce, o país está produzindo mais, gerando empregos e riqueza. Se o PIB cai (duas vezes seguidas), o país entra em "Recessão Técnica".',
+        howTheyDoIt: 'O IBGE calcula o PIB usando a fórmula: Consumo das Famílias + Gastos do Governo + Investimentos das Empresas + (Exportações - Importações).',
+        composition: 'Engloba a indústria, a agropecuária e o setor de serviços.',
+        cases: [
+          'Case 1: No final de 2023, o IBGE anunciou que o PIB cresceu 2,9%. Isso atrai investidores estrangeiros para a Bolsa de Valores (B3), pois mostra que as empresas brasileiras estão lucrando e crescendo.',
+          'Case 2: Na crise de 2015, o PIB brasileiro caiu quase 3,5%. Empresas fecharam, o desemprego subiu e os lucros das empresas listadas na CVM despencaram, gerando queda generalizada no mercado financeiro.'
+        ]
+      },
+      {
+        id: 'b3',
+        title: 'B3 (Brasil, Bolsa, Balcão)',
+        whatItIs: 'A principal empresa de infraestrutura de mercado financeiro no Brasil. É a nossa única Bolsa de Valores atual (resultado da fusão entre BM&F, Bovespa e Cetip).',
+        whatTheyDo: 'Fornece o ambiente (digital) seguro e auditado onde ocorrem as compras e vendas de ações, contratos futuros, ETFs, FIIs e registros de renda fixa (CDBs).',
+        howTheyDoIt: 'Atua como "Contraparte Central". Se você compra uma ação e o vendedor sumir, a B3 garante a entrega da ação para você e o dinheiro para o vendedor (Clearing House), mitigando o risco de calote no mercado.',
+        composition: 'A B3 é uma empresa privada (S.A.) de capital aberto. Sim, a bolsa de valores tem suas próprias ações negociadas nela mesma (código B3SA3).',
+        cases: [
+          'Case 1: Você envia uma ordem na corretora para comprar Petrobras a R$ 38. A B3 recebe essa ordem, procura instantaneamente na fila alguém no Brasil todo querendo vender a R$ 38, junta as duas pontas e cobra uma taxinha (Emolumentos) pelo serviço.',
+          'Case 2: Um banco emite um CDB. Esse título precisa ser registrado num sistema oficial para provar que ele existe. A B3 atua no sistema de Balcão e registra quem é o dono desse CDB para evitar fraudes.'
+        ]
+      },
+      {
+        id: 'ancord',
+        title: 'ANCORD (Agentes Autônomos e Corretoras)',
+        whatItIs: 'Associação Nacional das Corretoras e Distribuidoras de Títulos e Valores Mobiliários, Câmbio e Mercadorias.',
+        whatTheyDo: 'Defende os interesses das corretoras e é a única entidade autorizada pela CVM a aplicar a prova e certificar os Assessores de Investimentos (antigos Agentes Autônomos - AAI).',
+        howTheyDoIt: 'Desenvolve códigos de conduta e aplica o Exame de Certificação Ancord. Sem passar nessa prova, ninguém pode atuar legalmente captando clientes para investir em corretoras como a XP ou BTG.',
+        composition: 'Associação privada sem fins lucrativos mantida pelas corretoras associadas.',
+        cases: [
+          'Case 1: O jovem João quer trabalhar na XP ajudando pessoas a investir. Ele precisa estudar, pagar a taxa da Ancord, fazer a prova com dezenas de questões sobre a CVM e o SFN. Se passar, recebe o credenciamento.',
+          'Case 2: Um assessor certificado pela Ancord começa a prometer "lucro garantido" na Bolsa (o que é proibido). A Ancord e a CVM podem cassar a certificação dele e bani-lo do mercado.'
+        ]
+      },
+      {
+        id: 'anbima',
+        title: 'ANBIMA (Associação dos Mercados Financeiro e de Capitais)',
+        whatItIs: 'A mais forte associação privada de bancos e gestoras de fundos. É a criadora das regras de Autorregulação do mercado.',
+        whatTheyDo: 'Eleva a régua do mercado financeiro. Além das leis da CVM e do Bacen, as instituições que aderem à Anbima se comprometem a seguir códigos de conduta ainda mais rígidos e transparentes.',
+        howTheyDoIt: 'Cria selos para fundos de investimentos, fiscaliza a propaganda dos bancos e aplica as provas de certificação bancária mais famosas do país (CPA-10, CPA-20, CEA e CGA).',
+        composition: 'Associação privada mantida por Bradesco, Itaú, BB, corretoras e gestoras de recursos independentes.',
+        cases: [
+          'Case 1: Um banco vai vender um fundo de investimento. Pela autorregulação da Anbima, ele é OBRIGADO a destacar os riscos do fundo em um formulário simplificado ("Lâmina de Informações Essenciais") para não enganar o cliente idoso.',
+          'Case 2: Para o gerente do banco ser promovido e poder recomendar investimentos aos clientes de alta renda, o Itaú exige que ele estude e passe na prova de certificação CPA-20 ou CEA, elaboradas pela Anbima.'
+        ]
+      },
+      {
+        id: 'spb_spi',
+        title: 'SPB e SPI (Sistema de Pagamentos Brasileiro/Instantâneo)',
+        whatItIs: 'É o "encanamento" pelo qual o dinheiro viaja no país. Infraestrutura puramente tecnológica.',
+        whatTheyDo: 'O SPB modernizou o Brasil em 2002 criando o TED (Transferência Eletrônica Disponível). O SPI é a versão moderna criada pelo Banco Central que roda o PIX.',
+        howTheyDoIt: 'No SPB (TED), as transferências de grandes valores passam direto pelas contas que os bancos têm dentro do próprio Banco Central (liquidação bruta em tempo real - STR), impedindo que um banco quebre o outro. O SPI funciona 24/7 de forma descentralizada.',
+        composition: 'Redes de telecomunicações pesadas, servidores do Banco Central e câmaras de compensação bancária (CIP).',
+        cases: [
+          'Case 1 (Antes do SPB): Para transferir um milhão de reais (DOC), o dinheiro só caía no dia seguinte. Se à noite o banco do remetente quebrasse, gerava um efeito dominó que quebrava o banco que ia receber.',
+          'Case 2 (SPI/PIX): Hoje, o dinheiro sai da conta A e cai na conta B em 3 segundos às 3h da manhã de domingo. Isso é o SPI em ação sob o comando tecnológico do Banco Central.'
+        ]
+      },
+      {
+        id: 'pld_ft',
+        title: 'PLD/FT (Prevenção à Lavagem de Dinheiro)',
+        whatItIs: 'Não é um órgão, mas um conjunto rigoroso de leis (Lei 9.613) e regras globais de compliance.',
+        whatTheyDo: 'PLD/FT significa "Prevenção à Lavagem de Dinheiro e Financiamento ao Terrorismo". O objetivo é impedir que dinheiro sujo (de corrupção, tráfico) entre no sistema financeiro e pareça limpo.',
+        howTheyDoIt: 'Obriga todos os bancos a seguirem a regra do KYC ("Conheça Seu Cliente"). Se uma movimentação financeira for atípica para a renda da pessoa, o banco tem que congelar o dinheiro e avisar as autoridades.',
+        composition: 'Regras emanadas por organismos internacionais (GAFI/FATF), incorporadas ao Brasil pelo CMN e Bacen.',
+        cases: [
+          'Case 1 (Lavagem Clássica): Um traficante abre um lava-rápido de faixada. Ele ganha R$ 1 milhão na rua e emite notas falsas do lava-rápido para depositar no banco como se fossem lucros legítimos do negócio. Isso é Lavagem.',
+          'Case 2 (Ação do PLD): Um estudante que declara ganhar R$ 2 mil/mês recebe um PIX repentino de R$ 500 mil de uma conta estrangeira no paraíso fiscal. O alerta de PLD do banco apita na hora, trava a conta do estudante e aciona o governo.'
+        ]
+      },
+      {
+        id: 'coaf',
+        title: 'COAF (Conselho de Controle de Atividades Financeiras)',
+        whatItIs: 'A Unidade de Inteligência Financeira do Brasil (UIF). É o "rastreador" do dinheiro ilícito.',
+        whatTheyDo: 'É o órgão que recebe, examina e identifica as ocorrências suspeitas de lavagem de dinheiro e corrupção informadas pelos bancos. Ele não prende ninguém, ele junta as provas e manda para a Polícia Federal e Ministério Público.',
+        howTheyDoIt: 'Obriga bancos, concessionárias de carros de luxo, joalherias e leiloeiros de arte a reportarem (de forma secreta) compras gigantescas feitas em dinheiro vivo ou depósitos sem sentido.',
+        composition: 'Órgão administrativo vinculado administrativamente ao Banco Central, formado por auditores da Receita, Polícia Federal e Bacen.',
+        cases: [
+          'Case 1: Um político corrupto compra uma mansão de 10 milhões pagando em mochilas de dinheiro em espécie. O corretor de imóveis, por lei, é obrigado a comunicar o fato ao COAF no dia seguinte.',
+          'Case 2: O COAF recebe um alerta do banco do estudante (do exemplo anterior do PLD). O COAF puxa o CPF dele, vê que ele não tem empresa, cruza os dados com a Receita Federal e envia um dossiê pronto para a Polícia Federal deflagrar uma operação.'
+        ]
       }
     ];
 
@@ -554,6 +713,7 @@
               <NavItem icon="fa-bullseye" label="Viver de Renda" active={activeTab === 'independencia'} onClick={() => changeTab('independencia')} />
               
               <div className="pt-4 pb-2 px-2 text-xs font-bold text-slate-500 uppercase tracking-wider">Educação & Mercado</div>
+              <NavItem icon="fa-sitemap" label="Estrutura do SFN" active={activeTab === 'sfn'} onClick={() => changeTab('sfn')} />
               <NavItem icon="fa-university" label="Instituições" active={activeTab === 'instituicoes'} onClick={() => changeTab('instituicoes')} />
               <NavItem icon="fa-book-open" label="Dicionário" active={activeTab === 'dicionario'} onClick={() => changeTab('dicionario')} />
               <NavItem icon="fa-chart-area" label="Cotações" active={activeTab === 'cotacoes'} onClick={() => changeTab('cotacoes')} />
@@ -574,7 +734,8 @@
                 {activeTab === 'api' ? 'Análise de Perfil de Investidor' : 
                  activeTab === 'independencia' ? 'Independência Financeira' : 
                  activeTab === 'objetivos' ? 'Planejador de Objetivos' : 
-                 activeTab === 'instituicoes' ? 'Guia de Instituições Financeiras' : activeTab}
+                 activeTab === 'instituicoes' ? 'Guia de Instituições Financeiras' : 
+                 activeTab === 'sfn' ? 'Sistema Financeiro Nacional (SFN)' : activeTab}
               </h2>
               {profile && (
                 <div className="flex items-center gap-2 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-sm font-medium border border-emerald-200 shadow-sm">
@@ -595,6 +756,7 @@
                   {activeTab === 'simulador' && <Simulator profile={profile} onSave={handleSaveSimulation} />}
                   {activeTab === 'objetivos' && <CalculadoraObjetivos />}
                   {activeTab === 'independencia' && <IndependenciaFinanceira />}
+                  {activeTab === 'sfn' && <SistemaFinanceiroNacional />}
                   {activeTab === 'instituicoes' && <InstituicoesFinanceiras />}
                   {activeTab === 'dicionario' && <Dictionary />}
                   {activeTab === 'cotacoes' && <MarketStocks stocks={stocks} />}
@@ -1176,7 +1338,80 @@
       );
     }
 
-    // --- NOVA ABA: INSTITUIÇÕES FINANCEIRAS ---
+    // --- NOVA ABA: SISTEMA FINANCEIRO NACIONAL (SFN) ---
+    function SistemaFinanceiroNacional() {
+      const [searchTerm, setSearchTerm] = useState('');
+      const [expandedId, setExpandedId] = useState(null);
+      
+      const filtered = SFN_DATA.filter(i => 
+        i.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        i.whatItIs.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+
+      return (
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2 mb-2">
+              <i className="fas fa-sitemap text-indigo-600"></i> Estrutura do SFN
+            </h2>
+            <p className="text-slate-600 text-sm">Conheça o Sistema Financeiro Nacional. Quem manda, quem fiscaliza e como o dinheiro do país é organizado.</p>
+          </div>
+          
+          <div className="relative mb-6">
+            <i className="fas fa-search absolute left-4 top-4 text-slate-400"></i>
+            <input type="text" placeholder="Busque por SFN, CMN, BACEN, CVM, COAF, B3..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-indigo-500 outline-none shadow-sm" />
+          </div>
+          
+          <div className="space-y-4">
+            {filtered.map(item => (
+              <div key={item.id} className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <button onClick={() => setExpandedId(expandedId === item.id ? null : item.id)} className="w-full flex justify-between p-5 hover:bg-slate-50">
+                  <span className="font-bold text-slate-800 text-lg">{item.title}</span>
+                  <i className={`fas fa-chevron-down text-slate-400 transition-transform ${expandedId === item.id ? 'rotate-180' : ''}`}></i>
+                </button>
+                {expandedId === item.id && (
+                  <div className="px-5 pb-6 pt-2 border-t border-slate-100 text-sm animate-fade-in space-y-5">
+                    
+                    <div>
+                      <p className="font-bold text-indigo-800 mb-1"><i className="fas fa-landmark mr-1"></i> O que é?</p>
+                      <p className="text-slate-700 leading-relaxed bg-indigo-50 p-3 rounded-lg border border-indigo-100">{item.whatItIs}</p>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div>
+                        <p className="font-bold text-emerald-700 mb-1"><i className="fas fa-tasks mr-1"></i> O que fazem (Responsabilidade)</p>
+                        <p className="text-slate-600 leading-relaxed">{item.whatTheyDo}</p>
+                      </div>
+                      <div>
+                        <p className="font-bold text-amber-700 mb-1"><i className="fas fa-cogs mr-1"></i> Como fazem</p>
+                        <p className="text-slate-600 leading-relaxed">{item.howTheyDoIt}</p>
+                      </div>
+                    </div>
+
+                    <div className="border-t border-slate-100 pt-4">
+                      <p className="text-slate-700 mb-4"><strong className="text-slate-900">Composição / Quem faz parte:</strong> {item.composition}</p>
+                      
+                      <p className="font-bold text-slate-800 mb-2">Exemplos e Casos Práticos:</p>
+                      <ul className="space-y-3 text-slate-700">
+                        {item.cases.map((c, i) => (
+                          <li key={i} className="flex gap-2 bg-slate-50 p-3 rounded-lg border border-slate-100">
+                            <i className="fas fa-arrow-right text-indigo-500 mt-1"></i>
+                            <span>{c}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // --- 6. INSTITUIÇÕES FINANCEIRAS ---
     function InstituicoesFinanceiras() {
       const [searchTerm, setSearchTerm] = useState('');
       const [expandedId, setExpandedId] = useState(null);
@@ -1192,7 +1427,7 @@
             <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2 mb-2">
               <i className="fas fa-university text-blue-600"></i> Guia de Instituições Financeiras
             </h2>
-            <p className="text-slate-600 text-sm">Entenda como o Sistema Financeiro Nacional é estruturado, quem faz o quê, e como cada instituição impacta o seu dinheiro e a economia.</p>
+            <p className="text-slate-600 text-sm">Entenda como o Sistema Financeiro Nacional é estruturado no dia a dia do mercado.</p>
           </div>
           
           <div className="relative mb-6">
@@ -1243,7 +1478,7 @@
       );
     }
 
-    // --- 6. DICIONÁRIO COMPLETO ---
+    // --- 7. DICIONÁRIO COMPLETO ---
     function Dictionary() {
       const [searchTerm, setSearchTerm] = useState('');
       const [expandedId, setExpandedId] = useState(null);
@@ -1253,7 +1488,7 @@
         <div className="max-w-4xl mx-auto">
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2 mb-2">
-              <i className="fas fa-book-open text-emerald-500"></i> Dicionário Completo
+              <i className="fas fa-book-open text-emerald-500"></i> Dicionário de Produtos
             </h2>
             <p className="text-slate-600 text-sm">Entenda como funciona absolutamente cada produto do mercado financeiro.</p>
           </div>
@@ -1299,7 +1534,7 @@
       );
     }
 
-    // --- 7. COTAÇÕES E NOTÍCIAS ---
+    // --- 8. COTAÇÕES E NOTÍCIAS ---
     function MarketStocks({ stocks }) {
       return (
         <div className="max-w-4xl mx-auto">
