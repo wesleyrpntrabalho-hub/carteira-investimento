@@ -596,7 +596,7 @@
       }
     ];
 
-    // --- NOVOS DADOS: QUIZ DO INVESTIDOR ---
+    // --- NOVOS DADOS: QUIZ DO INVESTIDOR (VERSÃO EXTRA HARD - 55 QUESTÕES) ---
     const QUIZ_DATA = [
       {
         pergunta: "Qual é o órgão normativo máximo do Sistema Financeiro Nacional, que cria as regras mas não 'põe a mão na massa'?",
@@ -614,7 +614,7 @@
         pergunta: "Se um banco falir, qual é o limite MÁXIMO que o FGC (Fundo Garantidor de Créditos) devolve ao investidor por CPF e por instituição?",
         opcoes: ["R$ 50.000", "R$ 100.000", "R$ 250.000", "Não há limite"],
         correta: 2,
-        explicacao: "O FGC garante até R$ 250 mil por CPF em cada conglomerado financeiro, limitado a R$ 1 milhão no total."
+        explicacao: "O FGC garante até R$ 250 mil por CPF em cada conglomerado financeiro, limitado a R$ 1 milhão a cada 4 anos."
       },
       {
         pergunta: "O que significa o termo 'Come-Cotas' nos Fundos de Investimento?",
@@ -627,6 +627,307 @@
         opcoes: ["IPCA", "IGP-M", "Taxa Selic", "CDI"],
         correta: 0,
         explicacao: "O IPCA é a inflação oficial calculada pelo IBGE. O IGP-M é mais usado para contratos de aluguel e a Selic é a taxa de juros básica."
+      },
+      // --- QUESTÕES EXTRA HARD (CPA/ANCORD) ---
+      {
+        pergunta: "[CPA-20/CEA] Em relação ao IOF em investimentos de renda fixa, é correto afirmar que:",
+        opcoes: ["A alíquota é fixa em 15% independentemente do prazo.", "Atinge 0% (zero) no 30º dia de aplicação.", "É cobrado no último dia útil de maio e novembro.", "Pode ser compensado com prejuízos em ações."],
+        correta: 1,
+        explicacao: "A tabela do IOF é regressiva e diária, começando em 96% do lucro no 1º dia e zerando exatamente no 30º dia da aplicação."
+      },
+      {
+        pergunta: "[CPA-Base] De acordo com a regulação de Prevenção à Lavagem de Dinheiro (PLD), qual é o objetivo da regra 'Conheça seu Cliente' (KYC)?",
+        opcoes: ["Melhorar o marketing do banco para vender mais produtos.", "Identificar a origem dos recursos e entender se a movimentação é compatível com a renda.", "Garantir que o cliente assine o termo de suitability.", "Evitar que o cliente tenha prejuízos na Bolsa."],
+        correta: 1,
+        explicacao: "KYC (Know Your Customer) exige que as instituições conheçam a fundo quem é o cliente, sua renda e profissão, para detectar qualquer depósito ilícito ou suspeito."
+      },
+      {
+        pergunta: "[Case Extra Hard] João possui uma conta conjunta (com sua esposa) no Banco Alfa, com saldo de R$ 600.000 em CDB. O Banco Alfa sofre liquidação extrajudicial. Quanto João receberá do FGC?",
+        opcoes: ["R$ 250.000", "R$ 125.000", "R$ 300.000", "R$ 500.000"],
+        correta: 1,
+        explicacao: "O limite do FGC é R$ 250 mil POR CONTA, dividido pelo número de titulares. A conta tem R$ 600k, o limite bate em R$ 250k total. Como são 2 titulares (João e a esposa), João recebe metade do teto: R$ 125.000."
+      },
+      {
+        pergunta: "[ANCORD] Com a Instrução CVM 178 (fim da exclusividade), um Assessor de Investimentos pode:",
+        opcoes: ["Atuar distribuindo valores mobiliários por mais de uma corretora, caso o contrato permita.", "Garantir rentabilidade ao cliente, desde que assinado em cartório.", "Ser procurador do seu cliente para comprar e vender ações por ele.", "Receber dinheiro em espécie do cliente para investir."],
+        correta: 0,
+        explicacao: "A CVM 178 acabou com a exclusividade obrigatória, permitindo que o Assessor atue por mais de uma corretora. Porém, ele continua estritamente proibido de ser procurador do cliente ou receber dinheiro em espécie."
+      },
+      {
+        pergunta: "[Cálculo / Renda Fixa] O que acontece com o Preço Unitário (PU) de uma NTN-B (Tesouro IPCA+) de longo prazo quando a taxa de juros do mercado (Selic) sobe drasticamente?",
+        opcoes: ["O Preço Unitário sobe na mesma proporção.", "O Preço Unitário cai devido à marcação a mercado.", "O Preço Unitário fica inalterado, pois é garantido pelo governo.", "Aumenta a inflação do título de forma retroativa."],
+        correta: 1,
+        explicacao: "Relação inversamente proporcional da Renda Fixa: Se a taxa de juros exigida pelo mercado sobe, os títulos antigos que pagam menos perdem valor no mercado secundário (o Preço cai)."
+      },
+      {
+        pergunta: "[Tributação Extra Hard] Um investidor pessoa física realiza venda de R$ 18.000 em ações via Swing Trade num mês, apurando lucro de R$ 5.000. No mesmo mês, vende R$ 15.000 em BDRs, lucrando R$ 2.000. Quanto ele pagará de IR no mês seguinte?",
+        opcoes: ["Isento de IR para ambas as operações.", "Pagará 15% sobre os R$ 7.000 de lucro total.", "Isento sobre as Ações, mas pagará 15% (R$ 300) sobre os BDRs.", "Pagará 20% sobre o BDR e 15% sobre a Ação."],
+        correta: 2,
+        explicacao: "Vendas de ações até R$ 20.000 no mês são ISENTAS de IR (ele vendeu só 18k). Porém, NÃO existe isenção de 20k para BDRs, ETFs ou Fundos Imobiliários. Logo, ele paga 15% sobre o lucro do BDR."
+      },
+      {
+        pergunta: "[Case Derivativos] Em uma operação de Opções, o cliente comprou uma 'Put' (Opção de Venda) de Petrobras com strike a R$ 30,00, pagando R$ 1,00 de prêmio. No vencimento, a ação está a R$ 20,00. Qual o resultado líquido do cliente por opção?",
+        opcoes: ["Prejuízo de R$ 1,00", "Lucro de R$ 10,00", "Lucro de R$ 9,00", "Prejuízo de R$ 10,00"],
+        correta: 2,
+        explicacao: "Ele tem o direito de vender a 30 algo que no mercado custa 20. Ele ganha R$ 10 de diferença na execução. Como pagou R$ 1 de prêmio (seguro) para entrar no jogo, o lucro líquido é R$ 9."
+      },
+      {
+        pergunta: "[Fundos / CVM 175] A nova regulamentação de fundos de investimento (CVM 175) introduziu uma mudança histórica para a proteção do cotista. Qual foi?",
+        opcoes: ["Fim total da taxa de administração.", "Responsabilidade limitada do cotista, evitando que ele tenha que colocar dinheiro do próprio bolso se o fundo ficar negativo.", "A isenção do come-cotas para fundos multimercados.", "Proibição de investimento no exterior."],
+        correta: 1,
+        explicacao: "Antes, se o fundo perdesse mais dinheiro do que tinha, o cotista era chamado a pagar a dívida (ficar devendo ao fundo). A CVM 175 permitiu estruturar fundos onde a perda máxima é 100% do valor investido, protegendo o restante do patrimônio do cliente."
+      },
+      {
+        pergunta: "[Economia] Se o Banco Central do Brasil atua vendendo Dólares no mercado à vista (reservas internacionais), qual é o objetivo principal desta ação?",
+        opcoes: ["Desvalorizar o Real.", "Conter uma alta excessiva e volatilidade da cotação do Dólar (apreciar o Real).", "Aumentar a inflação (IPCA).", "Reduzir o PIB do país."],
+        correta: 1,
+        explicacao: "Lei da Oferta e Demanda. Se o BC joga Dólar (oferta) no mercado, o preço dele cai. É uma intervenção para segurar o câmbio em momentos de crise."
+      },
+      {
+        pergunta: "[Case SFN] Qual instituição é responsável por registrar e guardar as ações que você compra para garantir que nenhuma corretora fuja com elas?",
+        opcoes: ["BNDES", "FGC", "B3 (através do serviço de Depositária Central)", "SUSEP"],
+        correta: 2,
+        explicacao: "A B3 é a infraestrutura de mercado (Clearing/Depositária). A corretora é apenas a interface. Suas ações ficam custodiadas na B3 no seu CPF."
+      },
+      {
+        pergunta: "[ANCORD / Ética] O conceito de 'Front Running' consiste em:",
+        opcoes: ["O cliente operar muito rápido usando robôs de alta frequência.", "Um corretor ou profissional do mercado executar uma ordem própria ANTES de executar uma ordem grande do cliente, aproveitando a variação de preço.", "Lavar dinheiro usando laranjas na linha de frente.", "Vender ações que você não possui (venda a descoberto)."],
+        correta: 1,
+        explicacao: "Crime gravíssimo! O corretor recebe uma ordem de um fundo para comprar R$ 1 bilhão em Vale. Sabendo que isso vai fazer a ação subir, o corretor compra ações para si mesmo 1 segundo antes. Isso é Front Running."
+      },
+      {
+        pergunta: "[Case FII] Sobre os Fundos de Investimento Imobiliário (FIIs), de acordo com a Lei 14.754/2023, os rendimentos (dividendos) são isentos de IR para Pessoa Física desde que o fundo tenha, no mínimo:",
+        opcoes: ["50 cotistas", "100 cotistas", "500 cotistas", "Não existe mais isenção"],
+        correta: 2,
+        explicacao: "A nova regra alterou o mínimo para o fundo ser isento de 50 para 500 cotistas, dificultando a criação de 'fundos familiares' exclusivos apenas para fugir de impostos."
+      },
+      {
+        pergunta: "[CPA-20] Dentre as opções, qual NÃO é um risco presente nos Títulos Públicos Federais (Tesouro Direto)?",
+        opcoes: ["Risco de Mercado", "Risco de Liquidez", "Risco de Crédito", "Nenhuma das anteriores"],
+        correta: 2,
+        explicacao: "Na teoria financeira nacional, os títulos do Governo Federal representam o Risco Soberano (Livre de Risco de Crédito interno). O governo sempre pode 'imprimir dinheiro' para pagar a dívida em moeda local, logo o risco de crédito é zero (ou o mais baixo possível)."
+      },
+      {
+        pergunta: "[Case Tributação] Um investidor realizou operações de Day Trade e obteve R$ 10.000 de lucro em maio. No entanto, em abril ele havia acumulado um prejuízo de R$ 3.000 em Day Trade. Qual será a base de cálculo para pagar o IR de maio?",
+        opcoes: ["R$ 10.000, pois prejuízos de meses anteriores não contam.", "R$ 7.000, pois ele pode compensar prejuízos da mesma modalidade (Day Trade com Day Trade).", "Isento, pois está abaixo de 20 mil reais.", "R$ 13.000."],
+        correta: 1,
+        explicacao: "A Receita permite abater prejuízos passados de lucros futuros, desde que seja da MESMA modalidade (Day Trade abate Day Trade, Swing abate Swing). A base será R$ 7k."
+      },
+      {
+        pergunta: "[Macroeconomia] O Índice Geral de Preços - Mercado (IGP-M) é fortemente influenciado pelo atacado e pelo dólar porque a maior parte de sua composição (60%) advém do:",
+        opcoes: ["INCC-M (Custo da Construção)", "IPCA (Preços ao Consumidor)", "IPA-M (Índice de Preços ao Produtor Amplo)", "Taxa Selic"],
+        correta: 2,
+        explicacao: "O IPA (60%) mede os preços agrícolas e industriais na porta de saída. Por isso produtos exportáveis cotados em dólar (soja, minério) balançam tanto o IGP-M."
+      },
+      {
+        pergunta: "[CPA-Base] Quem determina a Meta da Taxa Selic e Quem executa as operações diárias para manter a Selic na meta, respectivamente?",
+        opcoes: ["Copom define; Mesa de Operações do Bacen executa.", "CMN define; CVM executa.", "Presidente da República define; Ministério da Fazenda executa.", "B3 define; Corretoras executam."],
+        correta: 0,
+        explicacao: "O Copom (Comitê de Política Monetária do Bacen) define a meta. A mesa de operações do Bacen (Open Market) compra e vende títulos todos os dias com os bancos para manter a taxa colada na meta."
+      },
+      {
+        pergunta: "[Fundos de Investimento] Um Fundo Multimercado sofre a incidência do 'Come-Cotas'. Se ele for classificado como Fundo de Longo Prazo, qual é a alíquota desse recolhimento semestral?",
+        opcoes: ["22,5%", "20%", "15%", "Isento"],
+        correta: 2,
+        explicacao: "Fundos de Longo Prazo têm o come-cotas fixado na alíquota mínima da tabela, que é 15% (Fundos de Curto Prazo têm o come-cotas em 20%)."
+      },
+      {
+        pergunta: "[Case Extra Hard / COE] Um COE (Certificado de Operações Estruturadas) oferece 'Valor Nominal Protegido'. O investidor aplicou R$ 100.000 apostando na alta do Ouro em 5 anos. O Ouro caiu 30%. O que acontece no vencimento?",
+        opcoes: ["O investidor recebe R$ 70.000.", "O Fundo Garantidor de Créditos banca a perda.", "O investidor recebe os R$ 100.000 brutos de volta, sem rendimentos, pois o capital principal estava protegido pelo banco emissor.", "O investidor fica com dívida na corretora."],
+        correta: 2,
+        explicacao: "A mágica do COE de capital protegido é essa: na pior das hipóteses (se a aposta der errado), o banco devolve 100% do dinheiro investido. A perda real é o custo de oportunidade (inflação do período)."
+      },
+      {
+        pergunta: "[ANCORD / PLD] Se um cliente entrar na corretora com uma mala contendo R$ 100.000 em espécie querendo depositar na conta, qual a ação imediata sob a ótica de PLD?",
+        opcoes: ["Depositar e investir num CDB.", "Avisar imediatamente o COAF, pois as corretoras e assessores estão terminantemente proibidos de aceitar depósitos em espécie.", "Cobrar uma taxa extra de contagem de cédulas.", "Mandar o cliente usar o PIX."],
+        correta: 1,
+        explicacao: "Corretoras de valores NÃO TÊM caixa físico e não podem transacionar espécie. Receber valores em espécie é forte indício de lavagem de dinheiro e deve gerar reporte ao COAF."
+      },
+      {
+        pergunta: "[Case Duração/Duration] O investidor 'A' comprou um título Prefixado para vencer em 2 anos. O investidor 'B' comprou um título Prefixado para vencer em 10 anos. Se a taxa Selic subir abruptamente amanhã, quem sofre a maior perda na marcação a mercado?",
+        opcoes: ["Investidor A", "Investidor B", "Ambos sofrem igual", "Nenhum sofre"],
+        correta: 1,
+        explicacao: "A Regra da Duration de Macaulay: Quanto mais longo o prazo (duration) do título de renda fixa, MAIOR é a sua volatilidade frente a mudanças na taxa de juros. O investidor B tomará um tombo violento na tela."
+      },
+      {
+        pergunta: "[CPA-20] Qual entidade é responsável por registrar o balanço e fiscalizar as demonstrações contábeis das S.A. de capital aberto que listam ações na B3?",
+        opcoes: ["Bacen", "SUSEP", "CVM", "CMN"],
+        correta: 2,
+        explicacao: "Tudo que envolve Sociedades Anônimas listadas, debêntures públicas e transparência com acionistas é jurisdição exclusiva da CVM (Comissão de Valores Mobiliários)."
+      },
+      {
+        pergunta: "[Case Tributação] Debêntures Incentivadas (Lei 12.431) financiam projetos de infraestrutura (rodovias, portos). Qual a grande vantagem para a Pessoa Física?",
+        opcoes: ["Rendem sempre acima da Selic.", "Possuem garantia do Fundo Garantidor de Créditos.", "São totalmente isentas de Imposto de Renda sobre os lucros.", "O Governo garante a recompra diária."],
+        correta: 2,
+        explicacao: "O Governo abre mão do Imposto de Renda (Isenção para PF) para incentivar que as pessoas emprestem dinheiro para construir a infraestrutura do país. Não têm FGC."
+      },
+      {
+        pergunta: "[Economia] Uma política monetária 'Expansionista' adotada pelo Banco Central envolve:",
+        opcoes: ["Aumentar a Taxa Selic para encarecer o crédito.", "Reduzir o compulsório bancário e reduzir a Selic para injetar dinheiro e estimular o consumo.", "Aumentar os impostos de importação.", "Cortar gastos do governo."],
+        correta: 1,
+        explicacao: "Expansionista = expandir o dinheiro. Reduzir a Selic faz os empréstimos ficarem baratos. Reduzir o compulsório (dinheiro que o banco é obrigado a deixar trancado no BC) libera bilhões para os bancos emprestarem ao povo."
+      },
+      {
+        pergunta: "[Previdência] O benefício fiscal do PGBL (abater até 12% da renda bruta tributável) só é útil se o investidor:",
+        opcoes: ["For isento de IR.", "Fizer a Declaração de Ajuste Anual do IR no modelo COMPLETO.", "Fizer a Declaração Simplificada.", "Possuir conta conjunta."],
+        correta: 1,
+        explicacao: "Se fizer no modelo simplificado, já recebe um desconto padrão da receita de 20%, e a aplicação no PGBL perde a utilidade fiscal. O PGBL só abate no modelo COMPLETO."
+      },
+      {
+        pergunta: "[Case Extra Hard / PGBL vs VGBL] João investiu R$ 100.000 em um PGBL e R$ 100.000 em um VGBL. Ambos renderam R$ 50.000. Na hora do resgate total, sobre qual valor incidirá o Imposto de Renda no PGBL e no VGBL, respectivamente?",
+        opcoes: ["PGBL: IR sobre R$ 50.000 / VGBL: IR sobre R$ 50.000", "PGBL: IR sobre os R$ 150.000 totais / VGBL: IR apenas sobre o lucro de R$ 50.000", "PGBL: IR isento / VGBL: IR sobre total", "PGBL e VGBL cobram IR sobre os R$ 150.000 totais."],
+        correta: 1,
+        explicacao: "A grande armadilha do PGBL: Você tem benefício fiscal na entrada, mas na saída o Leão cobra imposto sobre TODO o montante (principal + lucro). No VGBL (que não tem benefício de entrada), o imposto incide APENAS sobre a rentabilidade."
+      },
+      {
+        pergunta: "[Derivativos] O que é o 'Lançador' de uma opção Call?",
+        opcoes: ["É o comprador que pagou o prêmio e tem o direito de comprar a ação.", "É o vendedor da opção, que recebeu o prêmio e assumiu a OBRIGAÇÃO de entregar a ação no preço combinado.", "É a B3 cobrando a taxa.", "É quem joga a ação na bolsa (IPO)."],
+        correta: 1,
+        explicacao: "O Lançador (vendedor) recebe o dinheiro do seguro (prêmio) hoje, mas amarra uma corda no pescoço: se o comprador exercer, o lançador é OBRIGADO a cumprir o contrato."
+      },
+      {
+        pergunta: "[CPA-20] No Sistema Financeiro, quem é a instituição responsável por arrecadar o Seguro DPVAT, administrar loterias e gerir os recursos do FGTS?",
+        opcoes: ["Caixa Econômica Federal", "Banco do Brasil", "Banco Central", "SUSEP"],
+        correta: 0,
+        explicacao: "A Caixa Econômica atua como monopólio público em funções sociais do estado brasileiro, como Loterias, FGTS, Penhor Civil e PIS."
+      },
+      {
+        pergunta: "[Finanças Comportamentais] O investidor que se recusa a comprar uma ação hoje por R$ 30,00 porque 'semanas atrás ela custava R$ 15,00 e agora tá cara', ignorando que a empresa triplicou o lucro no período, está sofrendo de qual viés?",
+        opcoes: ["Excesso de confiança", "Ancoragem (Anchoring)", "Efeito Manada", "Contabilidade Mental"],
+        correta: 1,
+        explicacao: "Ancoragem: O cérebro fica 'preso' à referência de preço do passado (R$ 15) e a usa como métrica base para todas as decisões presentes, ignorando os novos fundamentos da empresa."
+      },
+      {
+        pergunta: "[Fundos de Investimento] Os ETFs (Fundos de Índice) no Brasil diferenciam-se da maioria dos fundos tradicionais por não terem:",
+        opcoes: ["Riscos", "Taxa de Administração", "Come-cotas semestral", "Gestor"],
+        correta: 2,
+        explicacao: "ETFs não sofrem o 'Come-cotas' da Receita Federal. O IR só é pago no momento da venda das cotas na Bolsa de Valores com lucro (15%)."
+      },
+      {
+        pergunta: "[Case Extra Hard / PLD] No combate à lavagem de dinheiro, a 'Fase de Ocultação' (ou Colocação/Placement) caracteriza-se por:",
+        opcoes: ["Distribuir o dinheiro sujo em milhares de transferências eletrônicas globais.", "Usar o dinheiro ilícito para comprar uma empresa lícita (Integração).", "A primeira entrada do dinheiro vivo (espécie) no sistema financeiro, fracionado em pequenos depósitos em caixas eletrônicos (smurfing).", "Reportar o crime ao COAF."],
+        correta: 2,
+        explicacao: "A lavagem tem 3 fases: 1. Colocação (se livrar da mochila de dinheiro físico jogando no banco). 2. Ocultação (camadas de TEDs para despistar). 3. Integração (o dinheiro volta 'limpo' comprando imóveis)."
+      },
+      {
+        pergunta: "[Derivativos / Futuros] O Mercado Futuro possui um mecanismo de proteção para evitar calotes, onde a B3 credita lucros e debita prejuízos diariamente na conta dos operadores. Qual o nome disso?",
+        opcoes: ["Come-cotas", "Ajuste Diário", "Chamada de Margem", "Swap"],
+        correta: 1,
+        explicacao: "O Ajuste Diário faz com que não haja acúmulo de dívidas. Se você comprou Dólar Futuro e ele caiu hoje, a B3 tira o dinheiro da sua conta hoje à tarde e entrega pro vencedor. Todo dia zera o risco."
+      },
+      {
+        pergunta: "[Case Renda Fixa] Um CDB pagando 110% do CDI possui um risco maior que um Tesouro Selic. Essa diferença de rentabilidade cobrada pelo investidor para correr esse risco do banco quebrar chama-se:",
+        opcoes: ["Risco de Liquidez", "Spread de Mercado", "Prêmio de Risco (Risco de Crédito)", "Taxa de Corretagem"],
+        correta: 2,
+        explicacao: "Por que eu tiraria dinheiro do governo (risco zero) e daria a um banco pequeno? Só se ele me der um 'Prêmio de Risco' maior (110% vs 100%). É a recompensa por aceitar o risco de crédito."
+      },
+      {
+        pergunta: "[Bancos e SFN] Para ser considerado um 'Banco Múltiplo' no Brasil, a instituição deve possuir, no mínimo, duas carteiras. Uma delas TEM que ser obrigatoriamente:",
+        opcoes: ["Imobiliária ou de Câmbio.", "Comercial ou de Investimento.", "Leasing (Arrendamento) ou Comercial.", "Desenvolvimento ou Investimento."],
+        correta: 1,
+        explicacao: "Regra do SFN: Um banco múltiplo deve ter 2 carteiras. E a âncora principal do banco deve ser ou a carteira Comercial (pra poder ter conta corrente normal) ou a de Investimento."
+      },
+      {
+        pergunta: "[CPA-20] As operações compromissadas realizadas pelo Banco Central (comprando e vendendo títulos com o compromisso de recompra) servem principalmente para:",
+        opcoes: ["Pagar as dívidas externas do Brasil.", "Financiar o BNDES.", "Regular a liquidez diária do sistema bancário (enxugar ou injetar dinheiro) mantendo a Selic na meta.", "Garantir o lucro dos fundos de pensão."],
+        correta: 2,
+        explicacao: "O Open Market. Se tem dinheiro sobrando nos bancos e a Selic vai cair, o BC vende títulos aos bancos, 'sugando' o dinheiro para si e enxugando a liquidez do mercado."
+      },
+      {
+        pergunta: "[Case Extra Hard / FGC] Uma LCI, uma LF (Letra Financeira), um RDB e uma Debênture. Quais destes contam com a proteção do FGC?",
+        opcoes: ["LCI e Debênture", "CDB e Letra Financeira", "LCI e RDB", "Todos possuem"],
+        correta: 2,
+        explicacao: "Letra Financeira (LF) e Debênture (título corporativo privado) NÃO têm proteção do Fundo Garantidor de Crédito. LCI, LCA, CDB, RDB e Poupança têm."
+      },
+      {
+        pergunta: "[ANCORD] O investidor 'B' preencheu o formulário de Suitability e resultou em Perfil Conservador. Ele liga para a corretora exigindo comprar contratos de Dólar Futuro (Alto Risco). O que o Assessor deve fazer?",
+        opcoes: ["Bloquear a conta do cliente, pois é ilegal.", "Executar a ordem, mas colher do cliente um 'Termo de Desenquadramento' ciente dos riscos e de que está agindo fora do seu perfil.", "Mudar o perfil dele à força no sistema para Arrojado e executar.", "Acionar o COAF."],
+        correta: 1,
+        explicacao: "O cliente é o dono do dinheiro. Se ele insiste em agir fora do perfil, a instrução da CVM exige que o sistema exiba um Termo de Desenquadramento. Ele assina a isenção de responsabilidade da corretora, e a ordem é executada."
+      },
+      {
+        pergunta: "[Finanças Comportamentais] O viés da 'Disponibilidade' ou 'Recência' se dá quando o investidor:",
+        opcoes: ["Fica com preguiça de investir.", "Toma decisões baseadas apenas nas notícias ou eventos mais recentes e memoráveis, ignorando o histórico de longo prazo.", "Divide o dinheiro em 'caixinhas' mentais (Ex: Dinheiro do salário não pode gastar, dinheiro de bônus pode torrar).", "Segue a manada."],
+        correta: 1,
+        explicacao: "Por exemplo, ocorreu um acidente aéreo semana passada. O investidor vende todas as ações da Embraer ou Boeing porque aquele risco está muito 'disponível/recente' na mente dele, ignorando que avião é o transporte mais seguro nas últimas 3 décadas."
+      },
+      {
+        pergunta: "[Case Previdência] Qual o prazo máximo em dias úteis que um plano de previdência (PGBL/VGBL) tem para efetuar o pagamento do resgate ou a transferência de portabilidade para outra seguradora, após a solicitação do cliente?",
+        opcoes: ["1 dia útil", "10 dias úteis", "Em até 5 dias úteis (dependendo da carência).", "30 dias corridos."],
+        correta: 2,
+        explicacao: "Pelas regras da SUSEP, a portabilidade (transferir o dinheiro sem pagar IR para outro banco) deve ser feita em até 5 dias úteis."
+      },
+      {
+        pergunta: "[Cálculo Econômico] O IPCA e o IGPM divergiram em 2020. O IGPM bateu quase 23% e o IPCA 4,5%. A principal causa dessa distorção grotesca foi:",
+        opcoes: ["O aumento da gasolina nas bombas (IPCA).", "A explosão do Dólar que impactou fortemente o Índice de Preços ao Produtor (IPA), que compõe 60% do IGPM.", "Manipulação de dados pelo IBGE.", "Aumento do custo de construção civil (INCC) isoladamente."],
+        correta: 1,
+        explicacao: "Commodities são exportadas em dólar. Quando o dólar sobe, o produtor de soja prefere vender pro exterior. Pra vender internamente, ele cobra mais caro. Isso reflete pesado no IPA (atacado), explodindo o IGPM, antes de chegar à prateleira do consumidor (IPCA)."
+      },
+      {
+        pergunta: "[Fundos Imobiliários] No Brasil, por lei, os FIIs são obrigados a distribuir que percentual mínimo dos seus lucros líquidos (gerados por aluguéis) aos cotistas?",
+        opcoes: ["50% a cada semestre.", "95% a cada semestre.", "100% todo mês.", "25% a cada trimestre."],
+        correta: 1,
+        explicacao: "A regra de ouro dos FIIs (Lei 8.668): Eles têm o dever legal de distribuir pelo menos 95% do lucro líquido auferido (calculado por regime de caixa) no semestre."
+      },
+      {
+        pergunta: "[CPA-20/CEA - Rating] As Agências de Classificação de Risco (Fitch, Moody's, S&P) dão notas para países e empresas. Uma empresa perde o grau de investimento (Investment Grade) e cai para 'Junk' (Especulativo). O que costuma acontecer com os títulos dela?",
+        opcoes: ["Aumentam o preço, pois ficam mais seguros.", "Caem de preço e precisam oferecer taxas de juros (prêmios) muito maiores para conseguir atrair investidores corajosos.", "Sofrem intervenção do Bacen.", "Tornam-se automaticamente debêntures incentivadas."],
+        correta: 1,
+        explicacao: "Perder o Investment Grade significa que o risco de calote aumentou. Grandes fundos globais são proibidos de comprar títulos Junk. Sem demanda, o preço despenca e a empresa tem que pagar juros estratosféricos para captar recursos."
+      },
+      {
+        pergunta: "[Derivativos / Opções] O modelo de precificação de opções de Black-Scholes NÃO utiliza qual destas variáveis em sua equação?",
+        opcoes: ["Preço atual do ativo objeto.", "Volatilidade histórica da ação.", "O PIB do país sede da empresa.", "Tempo restante até o vencimento da opção."],
+        correta: 2,
+        explicacao: "Black-Scholes usa 5 entradas vitais: Preço Atual da Ação (S), Preço de Exercício/Strike (K), Tempo até o vencimento (T), Taxa livre de risco da economia (r) e a Volatilidade da ação (Sigma). O PIB não entra na fórmula matemática direta."
+      },
+      {
+        pergunta: "[Mercado de Capitais] Quando a empresa XPTO emite novas ações e vende diretamente para o público pela primeira vez para levantar dinheiro para o seu caixa fabril, essa operação ocorre no:",
+        opcoes: ["Mercado Secundário (B3).", "Mercado Primário (IPO/Follow-on).", "Mercado Balcão Não Organizado.", "Mercado Futuro."],
+        correta: 1,
+        explicacao: "Sempre que o dinheiro vai PARA O CAIXA DA EMPRESA, é Mercado Primário. Quando João vende a ação para Maria (e a empresa não ganha nem um centavo na troca), é Mercado Secundário."
+      },
+      {
+        pergunta: "[Case Extra Hard / COAF] As IFs devem manter registro de todas as transações, inclusive as de menor valor. Por quanto tempo, no mínimo, esses dados de clientes e extratos devem ser guardados sob as regras de PLD?",
+        opcoes: ["1 ano", "3 anos", "5 anos", "10 anos"],
+        correta: 3,
+        explicacao: "A legislação de Prevenção à Lavagem de Dinheiro exige que as instituições financeiras conservem os registros das operações ativas por, no mínimo, 10 ANOS após o encerramento da conta."
+      },
+      {
+        pergunta: "[Fundos / ANBIMA] A 'Marcação a Mercado' (MTM) obrigatória nas cotas dos Fundos de Investimentos serve para:",
+        opcoes: ["Evitar a transferência de riqueza entre cotistas (quem entra hoje e quem sai amanhã) pagando o preço real que o título vale HOJE na venda forçada.", "Mascarar os prejuízos do fundo na curva.", "Cobrar a taxa de administração.", "Reduzir o IR do cotista."],
+        correta: 0,
+        explicacao: "Se não houvesse MTM (Marcação a Mercado), um fundo poderia dizer que o título público que ele comprou no passado vale 100 hoje, quando na verdade, devido à crise, só consegue vender por 80. O cotista que saísse hoje levaria 100, roubando 20 de riqueza de quem ficasse no fundo."
+      },
+      {
+        pergunta: "[CPA-20] Sobre o Conselho Nacional de Seguros Privados (CNSP), é correto afirmar que:",
+        opcoes: ["Fiscaliza o Banco Central.", "É o órgão fixador das diretrizes (normativo) do mercado de seguros, previdência complementar aberta e capitalização.", "É subordinado à SUSEP.", "Aplica multas diretamente aos corretores de imóveis."],
+        correta: 1,
+        explicacao: "Assim como o CMN manda no banco central (Câmbio e Moeda), o CNSP é o órgão máximo (normativo) que dita as leis que a SUSEP terá que executar e fiscalizar."
+      },
+      {
+        pergunta: "[Derivativos / Hedge] Um agricultor plantou milho. Ele tem medo que na colheita o preço desabe, levando-o à falência. A estratégia clássica de HEDGE (proteção) no mercado futuro seria:",
+        opcoes: ["Comprar contratos futuros de Milho.", "Vender contratos futuros de Milho (Short hedge).", "Comprar opções de Dólar.", "Fazer um swap reverso com a Bolsa."],
+        correta: 1,
+        explicacao: "Ele Vende futuro (trava o preço de venda alto hoje). Se o preço desabar na colheita, ele toma prejuízo vendendo as espigas físicas lá na fazenda, mas lucra vendendo mais caro no contrato futuro da bolsa. O ganho da bolsa compensa a perda na fazenda (Hedge)."
+      },
+      {
+        pergunta: "[Case Previdência / Tábua Biométrica] Num PGBL, a seguradora utiliza uma Tábua Biométrica (ex: BR-EMS) para calcular se o cliente vai viver muito ou pouco na fase de gozo da aposentadoria. O que ocorre se a tábua for muito 'antiga' e as pessoas viverem mais do que o calculado?",
+        opcoes: ["O cliente perderá todo o dinheiro.", "A seguradora (que assumiu o risco atuarial de pagar renda vitalícia) sofrerá prejuízo maciço pagando meses extras não contabilizados.", "O Governo banca a diferença pelo INSS.", "A SuSep zera a conta do cliente."],
+        correta: 1,
+        explicacao: "Na renda vitalícia, quem assume o 'risco de sobrevivência' (risco atuarial) é a seguradora. Se a pessoa viver até os 120 anos e o fundo dela acabou aos 90, a seguradora tem a OBRIGAÇÃO de continuar pagando do seu próprio bolso."
+      },
+      {
+        pergunta: "[Economia] Uma desvalorização cambial abrupta (O Dólar sai de R$ 5,00 para R$ 6,50), em regra, provoca:",
+        opcoes: ["Deflação profunda e imediata.", "Aumento da Inflação interna, pois insumos importados como trigo e semicondutores ficam mais caros em Reais.", "Fuga de exportadores do Brasil.", "Queda das taxas do Tesouro Prefixado."],
+        correta: 1,
+        explicacao: "O câmbio desvalorizado incentiva exportação (bom para produtor local) mas encarece tudo que compramos de fora, gerando inflação (efeito passthrough)."
+      },
+      {
+        pergunta: "[Case Ética ANBIMA / Chinese Wall] O conceito de Barreira de Informação (Chinese Wall) dentro de um Banco Múltiplo serve fundamentalmente para:",
+        opcoes: ["Aumentar o lucro nas fusões de empresas.", "Isolar as áreas do banco que possuem informação privilegiada (ex: Área de fusões e crédito corporativo) da área que administra fundos e corretora, evitando conflito de interesses.", "Reduzir custos de TI usando roteadores chineses.", "Evitar lavagem de dinheiro físico nas agências."],
+        correta: 1,
+        explicacao: "Imagine que o Itaú Corporativo sabe que a empresa X vai falir amanhã porque analisou o balanço interno. O Itaú Corretora não pode usar essa informação sigilosa para vender as ações da empresa X nos fundos antes do mercado. Há uma 'Muralha da China' legal entre os departamentos."
       }
     ];
 
@@ -770,7 +1071,7 @@
               <NavItem icon="fa-bullseye" label="Viver de Renda" active={activeTab === 'independencia'} onClick={() => changeTab('independencia')} />
               
               <div className="pt-4 pb-2 px-2 text-xs font-bold text-slate-500 uppercase tracking-wider">Educação & Mercado</div>
-              <NavItem icon="fa-gamepad" label="Quiz do Investidor" active={activeTab === 'quiz'} onClick={() => changeTab('quiz')} />
+              <NavItem icon="fa-gamepad" label="Quiz Certificação" active={activeTab === 'quiz'} onClick={() => changeTab('quiz')} />
               <NavItem icon="fa-file-invoice-dollar" label="Guia de Tributos" active={activeTab === 'tributacao'} onClick={() => changeTab('tributacao')} />
               <NavItem icon="fa-brain" label="Psicologia Financeira" active={activeTab === 'psicologia'} onClick={() => changeTab('psicologia')} />
               <NavItem icon="fa-sitemap" label="Estrutura do SFN" active={activeTab === 'sfn'} onClick={() => changeTab('sfn')} />
@@ -796,7 +1097,7 @@
                  activeTab === 'objetivos' ? 'Planejador de Objetivos' : 
                  activeTab === 'instituicoes' ? 'Guia de Instituições Financeiras' : 
                  activeTab === 'sfn' ? 'Sistema Financeiro Nacional (SFN)' : 
-                 activeTab === 'quiz' ? 'Quiz de Conhecimentos' : 
+                 activeTab === 'quiz' ? 'Quiz de Conhecimentos (Extra Hard)' : 
                  activeTab === 'tributacao' ? 'Tributação e Custos' : 
                  activeTab === 'psicologia' ? 'Psicologia Financeira' : activeTab}
               </h2>
@@ -1430,7 +1731,7 @@
           } else {
             setShowScore(true);
           }
-        }, 3000); // 3 segundos para ler a explicação
+        }, 4000); // 4 segundos para ler a explicação da certificação
       };
 
       const restartQuiz = () => {
@@ -1445,20 +1746,19 @@
         <div className="max-w-3xl mx-auto">
           <div className="mb-6 text-center">
             <h2 className="text-3xl font-black text-slate-800 flex justify-center items-center gap-3 mb-2">
-              <i className="fas fa-gamepad text-indigo-500"></i> Desafio do Investidor
+              <i className="fas fa-gamepad text-indigo-500"></i> Simulado Extra Hard (ANCORD / ANBIMA)
             </h2>
-            <p className="text-slate-600">Teste os seus conhecimentos sobre o mercado financeiro e prove que está pronto para investir!</p>
+            <p className="text-slate-600">São {QUIZ_DATA.length} questões complexas focadas nas certificações. Teste os seus limites reais!</p>
           </div>
 
           {showScore ? (
             <div className="bg-white p-10 rounded-2xl shadow-lg border border-gray-200 text-center animate-fade-in">
-              <i className={`fas ${score >= 3 ? 'fa-trophy text-yellow-400' : 'fa-book-reader text-blue-400'} text-6xl mb-4`}></i>
+              <i className={`fas ${score >= (QUIZ_DATA.length * 0.7) ? 'fa-trophy text-yellow-400' : 'fa-book-reader text-blue-400'} text-6xl mb-4`}></i>
               <h3 className="text-2xl font-bold text-slate-800 mb-2">O seu Resultado</h3>
               <p className="text-lg text-slate-600 mb-6">Você acertou <strong className="text-indigo-600 text-2xl">{score}</strong> de {QUIZ_DATA.length} perguntas.</p>
               
-              {score === QUIZ_DATA.length && <p className="text-emerald-600 font-bold mb-6 bg-emerald-50 p-3 rounded-lg">Perfeito! É um verdadeiro Mestre das Finanças (Wall Street espera por si)!</p>}
-              {score >= 3 && score < QUIZ_DATA.length && <p className="text-blue-600 font-bold mb-6 bg-blue-50 p-3 rounded-lg">Muito bom! Tem uma base sólida para começar a multiplicar o seu património.</p>}
-              {score < 3 && <p className="text-amber-600 font-bold mb-6 bg-amber-50 p-3 rounded-lg">Continue a estudar. O Dicionário e o Guia SFN estão no menu lateral para ajudar!</p>}
+              {score >= (QUIZ_DATA.length * 0.7) && <p className="text-emerald-600 font-bold mb-6 bg-emerald-50 p-3 rounded-lg">Aprovado! Fez mais de 70% da prova. O seu certificado está garantido!</p>}
+              {score < (QUIZ_DATA.length * 0.7) && <p className="text-red-600 font-bold mb-6 bg-red-50 p-3 rounded-lg">Reprovado (Abaixo de 70%). Mas não desista, os erros ensinam mais que os acertos. Volte ao Dicionário e tente outra vez.</p>}
               
               <button onClick={restartQuiz} className="bg-indigo-600 text-white font-bold py-3 px-8 rounded-xl hover:bg-indigo-700 transition shadow-md">
                 Tentar Novamente <i className="fas fa-redo ml-2"></i>
@@ -1468,7 +1768,7 @@
             <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
               <div className="flex justify-between items-center mb-6 border-b border-slate-100 pb-4">
                 <span className="text-slate-500 font-bold uppercase tracking-wider text-sm">Pergunta {currentQuestion + 1} de {QUIZ_DATA.length}</span>
-                <span className="bg-indigo-100 text-indigo-700 py-1 px-3 rounded-full text-sm font-bold">Pontos: {score}</span>
+                <span className="bg-indigo-100 text-indigo-700 py-1 px-3 rounded-full text-sm font-bold">Acertos: {score}</span>
               </div>
               
               <div className="mb-8">
@@ -1483,11 +1783,11 @@
                     buttonClass += "border-slate-200 hover:border-indigo-400 hover:bg-indigo-50";
                   } else {
                     if (index === QUIZ_DATA[currentQuestion].correta) {
-                      buttonClass += "border-emerald-500 bg-emerald-50 text-emerald-800"; // Correct answer highlights green
+                      buttonClass += "border-emerald-500 bg-emerald-50 text-emerald-800"; 
                     } else if (index === selectedOption) {
-                      buttonClass += "border-red-500 bg-red-50 text-red-800"; // Wrong selected highlights red
+                      buttonClass += "border-red-500 bg-red-50 text-red-800"; 
                     } else {
-                      buttonClass += "border-slate-200 opacity-50"; // Others fade out
+                      buttonClass += "border-slate-200 opacity-50"; 
                     }
                   }
 
@@ -1499,8 +1799,8 @@
                       className={buttonClass}
                     >
                       {opcao}
-                      {selectedOption !== null && index === QUIZ_DATA[currentQuestion].correta && <i className="fas fa-check-circle float-right text-emerald-500 mt-1"></i>}
-                      {selectedOption === index && index !== QUIZ_DATA[currentQuestion].correta && <i className="fas fa-times-circle float-right text-red-500 mt-1"></i>}
+                      {selectedOption !== null && index === QUIZ_DATA[currentQuestion].correta && <i className="fas fa-check-circle float-right text-emerald-500 mt-1 text-xl"></i>}
+                      {selectedOption === index && index !== QUIZ_DATA[currentQuestion].correta && <i className="fas fa-times-circle float-right text-red-500 mt-1 text-xl"></i>}
                     </button>
                   );
                 })}
@@ -1508,13 +1808,13 @@
 
               {selectedOption !== null && (
                 <div className={`mt-6 p-4 rounded-xl border animate-fade-in ${isCorrect ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-red-50 border-red-200 text-red-800'}`}>
-                  <p className="font-bold mb-1">
+                  <p className="font-bold mb-2 text-lg">
                     <i className={`fas ${isCorrect ? 'fa-check' : 'fa-exclamation-triangle'} mr-2`}></i>
                     {isCorrect ? 'Resposta Correta!' : 'Resposta Incorreta!'}
                   </p>
-                  <p className="text-sm">{QUIZ_DATA[currentQuestion].explicacao}</p>
+                  <p className="text-sm leading-relaxed"><strong>Resolução:</strong> {QUIZ_DATA[currentQuestion].explicacao}</p>
                   <div className="w-full bg-slate-200 h-1 mt-4 rounded-full overflow-hidden">
-                    <div className="bg-slate-800 h-1 animate-[pulse_3s_ease-in-out]"></div>
+                    <div className="bg-slate-800 h-1 animate-[pulse_4s_ease-in-out]"></div>
                   </div>
                 </div>
               )}
@@ -1537,7 +1837,6 @@
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             
-            {/* IOF */}
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
               <h3 className="text-xl font-bold text-slate-800 mb-3 border-b pb-2"><i className="fas fa-stopwatch text-orange-500 mr-2"></i>IOF (O Imposto Relâmpago)</h3>
               <p className="text-sm text-slate-600 mb-4">O Imposto sobre Operações Financeiras incide <strong>apenas nos primeiros 29 dias</strong> do investimento. É uma penalidade para quem saca o dinheiro muito rápido.</p>
@@ -1553,7 +1852,6 @@
               <p className="text-xs text-slate-400 mt-3"><i className="fas fa-lightbulb text-yellow-400"></i> Dica de Ouro: Nunca resgate um investimento de renda fixa (CDB, Tesouro) antes de completar 30 dias!</p>
             </div>
 
-            {/* Imposto de Renda (Tabela Regressiva) */}
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
               <h3 className="text-xl font-bold text-slate-800 mb-3 border-b pb-2"><i className="fas fa-calendar-alt text-blue-500 mr-2"></i>Imposto de Renda Regressivo</h3>
               <p className="text-sm text-slate-600 mb-4">Aplicável a quase toda a Renda Fixa (Tesouro Direto, CDB, RDB, LC). O Governo premeia quem investe a longo prazo, reduzindo a mordida.</p>
@@ -1577,7 +1875,6 @@
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             
-            {/* Come-Cotas */}
             <div className="bg-slate-900 p-6 rounded-2xl shadow-lg border border-slate-800 text-white relative overflow-hidden">
               <div className="absolute -right-4 -top-4 opacity-10 text-9xl"><i className="fas fa-ghost"></i></div>
               <h3 className="text-xl font-bold text-red-400 mb-3 border-b border-slate-700 pb-2 relative z-10"><i className="fas fa-spider mr-2"></i>O Fantasma do Come-Cotas</h3>
@@ -1592,7 +1889,6 @@
               </div>
             </div>
 
-            {/* Isenções (Paraíso Fiscal Interno) */}
             <div className="bg-gradient-to-br from-emerald-50 to-teal-100 p-6 rounded-2xl shadow-sm border border-emerald-200">
               <h3 className="text-xl font-bold text-emerald-800 mb-3 border-b border-emerald-200 pb-2"><i className="fas fa-umbrella-beach text-emerald-500 mr-2"></i>Oásis da Isenção (100% Livres de IR)</h3>
               <p className="text-sm text-emerald-700 mb-4">Para a Pessoa Física, existem produtos onde o Governo renuncia ao imposto para incentivar setores estratégicos do país.</p>
@@ -1631,7 +1927,6 @@
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             
-            {/* Efeito Manada */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden group hover:shadow-lg transition-all">
               <div className="bg-purple-100 p-6 flex justify-center items-center h-40">
                 <i className="fas fa-sheep text-6xl text-purple-500 group-hover:scale-110 transition-transform"></i>
@@ -1645,7 +1940,6 @@
               </div>
             </div>
 
-            {/* Aversão à Perda */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden group hover:shadow-lg transition-all">
               <div className="bg-red-100 p-6 flex justify-center items-center h-40 relative">
                 <i className="fas fa-chart-line text-6xl text-red-500 transform scale-y-[-1] group-hover:translate-y-2 transition-transform"></i>
@@ -1659,7 +1953,6 @@
               </div>
             </div>
 
-            {/* Excesso de Confiança */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden group hover:shadow-lg transition-all">
               <div className="bg-blue-100 p-6 flex justify-center items-center h-40">
                 <i className="fas fa-chess-king text-6xl text-blue-500 group-hover:rotate-12 transition-transform"></i>
