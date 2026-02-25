@@ -107,7 +107,7 @@
       {
         id: 'cdi', title: 'CDI (Certificado de Depósito Interbancário)',
         definition: 'Não é um investimento comprável. O CDI é a taxa de juros dos empréstimos diários que os bancos fazem entre si para fechar o caixa do dia no azul.',
-        howItYields: 'Não rende diretamente para você, é o "termômetro" usado para balizar outros investments. Anda cerca de 0,10% abaixo da taxa Selic.',
+        howItYields: 'Não rende diretamente para você, é o "termômetro" usado para balizar outros investimentos. Anda cerca de 0,10% abaixo da taxa Selic.',
         basis: 'Baseado estritamente na Taxa Selic definida pelo Banco Central (Copom).',
         cases: [
           'Case 1: BC define a Selic em 10,50%. Automaticamente o mercado ajusta o CDI para aproximadamente 10,40%.',
@@ -275,7 +275,7 @@
         howItYields: 'A maior atração é o "Capital Protegido". O banco garante que, na pior das hipóteses, você recebe de volta 100% do que investiu (mas sem juros). Sofre tributação regressiva de IR.',
         basis: 'Derivativos estruturados por bancos. Eles usam grande parte do seu dinheiro na renda fixa para garantir o principal, e usam o restinho para comprar opções de alto risco (ex: apostar na alta da Apple).',
         cases: [
-          'Case 1 (Cenário Bom): Você compra um COE apostando nas ações da Disney. Em 3 anos, a Disney sobe 40%. Você recebe seu dinheiro de volta + 40% de lucro (menos IR).',
+          'Case 1 (Cenário Bom): Você compra um COE apostando nas ações da Disney. Em 3 anos, a Disney sube 40%. Você recebe seu dinheiro de volta + 40% de lucro (menos IR).',
           'Case 2 (Cenário Ruim): As ações da Disney despencam 50%. Como o COE tem Capital Protegido, você não perde metade do dinheiro. Recebe de volta exatamente o valor investido, mas perdeu 3 anos de juros da inflação (custo de oportunidade).'
         ]
       },
@@ -303,7 +303,7 @@
         id: 'criptomoedas', title: 'Criptomoedas e Ativos Digitais',
         definition: 'Moedas digitais descentralizadas que utilizam criptografia para garantir a segurança das transações e não são emitidas por nenhum governo ou Banco Central.',
         howItYields: 'Extrema volatilidade. Rende única e exclusivamente pela lei da oferta e demanda no mercado aberto, 24 horas por dia, 7 dias por semana.',
-        basis: 'Tecnologia Blockchain (um livro-razão público, global e imutável que registra todas as transações) e adoção pelos usuários.',
+        basis: 'Tecnologia Blockchain (um livro-razão público, global e imutável que registra todas as transações) e adoção pelos utilizadores.',
         cases: [
           'Case 1 (Bitcoin): Criado com escassez matemática (só existirão 21 milhões de moedas). Investidores compram acreditando que seja o "ouro digital", uma reserva de valor protegida da impressão desenfreada de dinheiro por governos.',
           'Case 2 (Ethereum e Smart Contracts): Uma empresa cria um aplicativo financeiro que roda sozinho na internet, sem servidores de empresas. Para usar o app, as pessoas precisam gastar a moeda "Ether" (ETH) para pagar a taxa de processamento da rede global.'
@@ -413,7 +413,6 @@
       }
     ];
 
-    // --- NOVOS DADOS: ESTRUTURA DO SFN E MACROECONOMIA ---
     const SFN_DATA = [
       {
         id: 'sfn',
@@ -492,7 +491,7 @@
         title: 'PIB (Produto Interno Bruto)',
         whatItIs: 'Não é uma instituição, mas é o indicador macroeconômico mais importante de um país. Representa a soma (em dinheiro) de todos os bens e serviços finais produzidos no país durante um ano.',
         whatTheyDo: 'Mede o tamanho e a riqueza da economia. Se o PIB cresce, o país está produzindo mais, gerando empregos e riqueza. Se o PIB cai (duas vezes seguidas), o país entra em "Recessão Técnica".',
-        howTheyDoIt: 'O IBGE calcula o PIB usando a fórmula: Consumo das Famílias + Gastos do Governo + Investimentos das Empresas + (Exportações - Importações). A base matemática oficial sob a Ótica da Despesa é expressa pela equação: PIB = C + I + G + (X - M). Onde C é o Consumo privado; I é o Investimento (Formação Bruta de Capital Fixo das empresas); G são os Gastos do Governo; X são as Exportações; e M as Importações. Também pode ser calculado pela Ótica da Oferta (valor adicionado de cada setor da indústria, agro e serviços) e pela Ótica da Renda (soma de salários, juros, aluguéis e lucros distribuídos).',
+        howTheyDoIt: 'O IBGE calcula o PIB usando a fórmula: Consumo das Famílias + Gastos do Governo + Investimentos das Empresas + (Exportações - Importações). A base matemática oficial sob a Ótica da Despesa é expressa pela equação: PIB = C + I + G + (X - M). Também pode ser calculado pela Ótica da Oferta e da Renda.',
         composition: 'Engloba a indústria, a agropecuária e o setor de serviços.',
         cases: [
           'Case 1: No final de 2023, o IBGE anunciou que o PIB cresceu 2,9%. Isso atrai investidores estrangeiros para a Bolsa de Valores (B3), pois mostra que as empresas brasileiras estão lucrando e crescendo.',
@@ -504,23 +503,23 @@
         title: 'IPCA (Índice Nacional de Preços ao Consumidor Amplo)',
         whatItIs: 'É a inflação oficial do Brasil. Mede a variação do custo de vida médio de famílias com renda mensal de 1 a 40 salários mínimos, abrangendo as principais regiões metropolitanas do país.',
         whatTheyDo: 'Serve como o termômetro principal e oficial da economia. Sua maior responsabilidade é balizar as decisões do Banco Central: se o IPCA sobe, significa que a inflação está alta, obrigando o Bacen a subir a Taxa Selic para esfriar o consumo.',
-        howTheyDoIt: 'O IBGE (Instituto Brasileiro de Geografia e Estatística) pesquisa todos os meses o preço de uma "cesta" de produtos e serviços (arroz, feijão, gasolina, energia, aluguel, saúde) para ver o que ficou mais caro ou mais barato.',
-        composition: 'Calculado pelo IBGE. A cesta de produtos é dividida em grandes grupos de consumo das famílias: Alimentação e Bebidas, Transportes, Habitação, Saúde, Vestuário, etc.',
+        howTheyDoIt: 'O IBGE pesquisa todos os meses o preço de uma "cesta" de produtos e serviços (arroz, feijão, gasolina, energia, aluguel, saúde) para ver o que ficou mais caro ou mais barato.',
+        composition: 'Calculado pelo IBGE. A cesta de produtos é dividida em grandes grupos de consumo das famílias.',
         cases: [
-          'Case 1: Tesouro IPCA+. Se você compra esse título, o governo te paga uma taxa fixa (ex: 6%) MAIS a variação do IPCA do período. Se a inflação oficial fechar o ano em 10%, seu dinheiro rende 16%, garantindo que seu poder de compra não seja corroído pela alta dos preços.',
-          'Case 2: Efeito na Selic. O IPCA começa a bater 8% ao ano (quando a meta oficial era 3%). O Copom (Bacen) faz uma reunião de emergência e sobe a Taxa Selic de 10% para 12% para encarecer os empréstimos, fazendo as pessoas pararem de consumir em excesso, forçando os preços do IPCA a caírem.'
+          'Case 1: Tesouro IPCA+. Se compra esse título, o governo paga uma taxa fixa (ex: 6%) MAIS a variação do IPCA do período. Se a inflação oficial fechar em 10%, o dinheiro rende 16%.',
+          'Case 2: Efeito na Selic. O IPCA começa a bater 8% ao ano. O Copom sobe a Taxa Selic de 10% para 12% para encarecer os empréstimos, fazendo as pessoas pararem de consumir em excesso, forçando os preços a caírem.'
         ]
       },
       {
         id: 'igpm',
         title: 'IGP-M (Índice Geral de Preços - Mercado)',
         whatItIs: 'Conhecido popularmente como a "Inflação do Aluguel". É um indicador macroeconômico focado em medir o movimento dos preços de forma mais ampla que o IPCA, pegando o ciclo todo: desde a porta da fábrica/fazenda até o consumidor final.',
-        whatTheyDo: 'É responsável por servir de base legal para reajustar grande parte dos contratos da economia brasileira, como aluguéis de imóveis residenciais e comerciais, tarifas de energia elétrica, pedágios, mensalidades de escolas e planos de saúde.',
-        howTheyDoIt: 'É calculado pela FGV (Fundação Getulio Vargas). Diferente do IPCA que olha só para a prateleira do mercado, o IGP-M olha muito para os custos de produção no atacado (que sofrem forte impacto imediato da cotação do Dólar e das commodities internacionais).',
-        composition: 'Sua fórmula matemática é uma soma exata de 3 outros índices: 60% do IPA-M (Índice de Preços ao Produtor Amplo - Atacado), 30% do IPC-M (Índice de Preços ao Consumidor - Varejo) e 10% do INCC-M (Índice Nacional de Custo da Construção).',
+        whatTheyDo: 'É responsável por servir de base legal para reajustar grande parte dos contratos da economia brasileira, como aluguéis de imóveis residenciais e comerciais, tarifas de energia elétrica e pedágios.',
+        howTheyDoIt: 'É calculado pela FGV (Fundação Getulio Vargas). Diferente do IPCA, o IGP-M olha muito para os custos de produção no atacado (que sofrem forte impacto imediato da cotação do Dólar e das commodities internacionais).',
+        composition: 'Sua fórmula matemática é uma soma exata de 3 outros índices: 60% do IPA-M (Atacado), 30% do IPC-M (Varejo) e 10% do INCC-M (Construção Civil).',
         cases: [
-          'Case 1 (Reajuste de Aluguel): Você mora de aluguel pagando R$ 2.000 e o contrato vence este mês. No ano, o Dólar explodiu e fez o IGP-M fechar em altos 20% (mesmo com o IPCA estando baixo). Seu aluguel sofrerá um reajuste de 20%, indo imediatamente para R$ 2.400.',
-          'Case 2 (Efeito do Atacado e Dólar): Houve uma guerra no exterior e o preço do minério de ferro e da soja disparou em dólares. Como 60% do IGP-M é composto pelo Índice do Produtor Amplo (IPA), essa alta internacional de preços contamina o IGP-M quase instantaneamente, fazendo-o subir muito mais rápido e de forma mais volátil que a inflação comum (IPCA).'
+          'Case 1 (Reajuste de Aluguel): O contrato vence este mês. No ano, o Dólar explodiu e fez o IGP-M fechar em 20%. O aluguel sofre um reajuste de 20%, indo imediatamente para R$ 2.400.',
+          'Case 2 (Efeito do Atacado e Dólar): O preço do minério de ferro disparou em dólares. Como 60% do IGP-M é composto pelo IPA, essa alta internacional contamina o IGP-M quase instantaneamente.'
         ]
       },
       {
@@ -594,6 +593,40 @@
           'Case 1: Um político corrupto compra uma mansão de 10 milhões pagando em mochilas de dinheiro em espécie. O corretor de imóveis, por lei, é obrigado a comunicar o fato ao COAF no dia seguinte.',
           'Case 2: O COAF recebe um alerta do banco do estudante (do exemplo anterior do PLD). O COAF puxa o CPF dele, vê que ele não tem empresa, cruza os dados com a Receita Federal e envia um dossiê pronto para a Polícia Federal deflagrar uma operação.'
         ]
+      }
+    ];
+
+    // --- NOVOS DADOS: QUIZ DO INVESTIDOR ---
+    const QUIZ_DATA = [
+      {
+        pergunta: "Qual é o órgão normativo máximo do Sistema Financeiro Nacional, que cria as regras mas não 'põe a mão na massa'?",
+        opcoes: ["Banco Central (Bacen)", "CVM", "CMN (Conselho Monetário Nacional)", "B3"],
+        correta: 2,
+        explicacao: "O CMN é o chefe supremo. O Bacen e a CVM apenas executam e fiscalizam as leis criadas pelo CMN."
+      },
+      {
+        pergunta: "Qual destas aplicações de Renda Fixa é totalmente ISENTA de Imposto de Renda para a Pessoa Física?",
+        opcoes: ["CDB", "LCI", "Tesouro Selic", "Debênture Comum"],
+        correta: 1,
+        explicacao: "As LCIs e LCAs são isentas de IR para estimular o financiamento do setor imobiliário e do agronegócio."
+      },
+      {
+        pergunta: "Se um banco falir, qual é o limite MÁXIMO que o FGC (Fundo Garantidor de Créditos) devolve ao investidor por CPF e por instituição?",
+        opcoes: ["R$ 50.000", "R$ 100.000", "R$ 250.000", "Não há limite"],
+        correta: 2,
+        explicacao: "O FGC garante até R$ 250 mil por CPF em cada conglomerado financeiro, limitado a R$ 1 milhão no total."
+      },
+      {
+        pergunta: "O que significa o termo 'Come-Cotas' nos Fundos de Investimento?",
+        opcoes: ["Taxa cobrada pelo gestor do fundo para investir o dinheiro.", "Antecipação obrigatória do Imposto de Renda que ocorre nos meses de Maio e Novembro.", "Um imposto cobrado apenas quando o fundo dá prejuízo.", "A taxa que a B3 cobra pelas negociações."],
+        correta: 1,
+        explicacao: "O Come-cotas é o 'leão' da Receita Federal a recolher o Imposto de Renda antecipadamente duas vezes ao ano (Maio e Novembro), reduzindo o número de cotas do investidor."
+      },
+      {
+        pergunta: "Para calcular a inflação oficial do Brasil e reajustar metas econômicas, qual índice o governo federal utiliza?",
+        opcoes: ["IPCA", "IGP-M", "Taxa Selic", "CDI"],
+        correta: 0,
+        explicacao: "O IPCA é a inflação oficial calculada pelo IBGE. O IGP-M é mais usado para contratos de aluguel e a Selic é a taxa de juros básica."
       }
     ];
 
@@ -737,6 +770,9 @@
               <NavItem icon="fa-bullseye" label="Viver de Renda" active={activeTab === 'independencia'} onClick={() => changeTab('independencia')} />
               
               <div className="pt-4 pb-2 px-2 text-xs font-bold text-slate-500 uppercase tracking-wider">Educação & Mercado</div>
+              <NavItem icon="fa-gamepad" label="Quiz do Investidor" active={activeTab === 'quiz'} onClick={() => changeTab('quiz')} />
+              <NavItem icon="fa-file-invoice-dollar" label="Guia de Tributos" active={activeTab === 'tributacao'} onClick={() => changeTab('tributacao')} />
+              <NavItem icon="fa-brain" label="Psicologia Financeira" active={activeTab === 'psicologia'} onClick={() => changeTab('psicologia')} />
               <NavItem icon="fa-sitemap" label="Estrutura do SFN" active={activeTab === 'sfn'} onClick={() => changeTab('sfn')} />
               <NavItem icon="fa-university" label="Instituições" active={activeTab === 'instituicoes'} onClick={() => changeTab('instituicoes')} />
               <NavItem icon="fa-book-open" label="Dicionário" active={activeTab === 'dicionario'} onClick={() => changeTab('dicionario')} />
@@ -759,7 +795,10 @@
                  activeTab === 'independencia' ? 'Independência Financeira' : 
                  activeTab === 'objetivos' ? 'Planejador de Objetivos' : 
                  activeTab === 'instituicoes' ? 'Guia de Instituições Financeiras' : 
-                 activeTab === 'sfn' ? 'Sistema Financeiro Nacional (SFN)' : activeTab}
+                 activeTab === 'sfn' ? 'Sistema Financeiro Nacional (SFN)' : 
+                 activeTab === 'quiz' ? 'Quiz de Conhecimentos' : 
+                 activeTab === 'tributacao' ? 'Tributação e Custos' : 
+                 activeTab === 'psicologia' ? 'Psicologia Financeira' : activeTab}
               </h2>
               {profile && (
                 <div className="flex items-center gap-2 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-sm font-medium border border-emerald-200 shadow-sm">
@@ -771,7 +810,7 @@
             <div className="flex-1 overflow-y-auto p-4 md:p-8 bg-slate-50">
               {loadingDb && !user ? (
                 <div className="flex items-center justify-center h-full text-slate-400">
-                  <i className="fas fa-spinner fa-spin mr-2"></i> Carregando...
+                  <i className="fas fa-spinner fa-spin mr-2"></i> A carregar sistema...
                 </div>
               ) : (
                 <div className="animate-fade-in">
@@ -780,6 +819,9 @@
                   {activeTab === 'simulador' && <Simulator profile={profile} onSave={handleSaveSimulation} />}
                   {activeTab === 'objetivos' && <CalculadoraObjetivos />}
                   {activeTab === 'independencia' && <IndependenciaFinanceira />}
+                  {activeTab === 'quiz' && <QuizInvestidor />}
+                  {activeTab === 'tributacao' && <TributacaoImpostos />}
+                  {activeTab === 'psicologia' && <FinancasComportamentais />}
                   {activeTab === 'sfn' && <SistemaFinanceiroNacional />}
                   {activeTab === 'instituicoes' && <InstituicoesFinanceiras />}
                   {activeTab === 'dicionario' && <Dictionary />}
@@ -1090,7 +1132,7 @@
               </div>
             </div>
             <button onClick={() => onSave({initial, monthly, months, bestResult: results[0].total})} className="w-full bg-slate-900 text-white font-medium py-3 rounded-lg hover:bg-slate-800 transition flex items-center justify-center gap-2 shadow-md">
-              <i className="fas fa-save"></i> Salvar Simulação
+              <i className="fas fa-save"></i> Guardar Simulação
             </button>
           </div>
 
@@ -1102,7 +1144,7 @@
                     <i className="fas fa-trophy"></i>
                   </div>
                   <div>
-                    <p className="text-emerald-800 text-sm font-medium mb-1">A Melhor Opção Rendou (Líquido):</p>
+                    <p className="text-emerald-800 text-sm font-medium mb-1">A Melhor Opção Rendeu (Líquido):</p>
                     <h2 className="text-3xl font-black text-emerald-900">
                       R$ {results[0].total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </h2>
@@ -1362,7 +1404,282 @@
       );
     }
 
-    // --- NOVA ABA: SISTEMA FINANCEIRO NACIONAL (SFN) ---
+    // --- NOVA ABA: QUIZ DO INVESTIDOR (GAMIFICAÇÃO) ---
+    function QuizInvestidor() {
+      const [currentQuestion, setCurrentQuestion] = useState(0);
+      const [score, setScore] = useState(0);
+      const [showScore, setShowScore] = useState(false);
+      const [selectedOption, setSelectedOption] = useState(null);
+      const [isCorrect, setIsCorrect] = useState(null);
+
+      const handleAnswerOptionClick = (index) => {
+        setSelectedOption(index);
+        const correct = index === QUIZ_DATA[currentQuestion].correta;
+        setIsCorrect(correct);
+        
+        if (correct) {
+          setScore(score + 1);
+        }
+
+        setTimeout(() => {
+          const nextQuestion = currentQuestion + 1;
+          if (nextQuestion < QUIZ_DATA.length) {
+            setCurrentQuestion(nextQuestion);
+            setSelectedOption(null);
+            setIsCorrect(null);
+          } else {
+            setShowScore(true);
+          }
+        }, 3000); // 3 segundos para ler a explicação
+      };
+
+      const restartQuiz = () => {
+        setCurrentQuestion(0);
+        setScore(0);
+        setShowScore(false);
+        setSelectedOption(null);
+        setIsCorrect(null);
+      };
+
+      return (
+        <div className="max-w-3xl mx-auto">
+          <div className="mb-6 text-center">
+            <h2 className="text-3xl font-black text-slate-800 flex justify-center items-center gap-3 mb-2">
+              <i className="fas fa-gamepad text-indigo-500"></i> Desafio do Investidor
+            </h2>
+            <p className="text-slate-600">Teste os seus conhecimentos sobre o mercado financeiro e prove que está pronto para investir!</p>
+          </div>
+
+          {showScore ? (
+            <div className="bg-white p-10 rounded-2xl shadow-lg border border-gray-200 text-center animate-fade-in">
+              <i className={`fas ${score >= 3 ? 'fa-trophy text-yellow-400' : 'fa-book-reader text-blue-400'} text-6xl mb-4`}></i>
+              <h3 className="text-2xl font-bold text-slate-800 mb-2">O seu Resultado</h3>
+              <p className="text-lg text-slate-600 mb-6">Você acertou <strong className="text-indigo-600 text-2xl">{score}</strong> de {QUIZ_DATA.length} perguntas.</p>
+              
+              {score === QUIZ_DATA.length && <p className="text-emerald-600 font-bold mb-6 bg-emerald-50 p-3 rounded-lg">Perfeito! É um verdadeiro Mestre das Finanças (Wall Street espera por si)!</p>}
+              {score >= 3 && score < QUIZ_DATA.length && <p className="text-blue-600 font-bold mb-6 bg-blue-50 p-3 rounded-lg">Muito bom! Tem uma base sólida para começar a multiplicar o seu património.</p>}
+              {score < 3 && <p className="text-amber-600 font-bold mb-6 bg-amber-50 p-3 rounded-lg">Continue a estudar. O Dicionário e o Guia SFN estão no menu lateral para ajudar!</p>}
+              
+              <button onClick={restartQuiz} className="bg-indigo-600 text-white font-bold py-3 px-8 rounded-xl hover:bg-indigo-700 transition shadow-md">
+                Tentar Novamente <i className="fas fa-redo ml-2"></i>
+              </button>
+            </div>
+          ) : (
+            <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
+              <div className="flex justify-between items-center mb-6 border-b border-slate-100 pb-4">
+                <span className="text-slate-500 font-bold uppercase tracking-wider text-sm">Pergunta {currentQuestion + 1} de {QUIZ_DATA.length}</span>
+                <span className="bg-indigo-100 text-indigo-700 py-1 px-3 rounded-full text-sm font-bold">Pontos: {score}</span>
+              </div>
+              
+              <div className="mb-8">
+                <h3 className="text-xl font-bold text-slate-800 leading-relaxed">{QUIZ_DATA[currentQuestion].pergunta}</h3>
+              </div>
+              
+              <div className="space-y-3">
+                {QUIZ_DATA[currentQuestion].opcoes.map((opcao, index) => {
+                  let buttonClass = "w-full text-left p-4 rounded-xl border-2 transition-all font-medium text-slate-700 shadow-sm ";
+                  
+                  if (selectedOption === null) {
+                    buttonClass += "border-slate-200 hover:border-indigo-400 hover:bg-indigo-50";
+                  } else {
+                    if (index === QUIZ_DATA[currentQuestion].correta) {
+                      buttonClass += "border-emerald-500 bg-emerald-50 text-emerald-800"; // Correct answer highlights green
+                    } else if (index === selectedOption) {
+                      buttonClass += "border-red-500 bg-red-50 text-red-800"; // Wrong selected highlights red
+                    } else {
+                      buttonClass += "border-slate-200 opacity-50"; // Others fade out
+                    }
+                  }
+
+                  return (
+                    <button 
+                      key={index} 
+                      disabled={selectedOption !== null}
+                      onClick={() => handleAnswerOptionClick(index)}
+                      className={buttonClass}
+                    >
+                      {opcao}
+                      {selectedOption !== null && index === QUIZ_DATA[currentQuestion].correta && <i className="fas fa-check-circle float-right text-emerald-500 mt-1"></i>}
+                      {selectedOption === index && index !== QUIZ_DATA[currentQuestion].correta && <i className="fas fa-times-circle float-right text-red-500 mt-1"></i>}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {selectedOption !== null && (
+                <div className={`mt-6 p-4 rounded-xl border animate-fade-in ${isCorrect ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-red-50 border-red-200 text-red-800'}`}>
+                  <p className="font-bold mb-1">
+                    <i className={`fas ${isCorrect ? 'fa-check' : 'fa-exclamation-triangle'} mr-2`}></i>
+                    {isCorrect ? 'Resposta Correta!' : 'Resposta Incorreta!'}
+                  </p>
+                  <p className="text-sm">{QUIZ_DATA[currentQuestion].explicacao}</p>
+                  <div className="w-full bg-slate-200 h-1 mt-4 rounded-full overflow-hidden">
+                    <div className="bg-slate-800 h-1 animate-[pulse_3s_ease-in-out]"></div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // --- NOVA ABA: GUIA DE TRIBUTAÇÃO E IMPOSTOS ---
+    function TributacaoImpostos() {
+      return (
+        <div className="max-w-5xl mx-auto space-y-8">
+          <div className="mb-2">
+            <h2 className="text-3xl font-black text-slate-800 flex items-center gap-3 mb-2">
+              <i className="fas fa-file-invoice-dollar text-red-500"></i> Guia de Tributação e Custos
+            </h2>
+            <p className="text-slate-600 text-lg">O Leão nunca dorme. Entenda como os impostos corroem o seu rendimento e descubra as isenções secretas do mercado financeiro.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            {/* IOF */}
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+              <h3 className="text-xl font-bold text-slate-800 mb-3 border-b pb-2"><i className="fas fa-stopwatch text-orange-500 mr-2"></i>IOF (O Imposto Relâmpago)</h3>
+              <p className="text-sm text-slate-600 mb-4">O Imposto sobre Operações Financeiras incide <strong>apenas nos primeiros 29 dias</strong> do investimento. É uma penalidade para quem saca o dinheiro muito rápido.</p>
+              
+              <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                <div className="flex justify-between text-sm font-bold text-slate-500 mb-2 px-2"><span>Dias de resgate</span><span>Alíquota do IOF</span></div>
+                <div className="space-y-1">
+                  <div className="flex justify-between text-sm bg-white p-2 rounded text-red-600 font-bold border border-red-100"><span>Saque no 1º Dia</span><span>96% do lucro</span></div>
+                  <div className="flex justify-between text-sm bg-white p-2 rounded text-orange-600 font-bold border border-orange-100"><span>Saque no 15º Dia</span><span>50% do lucro</span></div>
+                  <div className="flex justify-between text-sm bg-emerald-50 p-2 rounded text-emerald-700 font-bold border border-emerald-200"><span>Saque no 30º Dia</span><span>0% (Isento)</span></div>
+                </div>
+              </div>
+              <p className="text-xs text-slate-400 mt-3"><i className="fas fa-lightbulb text-yellow-400"></i> Dica de Ouro: Nunca resgate um investimento de renda fixa (CDB, Tesouro) antes de completar 30 dias!</p>
+            </div>
+
+            {/* Imposto de Renda (Tabela Regressiva) */}
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+              <h3 className="text-xl font-bold text-slate-800 mb-3 border-b pb-2"><i className="fas fa-calendar-alt text-blue-500 mr-2"></i>Imposto de Renda Regressivo</h3>
+              <p className="text-sm text-slate-600 mb-4">Aplicável a quase toda a Renda Fixa (Tesouro Direto, CDB, RDB, LC). O Governo premeia quem investe a longo prazo, reduzindo a mordida.</p>
+              
+              <div className="overflow-hidden rounded-lg border border-slate-200">
+                <table className="w-full text-sm text-left">
+                  <thead className="bg-slate-100 text-slate-700">
+                    <tr><th className="p-3">Prazo de Investimento</th><th className="p-3 text-right">Alíquota sobre o Lucro</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b bg-white"><td className="p-3">Até 180 dias (6 meses)</td><td className="p-3 text-right font-bold text-red-500">22,5%</td></tr>
+                    <tr className="border-b bg-slate-50"><td className="p-3">De 181 a 360 dias (1 ano)</td><td className="p-3 text-right font-bold text-orange-500">20,0%</td></tr>
+                    <tr className="border-b bg-white"><td className="p-3">De 361 a 720 dias (2 anos)</td><td className="p-3 text-right font-bold text-amber-500">17,5%</td></tr>
+                    <tr className="bg-emerald-50"><td className="p-3 font-medium text-emerald-800">Acima de 720 dias (+2 anos)</td><td className="p-3 text-right font-bold text-emerald-600">15,0% (Mínimo)</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            {/* Come-Cotas */}
+            <div className="bg-slate-900 p-6 rounded-2xl shadow-lg border border-slate-800 text-white relative overflow-hidden">
+              <div className="absolute -right-4 -top-4 opacity-10 text-9xl"><i className="fas fa-ghost"></i></div>
+              <h3 className="text-xl font-bold text-red-400 mb-3 border-b border-slate-700 pb-2 relative z-10"><i className="fas fa-spider mr-2"></i>O Fantasma do Come-Cotas</h3>
+              <p className="text-sm text-slate-300 mb-4 relative z-10">Acontece nos <strong>Fundos de Investimento (Renda Fixa e Multimercado)</strong>. O Governo não quer esperar o seu resgate para cobrar impostos, por isso ele "come" cotas do seu fundo antecipadamente a cada 6 meses.</p>
+              
+              <div className="bg-slate-800 p-4 rounded-lg border border-slate-700 relative z-10">
+                <ul className="space-y-3 text-sm text-slate-200">
+                  <li><i className="fas fa-calendar-check text-indigo-400 mr-2"></i><strong>Quando ocorre:</strong> No último dia útil de Maio e Novembro.</li>
+                  <li><i className="fas fa-percent text-indigo-400 mr-2"></i><strong>Alíquota Fixa:</strong> 15% (Longo Prazo) ou 20% (Curto Prazo) cobrados sobre o lucro do semestre.</li>
+                  <li><i className="fas fa-shield-alt text-emerald-400 mr-2"></i><strong>Imunes ao Come-Cotas:</strong> Fundos de Ações (FIA), Fundos Imobiliários (FII) e Previdência Privada.</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Isenções (Paraíso Fiscal Interno) */}
+            <div className="bg-gradient-to-br from-emerald-50 to-teal-100 p-6 rounded-2xl shadow-sm border border-emerald-200">
+              <h3 className="text-xl font-bold text-emerald-800 mb-3 border-b border-emerald-200 pb-2"><i className="fas fa-umbrella-beach text-emerald-500 mr-2"></i>Oásis da Isenção (100% Livres de IR)</h3>
+              <p className="text-sm text-emerald-700 mb-4">Para a Pessoa Física, existem produtos onde o Governo renuncia ao imposto para incentivar setores estratégicos do país.</p>
+              
+              <ul className="space-y-3 text-sm text-slate-800 font-medium">
+                <li className="flex items-center gap-3 bg-white p-3 rounded-xl shadow-sm border border-emerald-100">
+                  <div className="bg-emerald-100 p-2 rounded-lg text-emerald-600"><i className="fas fa-tractor w-5 text-center"></i></div>
+                  LCI, LCA, CRI e CRA (Setor Imobiliário e Agronegócio).
+                </li>
+                <li className="flex items-center gap-3 bg-white p-3 rounded-xl shadow-sm border border-emerald-100">
+                  <div className="bg-emerald-100 p-2 rounded-lg text-emerald-600"><i className="fas fa-building w-5 text-center"></i></div>
+                  Dividendos mensais pagos por Fundos Imobiliários (FIIs).
+                </li>
+                <li className="flex items-center gap-3 bg-white p-3 rounded-xl shadow-sm border border-emerald-100">
+                  <div className="bg-emerald-100 p-2 rounded-lg text-emerald-600"><i className="fas fa-chart-line w-5 text-center"></i></div>
+                  Venda de Ações normais com lucro (Se o total vendido no mês for inferior a R$ 20.000).
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      );
+    }
+
+    // --- NOVA ABA: PSICOLOGIA FINANCEIRA (FINANÇAS COMPORTAMENTAIS) ---
+    function FinancasComportamentais() {
+      return (
+        <div className="max-w-5xl mx-auto space-y-6">
+          <div className="mb-6 text-center">
+            <h2 className="text-3xl font-black text-slate-800 flex justify-center items-center gap-3 mb-2">
+              <i className="fas fa-brain text-purple-600"></i> Psicologia do Investidor
+            </h2>
+            <p className="text-slate-600 text-lg">As Finanças Comportamentais provam que o nosso cérebro não é uma máquina lógica. Descubra as armadilhas mentais que destroem rentabilidades.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            {/* Efeito Manada */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden group hover:shadow-lg transition-all">
+              <div className="bg-purple-100 p-6 flex justify-center items-center h-40">
+                <i className="fas fa-sheep text-6xl text-purple-500 group-hover:scale-110 transition-transform"></i>
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-slate-800 mb-2">Efeito Manada (Herd Behavior)</h3>
+                <p className="text-sm text-slate-600 leading-relaxed mb-4">É a tendência incontrolável de seguir as ações da maioria, ignorando a sua própria análise. Comprar um ativo só porque "toda a gente está a falar dele".</p>
+                <div className="bg-slate-50 p-3 rounded-lg text-xs text-slate-500 border border-slate-100">
+                  <strong>O Erro Clássico:</strong> Comprar Bitcoin na máxima histórica porque o vizinho enriqueceu, e vender no desespero quando o preço cai, comprando na alta e vendendo na baixa.
+                </div>
+              </div>
+            </div>
+
+            {/* Aversão à Perda */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden group hover:shadow-lg transition-all">
+              <div className="bg-red-100 p-6 flex justify-center items-center h-40 relative">
+                <i className="fas fa-chart-line text-6xl text-red-500 transform scale-y-[-1] group-hover:translate-y-2 transition-transform"></i>
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-slate-800 mb-2">Aversão à Perda (Loss Aversion)</h3>
+                <p className="text-sm text-slate-600 leading-relaxed mb-4">Estudos mostram que a dor psicológica de perder 100 reais é matematicamente duas vezes maior do que a alegria de ganhar 100 reais.</p>
+                <div className="bg-slate-50 p-3 rounded-lg text-xs text-slate-500 border border-slate-100">
+                  <strong>O Erro Clássico:</strong> Manter uma ação horrível na carteira durante anos (só para não assumir o prejuízo da venda), enquanto vende rapidamente uma ação maravilhosa com 5% de lucro (medo de perder o ganho).
+                </div>
+              </div>
+            </div>
+
+            {/* Excesso de Confiança */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden group hover:shadow-lg transition-all">
+              <div className="bg-blue-100 p-6 flex justify-center items-center h-40">
+                <i className="fas fa-chess-king text-6xl text-blue-500 group-hover:rotate-12 transition-transform"></i>
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-slate-800 mb-2">Excesso de Confiança (Overconfidence)</h3>
+                <p className="text-sm text-slate-600 leading-relaxed mb-4">Acreditar que se tem mais conhecimentos e capacidade de previsão do mercado do que a realidade comprova. Confundir sorte num bull market (alta) com genialidade.</p>
+                <div className="bg-slate-50 p-3 rounded-lg text-xs text-slate-500 border border-slate-100">
+                  <strong>O Erro Clássico:</strong> Concentrar 80% de todo o património numa única empresa por ter "absoluta certeza" do sucesso, ignorando o princípio básico da diversificação.
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      );
+    }
+
+
+    // --- 6. SISTEMA FINANCEIRO NACIONAL (SFN) ---
     function SistemaFinanceiroNacional() {
       const [searchTerm, setSearchTerm] = useState('');
       const [expandedId, setExpandedId] = useState(null);
@@ -1378,7 +1695,7 @@
             <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2 mb-2">
               <i className="fas fa-sitemap text-indigo-600"></i> Estrutura do SFN e Macroeconomia
             </h2>
-            <p className="text-slate-600 text-sm">Conheça o Sistema Financeiro Nacional, os indicadores econômicos oficiais, quem manda, quem fiscaliza e como o dinheiro do país é organizado.</p>
+            <p className="text-slate-600 text-sm">Conheça o Sistema Financeiro Nacional, os indicadores económicos oficiais, quem manda, quem fiscaliza e como o dinheiro do país é organizado.</p>
           </div>
           
           <div className="relative mb-6">
@@ -1435,7 +1752,7 @@
       );
     }
 
-    // --- 6. INSTITUIÇÕES FINANCEIRAS ---
+    // --- 7. INSTITUIÇÕES FINANCEIRAS ---
     function InstituicoesFinanceiras() {
       const [searchTerm, setSearchTerm] = useState('');
       const [expandedId, setExpandedId] = useState(null);
@@ -1502,7 +1819,7 @@
       );
     }
 
-    // --- 7. DICIONÁRIO COMPLETO ---
+    // --- 8. DICIONÁRIO COMPLETO ---
     function Dictionary() {
       const [searchTerm, setSearchTerm] = useState('');
       const [expandedId, setExpandedId] = useState(null);
@@ -1558,7 +1875,7 @@
       );
     }
 
-    // --- 8. COTAÇÕES E NOTÍCIAS ---
+    // --- 9. COTAÇÕES E NOTÍCIAS ---
     function MarketStocks({ stocks }) {
       return (
         <div className="max-w-4xl mx-auto">
