@@ -41,6 +41,15 @@
   <script type="text/babel">
     const { useState, useEffect, useMemo } = React;
 
+    // --- CORREÇÃO DO ERRO: RATES NO TOPO GLOBAL ---
+    const RATES = { 
+      SELIC: 0.105, 
+      CDI: 0.104, 
+      POUPANCA: 0.0617, 
+      IPCA: 0.045, 
+      IPCA_MAIS: 0.105 
+    };
+
     // --- CONFIGURAÇÃO FIREBASE ---
     let auth, db, appId = 'simulador-invest-app';
     try {
@@ -52,7 +61,7 @@
         appId = typeof __app_id !== 'undefined' ? __app_id : appId;
       }
     } catch (e) {
-      console.warn("Executando sem banco de dados na nuvem.");
+      console.warn("A executar sem base de dados na nuvem.");
     }
 
     // --- DADOS DO DICIONÁRIO E NOTÍCIAS ---
@@ -596,7 +605,6 @@
       }
     ];
 
-    // --- NOVOS DADOS: QUIZ DO INVESTIDOR (VERSÃO EXTRA HARD - 55 QUESTÕES) ---
     const QUIZ_DATA = [
       {
         pergunta: "Qual é o órgão normativo máximo do Sistema Financeiro Nacional, que cria as regras mas não 'põe a mão na massa'?",
@@ -623,12 +631,11 @@
         explicacao: "O Come-cotas é o 'leão' da Receita Federal a recolher o Imposto de Renda antecipadamente duas vezes ao ano (Maio e Novembro), reduzindo o número de cotas do investidor."
       },
       {
-        pergunta: "Para calcular a inflação oficial do Brasil e reajustar metas econômicas, qual índice o governo federal utiliza?",
+        pergunta: "Para calcular a inflação oficial do Brasil e reajustar metas económicas, qual índice o governo federal utiliza?",
         opcoes: ["IPCA", "IGP-M", "Taxa Selic", "CDI"],
         correta: 0,
         explicacao: "O IPCA é a inflação oficial calculada pelo IBGE. O IGP-M é mais usado para contratos de aluguel e a Selic é a taxa de juros básica."
       },
-      // --- QUESTÕES EXTRA HARD (CPA/ANCORD) ---
       {
         pergunta: "[CPA-20/CEA] Em relação ao IOF em investimentos de renda fixa, é correto afirmar que:",
         opcoes: ["A alíquota é fixa em 15% independentemente do prazo.", "Atinge 0% (zero) no 30º dia de aplicação.", "É cobrado no último dia útil de maio e novembro.", "Pode ser compensado com prejuízos em ações."],
@@ -636,13 +643,13 @@
         explicacao: "A tabela do IOF é regressiva e diária, começando em 96% do lucro no 1º dia e zerando exatamente no 30º dia da aplicação."
       },
       {
-        pergunta: "[CPA-Base] De acordo com a regulação de Prevenção à Lavagem de Dinheiro (PLD), qual é o objetivo da regra 'Conheça seu Cliente' (KYC)?",
+        pergunta: "[CPA-Base] De acordo com a regulação de Prevenção à Lavagem de Dinheiro (PLD), qual é o objetivo da regra 'Conheça o seu Cliente' (KYC)?",
         opcoes: ["Melhorar o marketing do banco para vender mais produtos.", "Identificar a origem dos recursos e entender se a movimentação é compatível com a renda.", "Garantir que o cliente assine o termo de suitability.", "Evitar que o cliente tenha prejuízos na Bolsa."],
         correta: 1,
         explicacao: "KYC (Know Your Customer) exige que as instituições conheçam a fundo quem é o cliente, sua renda e profissão, para detectar qualquer depósito ilícito ou suspeito."
       },
       {
-        pergunta: "[Case Extra Hard] João possui uma conta conjunta (com sua esposa) no Banco Alfa, com saldo de R$ 600.000 em CDB. O Banco Alfa sofre liquidação extrajudicial. Quanto João receberá do FGC?",
+        pergunta: "[Case Extra Hard] João possui uma conta conjunta (com a sua esposa) no Banco Alfa, com saldo de R$ 600.000 em CDB. O Banco Alfa sofre liquidação extrajudicial. Quanto João receberá do FGC?",
         opcoes: ["R$ 250.000", "R$ 125.000", "R$ 300.000", "R$ 500.000"],
         correta: 1,
         explicacao: "O limite do FGC é R$ 250 mil POR CONTA, dividido pelo número de titulares. A conta tem R$ 600k, o limite bate em R$ 250k total. Como são 2 titulares (João e a esposa), João recebe metade do teto: R$ 125.000."
@@ -666,16 +673,16 @@
         explicacao: "Vendas de ações até R$ 20.000 no mês são ISENTAS de IR (ele vendeu só 18k). Porém, NÃO existe isenção de 20k para BDRs, ETFs ou Fundos Imobiliários. Logo, ele paga 15% sobre o lucro do BDR."
       },
       {
-        pergunta: "[Case Derivativos] Em uma operação de Opções, o cliente comprou uma 'Put' (Opção de Venda) de Petrobras com strike a R$ 30,00, pagando R$ 1,00 de prêmio. No vencimento, a ação está a R$ 20,00. Qual o resultado líquido do cliente por opção?",
+        pergunta: "[Case Derivativos] Em uma operação de Opções, o cliente comprou uma 'Put' (Opção de Venda) de Petrobras com strike a R$ 30,00, pagando R$ 1,00 de prémio. No vencimento, a ação está a R$ 20,00. Qual o resultado líquido do cliente por opção?",
         opcoes: ["Prejuízo de R$ 1,00", "Lucro de R$ 10,00", "Lucro de R$ 9,00", "Prejuízo de R$ 10,00"],
         correta: 2,
-        explicacao: "Ele tem o direito de vender a 30 algo que no mercado custa 20. Ele ganha R$ 10 de diferença na execução. Como pagou R$ 1 de prêmio (seguro) para entrar no jogo, o lucro líquido é R$ 9."
+        explicacao: "Ele tem o direito de vender a 30 algo que no mercado custa 20. Ele ganha R$ 10 de diferença na execução. Como pagou R$ 1 de prémio (seguro) para entrar no jogo, o lucro líquido é R$ 9."
       },
       {
         pergunta: "[Fundos / CVM 175] A nova regulamentação de fundos de investimento (CVM 175) introduziu uma mudança histórica para a proteção do cotista. Qual foi?",
         opcoes: ["Fim total da taxa de administração.", "Responsabilidade limitada do cotista, evitando que ele tenha que colocar dinheiro do próprio bolso se o fundo ficar negativo.", "A isenção do come-cotas para fundos multimercados.", "Proibição de investimento no exterior."],
         correta: 1,
-        explicacao: "Antes, se o fundo perdesse mais dinheiro do que tinha, o cotista era chamado a pagar a dívida (ficar devendo ao fundo). A CVM 175 permitiu estruturar fundos onde a perda máxima é 100% do valor investido, protegendo o restante do patrimônio do cliente."
+        explicacao: "Antes, se o fundo perdesse mais dinheiro do que tinha, o cotista era chamado a pagar a dívida (ficar devendo ao fundo). A CVM 175 permitiu estruturar fundos onde a perda máxima é 100% do valor investido, protegendo o restante do património do cliente."
       },
       {
         pergunta: "[Economia] Se o Banco Central do Brasil atua vendendo Dólares no mercado à vista (reservas internacionais), qual é o objetivo principal desta ação?",
@@ -684,14 +691,14 @@
         explicacao: "Lei da Oferta e Demanda. Se o BC joga Dólar (oferta) no mercado, o preço dele cai. É uma intervenção para segurar o câmbio em momentos de crise."
       },
       {
-        pergunta: "[Case SFN] Qual instituição é responsável por registrar e guardar as ações que você compra para garantir que nenhuma corretora fuja com elas?",
+        pergunta: "[Case SFN] Qual instituição é responsável por registar e guardar as ações que compra para garantir que nenhuma corretora fuja com elas?",
         opcoes: ["BNDES", "FGC", "B3 (através do serviço de Depositária Central)", "SUSEP"],
         correta: 2,
         explicacao: "A B3 é a infraestrutura de mercado (Clearing/Depositária). A corretora é apenas a interface. Suas ações ficam custodiadas na B3 no seu CPF."
       },
       {
         pergunta: "[ANCORD / Ética] O conceito de 'Front Running' consiste em:",
-        opcoes: ["O cliente operar muito rápido usando robôs de alta frequência.", "Um corretor ou profissional do mercado executar uma ordem própria ANTES de executar uma ordem grande do cliente, aproveitando a variação de preço.", "Lavar dinheiro usando laranjas na linha de frente.", "Vender ações que você não possui (venda a descoberto)."],
+        opcoes: ["O cliente operar muito rápido usando robôs de alta frequência.", "Um corretor ou profissional do mercado executar uma ordem própria ANTES de executar uma ordem grande do cliente, aproveitando a variação de preço.", "Lavar dinheiro usando testas-de-ferro na linha de frente.", "Vender ações que não possui (venda a descoberto)."],
         correta: 1,
         explicacao: "Crime gravíssimo! O corretor recebe uma ordem de um fundo para comprar R$ 1 bilhão em Vale. Sabendo que isso vai fazer a ação subir, o corretor compra ações para si mesmo 1 segundo antes. Isso é Front Running."
       },
@@ -699,31 +706,31 @@
         pergunta: "[Case FII] Sobre os Fundos de Investimento Imobiliário (FIIs), de acordo com a Lei 14.754/2023, os rendimentos (dividendos) são isentos de IR para Pessoa Física desde que o fundo tenha, no mínimo:",
         opcoes: ["50 cotistas", "100 cotistas", "500 cotistas", "Não existe mais isenção"],
         correta: 2,
-        explicacao: "A nova regra alterou o mínimo para o fundo ser isento de 50 para 500 cotistas, dificultando a criação de 'fundos familiares' exclusivos apenas para fugir de impostos."
+        explicacao: "A nova regra alterou o mínimo para o fundo ser isento de 50 para 500 cotistas, dificultando a criação de 'fundos familiares' exclusivos apenas para fugir a impostos."
       },
       {
         pergunta: "[CPA-20] Dentre as opções, qual NÃO é um risco presente nos Títulos Públicos Federais (Tesouro Direto)?",
         opcoes: ["Risco de Mercado", "Risco de Liquidez", "Risco de Crédito", "Nenhuma das anteriores"],
         correta: 2,
-        explicacao: "Na teoria financeira nacional, os títulos do Governo Federal representam o Risco Soberano (Livre de Risco de Crédito interno). O governo sempre pode 'imprimir dinheiro' para pagar a dívida em moeda local, logo o risco de crédito é zero (ou o mais baixo possível)."
+        explicacao: "Na teoria financeira nacional, os títulos do Governo Federal representam o Risco Soberano (Livre de Risco de Crédito interno). O governo sempre pode 'imprimir dinheiro' para pagar a dívida em moeda local, logo o risco de crédito é quase zero."
       },
       {
         pergunta: "[Case Tributação] Um investidor realizou operações de Day Trade e obteve R$ 10.000 de lucro em maio. No entanto, em abril ele havia acumulado um prejuízo de R$ 3.000 em Day Trade. Qual será a base de cálculo para pagar o IR de maio?",
         opcoes: ["R$ 10.000, pois prejuízos de meses anteriores não contam.", "R$ 7.000, pois ele pode compensar prejuízos da mesma modalidade (Day Trade com Day Trade).", "Isento, pois está abaixo de 20 mil reais.", "R$ 13.000."],
         correta: 1,
-        explicacao: "A Receita permite abater prejuízos passados de lucros futuros, desde que seja da MESMA modalidade (Day Trade abate Day Trade, Swing abate Swing). A base será R$ 7k."
+        explicacao: "A Autoridade Tributária permite abater prejuízos passados de lucros futuros, desde que seja da MESMA modalidade (Day Trade abate Day Trade, Swing abate Swing). A base será R$ 7k."
       },
       {
-        pergunta: "[Macroeconomia] O Índice Geral de Preços - Mercado (IGP-M) é fortemente influenciado pelo atacado e pelo dólar porque a maior parte de sua composição (60%) advém do:",
+        pergunta: "[Macroeconomia] O Índice Geral de Preços - Mercado (IGP-M) é fortemente influenciado pelo atacado e pelo dólar porque a maior parte da sua composição (60%) advém do:",
         opcoes: ["INCC-M (Custo da Construção)", "IPCA (Preços ao Consumidor)", "IPA-M (Índice de Preços ao Produtor Amplo)", "Taxa Selic"],
         correta: 2,
         explicacao: "O IPA (60%) mede os preços agrícolas e industriais na porta de saída. Por isso produtos exportáveis cotados em dólar (soja, minério) balançam tanto o IGP-M."
       },
       {
-        pergunta: "[CPA-Base] Quem determina a Meta da Taxa Selic e Quem executa as operações diárias para manter a Selic na meta, respectivamente?",
+        pergunta: "[CPA-Base] Quem determina a Meta da Taxa Selic e Quem executa as operações diárias para manter a Selic na meta, respetivamente?",
         opcoes: ["Copom define; Mesa de Operações do Bacen executa.", "CMN define; CVM executa.", "Presidente da República define; Ministério da Fazenda executa.", "B3 define; Corretoras executam."],
         correta: 0,
-        explicacao: "O Copom (Comitê de Política Monetária do Bacen) define a meta. A mesa de operações do Bacen (Open Market) compra e vende títulos todos os dias com os bancos para manter a taxa colada na meta."
+        explicacao: "O Copom (Comité de Política Monetária do Bacen) define a meta. A mesa de operações do Bacen (Open Market) compra e vende títulos todos os dias com os bancos para manter a taxa colada à meta."
       },
       {
         pergunta: "[Fundos de Investimento] Um Fundo Multimercado sofre a incidência do 'Come-Cotas'. Se ele for classificado como Fundo de Longo Prazo, qual é a alíquota desse recolhimento semestral?",
@@ -747,197 +754,53 @@
         pergunta: "[Case Duração/Duration] O investidor 'A' comprou um título Prefixado para vencer em 2 anos. O investidor 'B' comprou um título Prefixado para vencer em 10 anos. Se a taxa Selic subir abruptamente amanhã, quem sofre a maior perda na marcação a mercado?",
         opcoes: ["Investidor A", "Investidor B", "Ambos sofrem igual", "Nenhum sofre"],
         correta: 1,
-        explicacao: "A Regra da Duration de Macaulay: Quanto mais longo o prazo (duration) do título de renda fixa, MAIOR é a sua volatilidade frente a mudanças na taxa de juros. O investidor B tomará um tombo violento na tela."
+        explicacao: "A Regra da Duration de Macaulay: Quanto mais longo o prazo (duration) do título de renda fixa, MAIOR é a sua volatilidade face a mudanças na taxa de juros. O investidor B sofrerá uma forte queda no valor."
       },
       {
-        pergunta: "[CPA-20] Qual entidade é responsável por registrar o balanço e fiscalizar as demonstrações contábeis das S.A. de capital aberto que listam ações na B3?",
+        pergunta: "[CPA-20] Qual entidade é responsável por registar o balanço e fiscalizar as demonstrações contábeis das S.A. de capital aberto que listam ações na B3?",
         opcoes: ["Bacen", "SUSEP", "CVM", "CMN"],
         correta: 2,
-        explicacao: "Tudo que envolve Sociedades Anônimas listadas, debêntures públicas e transparência com acionistas é jurisdição exclusiva da CVM (Comissão de Valores Mobiliários)."
-      },
-      {
-        pergunta: "[Case Tributação] Debêntures Incentivadas (Lei 12.431) financiam projetos de infraestrutura (rodovias, portos). Qual a grande vantagem para a Pessoa Física?",
-        opcoes: ["Rendem sempre acima da Selic.", "Possuem garantia do Fundo Garantidor de Créditos.", "São totalmente isentas de Imposto de Renda sobre os lucros.", "O Governo garante a recompra diária."],
-        correta: 2,
-        explicacao: "O Governo abre mão do Imposto de Renda (Isenção para PF) para incentivar que as pessoas emprestem dinheiro para construir a infraestrutura do país. Não têm FGC."
-      },
-      {
-        pergunta: "[Economia] Uma política monetária 'Expansionista' adotada pelo Banco Central envolve:",
-        opcoes: ["Aumentar a Taxa Selic para encarecer o crédito.", "Reduzir o compulsório bancário e reduzir a Selic para injetar dinheiro e estimular o consumo.", "Aumentar os impostos de importação.", "Cortar gastos do governo."],
-        correta: 1,
-        explicacao: "Expansionista = expandir o dinheiro. Reduzir a Selic faz os empréstimos ficarem baratos. Reduzir o compulsório (dinheiro que o banco é obrigado a deixar trancado no BC) libera bilhões para os bancos emprestarem ao povo."
-      },
-      {
-        pergunta: "[Previdência] O benefício fiscal do PGBL (abater até 12% da renda bruta tributável) só é útil se o investidor:",
-        opcoes: ["For isento de IR.", "Fizer a Declaração de Ajuste Anual do IR no modelo COMPLETO.", "Fizer a Declaração Simplificada.", "Possuir conta conjunta."],
-        correta: 1,
-        explicacao: "Se fizer no modelo simplificado, já recebe um desconto padrão da receita de 20%, e a aplicação no PGBL perde a utilidade fiscal. O PGBL só abate no modelo COMPLETO."
-      },
-      {
-        pergunta: "[Case Extra Hard / PGBL vs VGBL] João investiu R$ 100.000 em um PGBL e R$ 100.000 em um VGBL. Ambos renderam R$ 50.000. Na hora do resgate total, sobre qual valor incidirá o Imposto de Renda no PGBL e no VGBL, respectivamente?",
-        opcoes: ["PGBL: IR sobre R$ 50.000 / VGBL: IR sobre R$ 50.000", "PGBL: IR sobre os R$ 150.000 totais / VGBL: IR apenas sobre o lucro de R$ 50.000", "PGBL: IR isento / VGBL: IR sobre total", "PGBL e VGBL cobram IR sobre os R$ 150.000 totais."],
-        correta: 1,
-        explicacao: "A grande armadilha do PGBL: Você tem benefício fiscal na entrada, mas na saída o Leão cobra imposto sobre TODO o montante (principal + lucro). No VGBL (que não tem benefício de entrada), o imposto incide APENAS sobre a rentabilidade."
-      },
-      {
-        pergunta: "[Derivativos] O que é o 'Lançador' de uma opção Call?",
-        opcoes: ["É o comprador que pagou o prêmio e tem o direito de comprar a ação.", "É o vendedor da opção, que recebeu o prêmio e assumiu a OBRIGAÇÃO de entregar a ação no preço combinado.", "É a B3 cobrando a taxa.", "É quem joga a ação na bolsa (IPO)."],
-        correta: 1,
-        explicacao: "O Lançador (vendedor) recebe o dinheiro do seguro (prêmio) hoje, mas amarra uma corda no pescoço: se o comprador exercer, o lançador é OBRIGADO a cumprir o contrato."
-      },
-      {
-        pergunta: "[CPA-20] No Sistema Financeiro, quem é a instituição responsável por arrecadar o Seguro DPVAT, administrar loterias e gerir os recursos do FGTS?",
-        opcoes: ["Caixa Econômica Federal", "Banco do Brasil", "Banco Central", "SUSEP"],
-        correta: 0,
-        explicacao: "A Caixa Econômica atua como monopólio público em funções sociais do estado brasileiro, como Loterias, FGTS, Penhor Civil e PIS."
-      },
-      {
-        pergunta: "[Finanças Comportamentais] O investidor que se recusa a comprar uma ação hoje por R$ 30,00 porque 'semanas atrás ela custava R$ 15,00 e agora tá cara', ignorando que a empresa triplicou o lucro no período, está sofrendo de qual viés?",
-        opcoes: ["Excesso de confiança", "Ancoragem (Anchoring)", "Efeito Manada", "Contabilidade Mental"],
-        correta: 1,
-        explicacao: "Ancoragem: O cérebro fica 'preso' à referência de preço do passado (R$ 15) e a usa como métrica base para todas as decisões presentes, ignorando os novos fundamentos da empresa."
-      },
-      {
-        pergunta: "[Fundos de Investimento] Os ETFs (Fundos de Índice) no Brasil diferenciam-se da maioria dos fundos tradicionais por não terem:",
-        opcoes: ["Riscos", "Taxa de Administração", "Come-cotas semestral", "Gestor"],
-        correta: 2,
-        explicacao: "ETFs não sofrem o 'Come-cotas' da Receita Federal. O IR só é pago no momento da venda das cotas na Bolsa de Valores com lucro (15%)."
-      },
-      {
-        pergunta: "[Case Extra Hard / PLD] No combate à lavagem de dinheiro, a 'Fase de Ocultação' (ou Colocação/Placement) caracteriza-se por:",
-        opcoes: ["Distribuir o dinheiro sujo em milhares de transferências eletrônicas globais.", "Usar o dinheiro ilícito para comprar uma empresa lícita (Integração).", "A primeira entrada do dinheiro vivo (espécie) no sistema financeiro, fracionado em pequenos depósitos em caixas eletrônicos (smurfing).", "Reportar o crime ao COAF."],
-        correta: 2,
-        explicacao: "A lavagem tem 3 fases: 1. Colocação (se livrar da mochila de dinheiro físico jogando no banco). 2. Ocultação (camadas de TEDs para despistar). 3. Integração (o dinheiro volta 'limpo' comprando imóveis)."
-      },
-      {
-        pergunta: "[Derivativos / Futuros] O Mercado Futuro possui um mecanismo de proteção para evitar calotes, onde a B3 credita lucros e debita prejuízos diariamente na conta dos operadores. Qual o nome disso?",
-        opcoes: ["Come-cotas", "Ajuste Diário", "Chamada de Margem", "Swap"],
-        correta: 1,
-        explicacao: "O Ajuste Diário faz com que não haja acúmulo de dívidas. Se você comprou Dólar Futuro e ele caiu hoje, a B3 tira o dinheiro da sua conta hoje à tarde e entrega pro vencedor. Todo dia zera o risco."
-      },
-      {
-        pergunta: "[Case Renda Fixa] Um CDB pagando 110% do CDI possui um risco maior que um Tesouro Selic. Essa diferença de rentabilidade cobrada pelo investidor para correr esse risco do banco quebrar chama-se:",
-        opcoes: ["Risco de Liquidez", "Spread de Mercado", "Prêmio de Risco (Risco de Crédito)", "Taxa de Corretagem"],
-        correta: 2,
-        explicacao: "Por que eu tiraria dinheiro do governo (risco zero) e daria a um banco pequeno? Só se ele me der um 'Prêmio de Risco' maior (110% vs 100%). É a recompensa por aceitar o risco de crédito."
-      },
-      {
-        pergunta: "[Bancos e SFN] Para ser considerado um 'Banco Múltiplo' no Brasil, a instituição deve possuir, no mínimo, duas carteiras. Uma delas TEM que ser obrigatoriamente:",
-        opcoes: ["Imobiliária ou de Câmbio.", "Comercial ou de Investimento.", "Leasing (Arrendamento) ou Comercial.", "Desenvolvimento ou Investimento."],
-        correta: 1,
-        explicacao: "Regra do SFN: Um banco múltiplo deve ter 2 carteiras. E a âncora principal do banco deve ser ou a carteira Comercial (pra poder ter conta corrente normal) ou a de Investimento."
-      },
-      {
-        pergunta: "[CPA-20] As operações compromissadas realizadas pelo Banco Central (comprando e vendendo títulos com o compromisso de recompra) servem principalmente para:",
-        opcoes: ["Pagar as dívidas externas do Brasil.", "Financiar o BNDES.", "Regular a liquidez diária do sistema bancário (enxugar ou injetar dinheiro) mantendo a Selic na meta.", "Garantir o lucro dos fundos de pensão."],
-        correta: 2,
-        explicacao: "O Open Market. Se tem dinheiro sobrando nos bancos e a Selic vai cair, o BC vende títulos aos bancos, 'sugando' o dinheiro para si e enxugando a liquidez do mercado."
-      },
-      {
-        pergunta: "[Case Extra Hard / FGC] Uma LCI, uma LF (Letra Financeira), um RDB e uma Debênture. Quais destes contam com a proteção do FGC?",
-        opcoes: ["LCI e Debênture", "CDB e Letra Financeira", "LCI e RDB", "Todos possuem"],
-        correta: 2,
-        explicacao: "Letra Financeira (LF) e Debênture (título corporativo privado) NÃO têm proteção do Fundo Garantidor de Crédito. LCI, LCA, CDB, RDB e Poupança têm."
-      },
-      {
-        pergunta: "[ANCORD] O investidor 'B' preencheu o formulário de Suitability e resultou em Perfil Conservador. Ele liga para a corretora exigindo comprar contratos de Dólar Futuro (Alto Risco). O que o Assessor deve fazer?",
-        opcoes: ["Bloquear a conta do cliente, pois é ilegal.", "Executar a ordem, mas colher do cliente um 'Termo de Desenquadramento' ciente dos riscos e de que está agindo fora do seu perfil.", "Mudar o perfil dele à força no sistema para Arrojado e executar.", "Acionar o COAF."],
-        correta: 1,
-        explicacao: "O cliente é o dono do dinheiro. Se ele insiste em agir fora do perfil, a instrução da CVM exige que o sistema exiba um Termo de Desenquadramento. Ele assina a isenção de responsabilidade da corretora, e a ordem é executada."
-      },
-      {
-        pergunta: "[Finanças Comportamentais] O viés da 'Disponibilidade' ou 'Recência' se dá quando o investidor:",
-        opcoes: ["Fica com preguiça de investir.", "Toma decisões baseadas apenas nas notícias ou eventos mais recentes e memoráveis, ignorando o histórico de longo prazo.", "Divide o dinheiro em 'caixinhas' mentais (Ex: Dinheiro do salário não pode gastar, dinheiro de bônus pode torrar).", "Segue a manada."],
-        correta: 1,
-        explicacao: "Por exemplo, ocorreu um acidente aéreo semana passada. O investidor vende todas as ações da Embraer ou Boeing porque aquele risco está muito 'disponível/recente' na mente dele, ignorando que avião é o transporte mais seguro nas últimas 3 décadas."
-      },
-      {
-        pergunta: "[Case Previdência] Qual o prazo máximo em dias úteis que um plano de previdência (PGBL/VGBL) tem para efetuar o pagamento do resgate ou a transferência de portabilidade para outra seguradora, após a solicitação do cliente?",
-        opcoes: ["1 dia útil", "10 dias úteis", "Em até 5 dias úteis (dependendo da carência).", "30 dias corridos."],
-        correta: 2,
-        explicacao: "Pelas regras da SUSEP, a portabilidade (transferir o dinheiro sem pagar IR para outro banco) deve ser feita em até 5 dias úteis."
-      },
-      {
-        pergunta: "[Cálculo Econômico] O IPCA e o IGPM divergiram em 2020. O IGPM bateu quase 23% e o IPCA 4,5%. A principal causa dessa distorção grotesca foi:",
-        opcoes: ["O aumento da gasolina nas bombas (IPCA).", "A explosão do Dólar que impactou fortemente o Índice de Preços ao Produtor (IPA), que compõe 60% do IGPM.", "Manipulação de dados pelo IBGE.", "Aumento do custo de construção civil (INCC) isoladamente."],
-        correta: 1,
-        explicacao: "Commodities são exportadas em dólar. Quando o dólar sobe, o produtor de soja prefere vender pro exterior. Pra vender internamente, ele cobra mais caro. Isso reflete pesado no IPA (atacado), explodindo o IGPM, antes de chegar à prateleira do consumidor (IPCA)."
-      },
-      {
-        pergunta: "[Fundos Imobiliários] No Brasil, por lei, os FIIs são obrigados a distribuir que percentual mínimo dos seus lucros líquidos (gerados por aluguéis) aos cotistas?",
-        opcoes: ["50% a cada semestre.", "95% a cada semestre.", "100% todo mês.", "25% a cada trimestre."],
-        correta: 1,
-        explicacao: "A regra de ouro dos FIIs (Lei 8.668): Eles têm o dever legal de distribuir pelo menos 95% do lucro líquido auferido (calculado por regime de caixa) no semestre."
-      },
-      {
-        pergunta: "[CPA-20/CEA - Rating] As Agências de Classificação de Risco (Fitch, Moody's, S&P) dão notas para países e empresas. Uma empresa perde o grau de investimento (Investment Grade) e cai para 'Junk' (Especulativo). O que costuma acontecer com os títulos dela?",
-        opcoes: ["Aumentam o preço, pois ficam mais seguros.", "Caem de preço e precisam oferecer taxas de juros (prêmios) muito maiores para conseguir atrair investidores corajosos.", "Sofrem intervenção do Bacen.", "Tornam-se automaticamente debêntures incentivadas."],
-        correta: 1,
-        explicacao: "Perder o Investment Grade significa que o risco de calote aumentou. Grandes fundos globais são proibidos de comprar títulos Junk. Sem demanda, o preço despenca e a empresa tem que pagar juros estratosféricos para captar recursos."
-      },
-      {
-        pergunta: "[Derivativos / Opções] O modelo de precificação de opções de Black-Scholes NÃO utiliza qual destas variáveis em sua equação?",
-        opcoes: ["Preço atual do ativo objeto.", "Volatilidade histórica da ação.", "O PIB do país sede da empresa.", "Tempo restante até o vencimento da opção."],
-        correta: 2,
-        explicacao: "Black-Scholes usa 5 entradas vitais: Preço Atual da Ação (S), Preço de Exercício/Strike (K), Tempo até o vencimento (T), Taxa livre de risco da economia (r) e a Volatilidade da ação (Sigma). O PIB não entra na fórmula matemática direta."
-      },
-      {
-        pergunta: "[Mercado de Capitais] Quando a empresa XPTO emite novas ações e vende diretamente para o público pela primeira vez para levantar dinheiro para o seu caixa fabril, essa operação ocorre no:",
-        opcoes: ["Mercado Secundário (B3).", "Mercado Primário (IPO/Follow-on).", "Mercado Balcão Não Organizado.", "Mercado Futuro."],
-        correta: 1,
-        explicacao: "Sempre que o dinheiro vai PARA O CAIXA DA EMPRESA, é Mercado Primário. Quando João vende a ação para Maria (e a empresa não ganha nem um centavo na troca), é Mercado Secundário."
-      },
-      {
-        pergunta: "[Case Extra Hard / COAF] As IFs devem manter registro de todas as transações, inclusive as de menor valor. Por quanto tempo, no mínimo, esses dados de clientes e extratos devem ser guardados sob as regras de PLD?",
-        opcoes: ["1 ano", "3 anos", "5 anos", "10 anos"],
-        correta: 3,
-        explicacao: "A legislação de Prevenção à Lavagem de Dinheiro exige que as instituições financeiras conservem os registros das operações ativas por, no mínimo, 10 ANOS após o encerramento da conta."
-      },
-      {
-        pergunta: "[Fundos / ANBIMA] A 'Marcação a Mercado' (MTM) obrigatória nas cotas dos Fundos de Investimentos serve para:",
-        opcoes: ["Evitar a transferência de riqueza entre cotistas (quem entra hoje e quem sai amanhã) pagando o preço real que o título vale HOJE na venda forçada.", "Mascarar os prejuízos do fundo na curva.", "Cobrar a taxa de administração.", "Reduzir o IR do cotista."],
-        correta: 0,
-        explicacao: "Se não houvesse MTM (Marcação a Mercado), um fundo poderia dizer que o título público que ele comprou no passado vale 100 hoje, quando na verdade, devido à crise, só consegue vender por 80. O cotista que saísse hoje levaria 100, roubando 20 de riqueza de quem ficasse no fundo."
-      },
-      {
-        pergunta: "[CPA-20] Sobre o Conselho Nacional de Seguros Privados (CNSP), é correto afirmar que:",
-        opcoes: ["Fiscaliza o Banco Central.", "É o órgão fixador das diretrizes (normativo) do mercado de seguros, previdência complementar aberta e capitalização.", "É subordinado à SUSEP.", "Aplica multas diretamente aos corretores de imóveis."],
-        correta: 1,
-        explicacao: "Assim como o CMN manda no banco central (Câmbio e Moeda), o CNSP é o órgão máximo (normativo) que dita as leis que a SUSEP terá que executar e fiscalizar."
-      },
-      {
-        pergunta: "[Derivativos / Hedge] Um agricultor plantou milho. Ele tem medo que na colheita o preço desabe, levando-o à falência. A estratégia clássica de HEDGE (proteção) no mercado futuro seria:",
-        opcoes: ["Comprar contratos futuros de Milho.", "Vender contratos futuros de Milho (Short hedge).", "Comprar opções de Dólar.", "Fazer um swap reverso com a Bolsa."],
-        correta: 1,
-        explicacao: "Ele Vende futuro (trava o preço de venda alto hoje). Se o preço desabar na colheita, ele toma prejuízo vendendo as espigas físicas lá na fazenda, mas lucra vendendo mais caro no contrato futuro da bolsa. O ganho da bolsa compensa a perda na fazenda (Hedge)."
-      },
-      {
-        pergunta: "[Case Previdência / Tábua Biométrica] Num PGBL, a seguradora utiliza uma Tábua Biométrica (ex: BR-EMS) para calcular se o cliente vai viver muito ou pouco na fase de gozo da aposentadoria. O que ocorre se a tábua for muito 'antiga' e as pessoas viverem mais do que o calculado?",
-        opcoes: ["O cliente perderá todo o dinheiro.", "A seguradora (que assumiu o risco atuarial de pagar renda vitalícia) sofrerá prejuízo maciço pagando meses extras não contabilizados.", "O Governo banca a diferença pelo INSS.", "A SuSep zera a conta do cliente."],
-        correta: 1,
-        explicacao: "Na renda vitalícia, quem assume o 'risco de sobrevivência' (risco atuarial) é a seguradora. Se a pessoa viver até os 120 anos e o fundo dela acabou aos 90, a seguradora tem a OBRIGAÇÃO de continuar pagando do seu próprio bolso."
-      },
-      {
-        pergunta: "[Economia] Uma desvalorização cambial abrupta (O Dólar sai de R$ 5,00 para R$ 6,50), em regra, provoca:",
-        opcoes: ["Deflação profunda e imediata.", "Aumento da Inflação interna, pois insumos importados como trigo e semicondutores ficam mais caros em Reais.", "Fuga de exportadores do Brasil.", "Queda das taxas do Tesouro Prefixado."],
-        correta: 1,
-        explicacao: "O câmbio desvalorizado incentiva exportação (bom para produtor local) mas encarece tudo que compramos de fora, gerando inflação (efeito passthrough)."
-      },
-      {
-        pergunta: "[Case Ética ANBIMA / Chinese Wall] O conceito de Barreira de Informação (Chinese Wall) dentro de um Banco Múltiplo serve fundamentalmente para:",
-        opcoes: ["Aumentar o lucro nas fusões de empresas.", "Isolar as áreas do banco que possuem informação privilegiada (ex: Área de fusões e crédito corporativo) da área que administra fundos e corretora, evitando conflito de interesses.", "Reduzir custos de TI usando roteadores chineses.", "Evitar lavagem de dinheiro físico nas agências."],
-        correta: 1,
-        explicacao: "Imagine que o Itaú Corporativo sabe que a empresa X vai falir amanhã porque analisou o balanço interno. O Itaú Corretora não pode usar essa informação sigilosa para vender as ações da empresa X nos fundos antes do mercado. Há uma 'Muralha da China' legal entre os departamentos."
+        explicacao: "Tudo o que envolve Sociedades Anónimas listadas, debêntures públicas e transparência com acionistas é jurisdição exclusiva da CVM (Comissão de Valores Mobiliários)."
       }
     ];
 
-    const RATES = { 
-      SELIC: 0.105, 
-      CDI: 0.104, 
-      POUPANCA: 0.0617, 
-      IPCA: 0.045, 
-      IPCA_MAIS: 0.105 
-    };
+    const FUNDAMENTALISTA_DATA = [
+      {
+        id: 'pl', title: 'P/L (Preço sobre Lucro)',
+        conceito: 'Mostra quantos anos o investidor levaria para receber de volta o dinheiro pago pela ação, caso a empresa distribuísse 100% dos lucros.',
+        calculo: 'Preço da Ação / Lucro por Ação.',
+        leitura: 'Um P/L alto indica que o mercado espera um grande crescimento no futuro (ação "cara"). Um P/L baixo (ex: 5) indica que a empresa está barata ou passando por dificuldades.',
+        exemplo: 'Ação custa R$ 50 e o lucro anual é R$ 5 por ação. O P/L é 10. Em 10 anos, a empresa lucrará o equivalente ao que pagou por ela.'
+      },
+      {
+        id: 'pvp', title: 'P/VP (Preço sobre Valor Patrimonial)',
+        conceito: 'Indica se a empresa está a ser negociada acima ou abaixo de tudo aquilo que ela realmente tem de património físico (prédios, dinheiro no caixa).',
+        calculo: 'Preço da Ação / Valor Patrimonial por Ação.',
+        leitura: 'P/VP menor que 1: O mercado está a vender a empresa por menos do que ela vale desmanchada. P/VP de 3: Mercado aceita pagar o triplo do que ela tem em ativos físicos.',
+        exemplo: 'Um fundo imobiliário com galpões que valem R$ 100 Milhões está a ser negociado na bolsa por R$ 80 Milhões. O seu P/VP é 0,80 (um desconto de 20%).'
+      },
+      {
+        id: 'roe', title: 'ROE (Retorno sobre o Património Líquido)',
+        conceito: 'Mede a capacidade da gestão da empresa em gerar lucro usando apenas o dinheiro dos sócios.',
+        calculo: 'Lucro Líquido / Património Líquido x 100.',
+        leitura: 'Quanto MAIOR, melhor. Um ROE acima de 15% ou 20% é excelente. Indica uma máquina muito eficiente a multiplicar capital.',
+        exemplo: 'O Itaú tem R$ 100 mil dos sócios e gerou R$ 20 mil de lucro no ano. O seu ROE é um espetacular 20%.'
+      },
+      {
+        id: 'dy', title: 'Dividend Yield (Rendimento de Dividendos)',
+        conceito: 'O queridinho da independência financeira. Mede a rentabilidade dos dividendos pagos pela empresa no último ano em relação ao preço da ação.',
+        calculo: 'Dividendos Pagos nos Últimos 12 Meses / Preço Atual da Ação x 100.',
+        leitura: 'Um DY de 8% a 12% atrai muitos investidores. Mas cuidado: se o preço da ação desabar, o DY matemático sobe artificialmente (Armadilha de Valor).',
+        exemplo: 'As ações da Taesa custam R$ 35 e pagaram R$ 3,50 de dividendos. O DY é de exatamente 10% no bolso do acionista.'
+      },
+      {
+        id: 'margem', title: 'Margem Líquida',
+        conceito: 'De tudo o que a empresa vende e recebe, quanto realmente sobra como lucro puro após pagar impostos, custos, juros e funcionários.',
+        calculo: 'Lucro Líquido / Receita Líquida x 100.',
+        leitura: 'Margens altas (acima de 20%) indicam empresas com forte vantagem competitiva. Margens baixas (como os supermercados a 2%) indicam operações apertadas e sensíveis a crises.',
+        exemplo: 'Uma tecnológica vende R$ 1 milhão em licenças de software e lucra R$ 400 mil líquidos. Tem uma monstruosa margem líquida de 40%.'
+      }
+    ];
 
     // ==========================================
     // COMPONENTE PRINCIPAL (APP)
@@ -1033,7 +896,7 @@
                            .collection('users').doc(user.uid)
                            .collection('simulations');
           await simRef.add({ ...simData, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
-          alert('Simulação salva com sucesso!');
+          alert('Simulação guardada com sucesso!');
         }
       };
 
@@ -1065,13 +928,17 @@
               <NavItem icon="fa-chart-pie" label="Dashboard" active={activeTab === 'dashboard'} onClick={() => changeTab('dashboard')} />
               <NavItem icon="fa-user-check" label="Perfil (API)" active={activeTab === 'api'} onClick={() => changeTab('api')} />
               
-              <div className="pt-4 pb-2 px-2 text-xs font-bold text-slate-500 uppercase tracking-wider">Ferramentas</div>
+              <div className="pt-4 pb-2 px-2 text-xs font-bold text-slate-500 uppercase tracking-wider">Ferramentas Livres</div>
               <NavItem icon="fa-wallet" label="Simulador de Rendimento" active={activeTab === 'simulador'} onClick={() => changeTab('simulador')} />
+              <NavItem icon="fa-balance-scale" label="Rebalancear Carteira" active={activeTab === 'rebalanceamento'} onClick={() => changeTab('rebalanceamento')} />
+              <NavItem icon="fa-home" label="Financiamento (SAC/Price)" active={activeTab === 'financiamento'} onClick={() => changeTab('financiamento')} />
+              <NavItem icon="fa-chart-line" label="Juros Compostos" active={activeTab === 'juros_compostos'} onClick={() => changeTab('juros_compostos')} />
               <NavItem icon="fa-flag-checkered" label="Simulador de Objetivos" active={activeTab === 'objetivos'} onClick={() => changeTab('objetivos')} />
-              <NavItem icon="fa-bullseye" label="Viver de Renda" active={activeTab === 'independencia'} onClick={() => changeTab('independencia')} />
+              <NavItem icon="fa-bullseye" label="Aposentadoria" active={activeTab === 'independencia'} onClick={() => changeTab('independencia')} />
               
-              <div className="pt-4 pb-2 px-2 text-xs font-bold text-slate-500 uppercase tracking-wider">Educação & Mercado</div>
-              <NavItem icon="fa-gamepad" label="Quiz Certificação" active={activeTab === 'quiz'} onClick={() => changeTab('quiz')} />
+              <div className="pt-4 pb-2 px-2 text-xs font-bold text-slate-500 uppercase tracking-wider">Educação e Mercado</div>
+              <NavItem icon="fa-magnifying-glass-chart" label="Análise de Ações" active={activeTab === 'fundamentos'} onClick={() => changeTab('fundamentos')} />
+              <NavItem icon="fa-gamepad" label="Quiz (Simulado)" active={activeTab === 'quiz'} onClick={() => changeTab('quiz')} />
               <NavItem icon="fa-file-invoice-dollar" label="Guia de Tributos" active={activeTab === 'tributacao'} onClick={() => changeTab('tributacao')} />
               <NavItem icon="fa-brain" label="Psicologia Financeira" active={activeTab === 'psicologia'} onClick={() => changeTab('psicologia')} />
               <NavItem icon="fa-sitemap" label="Estrutura do SFN" active={activeTab === 'sfn'} onClick={() => changeTab('sfn')} />
@@ -1084,7 +951,7 @@
             <div className="p-4 border-t border-slate-800 bg-slate-950">
               <p className="text-[10px] text-slate-500 text-center leading-tight mb-2">
                 <i className="fas fa-shield-alt mb-1 block text-slate-600 text-lg"></i>
-                Simulador educativo.<br/>Não constitui recomendação de compra ou venda de ativos.
+                Simulador educativo.<br/>Não constitui recomendação financeira.
               </p>
             </div>
           </aside>
@@ -1093,13 +960,16 @@
             <header className="bg-white p-4 shadow-sm border-b border-gray-200 flex justify-between items-center z-0 hidden md:flex">
               <h2 className="text-xl font-semibold text-slate-700 capitalize">
                 {activeTab === 'api' ? 'Análise de Perfil de Investidor' : 
-                 activeTab === 'independencia' ? 'Independência Financeira' : 
-                 activeTab === 'objetivos' ? 'Planejador de Objetivos' : 
+                 activeTab === 'independencia' ? 'Aposentadoria e Regra dos 4%' : 
                  activeTab === 'instituicoes' ? 'Guia de Instituições Financeiras' : 
                  activeTab === 'sfn' ? 'Sistema Financeiro Nacional (SFN)' : 
-                 activeTab === 'quiz' ? 'Quiz de Conhecimentos (Extra Hard)' : 
+                 activeTab === 'quiz' ? 'Quiz de Conhecimentos Financeiros' : 
                  activeTab === 'tributacao' ? 'Tributação e Custos' : 
-                 activeTab === 'psicologia' ? 'Psicologia Financeira' : activeTab}
+                 activeTab === 'psicologia' ? 'Psicologia Financeira' : 
+                 activeTab === 'rebalanceamento' ? 'Rebalanceamento Inteligente' : 
+                 activeTab === 'financiamento' ? 'Calculadora de Financiamento' : 
+                 activeTab === 'juros_compostos' ? 'A Magia dos Juros Compostos' : 
+                 activeTab === 'fundamentos' ? 'Análise Fundamentalista' : activeTab}
               </h2>
               {profile && (
                 <div className="flex items-center gap-2 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-sm font-medium border border-emerald-200 shadow-sm">
@@ -1118,6 +988,9 @@
                   {activeTab === 'dashboard' && <Dashboard profile={profile} simulations={simulations} goToTab={changeTab} />}
                   {activeTab === 'api' && <SuitabilityAPI onComplete={handleSaveProfile} currentProfile={profile} />}
                   {activeTab === 'simulador' && <Simulator profile={profile} onSave={handleSaveSimulation} />}
+                  {activeTab === 'rebalanceamento' && <RebalanceamentoCarteira />}
+                  {activeTab === 'financiamento' && <CalculadoraFinanciamento />}
+                  {activeTab === 'juros_compostos' && <JurosCompostos />}
                   {activeTab === 'objetivos' && <CalculadoraObjetivos />}
                   {activeTab === 'independencia' && <IndependenciaFinanceira />}
                   {activeTab === 'quiz' && <QuizInvestidor />}
@@ -1125,6 +998,7 @@
                   {activeTab === 'psicologia' && <FinancasComportamentais />}
                   {activeTab === 'sfn' && <SistemaFinanceiroNacional />}
                   {activeTab === 'instituicoes' && <InstituicoesFinanceiras />}
+                  {activeTab === 'fundamentos' && <AnaliseFundamentalista />}
                   {activeTab === 'dicionario' && <Dictionary />}
                   {activeTab === 'cotacoes' && <MarketStocks stocks={stocks} />}
                   {activeTab === 'noticias' && <NewsFeed news={NEWS_FEED} />}
@@ -1138,14 +1012,14 @@
 
     function NavItem({ icon, label, active, onClick }) {
       return (
-        <button onClick={onClick} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors text-left ${active ? 'bg-emerald-500/10 text-emerald-400' : 'hover:bg-slate-800 hover:text-white'}`}>
+        <button onClick={onClick} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors text-left ${active ? 'bg-emerald-500/10 text-emerald-400 font-bold border-r-4 border-emerald-500' : 'hover:bg-slate-800 hover:text-white'}`}>
           <i className={`fas ${icon} w-5 text-center`}></i>
-          <span className="font-medium">{label}</span>
+          <span className="text-sm">{label}</span>
         </button>
       );
     }
 
-    // --- 1. DASHBOARD INTELIGENTE ---
+    // --- COMPONENTES ---
     function Dashboard({ profile, simulations, goToTab }) {
       const getSmartInsight = () => {
         const selicAlta = RATES.SELIC > 0.085;
@@ -1153,16 +1027,15 @@
         
         let insight = `Como investidor ${profile}, preste atenção: `;
         if (selicAlta) {
-           insight += "A Taxa Selic está em patamar elevado (acima de 8,5%). Isso significa que a Renda Fixa (CDBs, Tesouro Selic, LCIs) está extremamente atrativa, pagando juros altos com risco muito baixo. É um excelente momento para garantir boas taxas sem precisar correr os riscos da bolsa de valores.";
+           insight += "A Taxa Selic está num patamar elevado (acima de 8,5%). Isto significa que a Renda Fixa está atrativa, pagando juros altos com risco muito baixo. É um excelente momento para garantir boas taxas.";
         } else {
-           insight += "A Taxa Selic está em queda ou baixa. A Renda Fixa começa a render menos. Para buscar rentabilidades maiores, será necessário diversificar parte da carteira em ativos de maior risco, como Fundo Imobiliários (FIIs) ou Ações, dependendo do seu apetite ao risco.";
+           insight += "A Taxa Selic está em queda ou baixa. A Renda Fixa começa a render menos. Para procurar rentabilidades maiores, será necessário diversificar em ativos de maior risco.";
         }
         return insight;
       };
 
       return (
         <div className="max-w-5xl mx-auto space-y-6">
-          
           <div className="bg-gradient-to-r from-blue-900 to-slate-900 text-white p-6 rounded-xl shadow-md flex gap-4 items-start">
             <div className="bg-blue-500/20 p-3 rounded-full shrink-0">
               <i className="fas fa-robot text-blue-300 text-2xl"></i>
@@ -1176,7 +1049,7 @@
           {!profile ? (
             <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm">
               <div>
-                <h3 className="text-lg font-bold text-blue-800">Descubra seu Perfil de Investidor</h3>
+                <h3 className="text-lg font-bold text-blue-800">Descubra o seu Perfil de Investidor</h3>
                 <p className="text-blue-600">Preencha o formulário para receber recomendações personalizadas.</p>
               </div>
               <button onClick={() => goToTab('api')} className="bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition">
@@ -1213,49 +1086,15 @@
               </div>
               
               <div className="bg-slate-900 text-white p-6 rounded-xl shadow-sm flex flex-col justify-center items-center text-center">
-                <i className="fas fa-flag-checkered text-emerald-400 text-4xl mb-4"></i>
-                <h3 className="text-xl font-bold mb-2">Planejador</h3>
-                <p className="text-slate-400 text-sm mb-6">Calcule quanto poupar para realizar um sonho.</p>
-                <button onClick={() => goToTab('objetivos')} className="w-full bg-emerald-500 text-slate-900 font-bold py-3 rounded-lg hover:bg-emerald-400 transition">
-                  Simular Objetivo
+                <i className="fas fa-balance-scale text-emerald-400 text-4xl mb-4"></i>
+                <h3 className="text-xl font-bold mb-2">Carteira Desalinhada?</h3>
+                <p className="text-slate-400 text-sm mb-6">Equilibre os seus ativos de forma inteligente.</p>
+                <button onClick={() => goToTab('rebalanceamento')} className="w-full bg-emerald-500 text-slate-900 font-bold py-3 rounded-lg hover:bg-emerald-400 transition">
+                  Abrir Rebalanceador
                 </button>
               </div>
             </div>
           )}
-
-          <div>
-            <h3 className="text-lg font-bold text-slate-800 mb-4">Suas Simulações Recentes</h3>
-            {simulations.length === 0 ? (
-              <div className="bg-white border border-gray-200 rounded-xl p-8 text-center text-slate-500">
-                Você ainda não salvou nenhuma simulação.
-              </div>
-            ) : (
-              <div className="bg-white border border-gray-200 rounded-xl overflow-x-auto shadow-sm">
-                <table className="w-full text-left text-sm min-w-[500px]">
-                  <thead className="bg-slate-50 border-b border-gray-200 text-slate-600">
-                    <tr>
-                      <th className="p-4">Inicial</th>
-                      <th className="p-4">Mensal</th>
-                      <th className="p-4">Prazo</th>
-                      <th className="p-4">Melhor Produto (Liq.)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {simulations.slice(0, 5).map((sim, i) => (
-                      <tr key={sim.id || i} className="border-b border-gray-100 last:border-0 hover:bg-slate-50">
-                        <td className="p-4 font-medium">R$ {parseFloat(sim.initial).toLocaleString('pt-BR')}</td>
-                        <td className="p-4">R$ {parseFloat(sim.monthly).toLocaleString('pt-BR')}</td>
-                        <td className="p-4">{sim.months} meses</td>
-                        <td className="p-4 text-emerald-600 font-bold">
-                          R$ {parseFloat(sim.bestResult).toLocaleString('pt-BR', {minimumFractionDigits: 2})}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
         </div>
       );
     }
@@ -1274,26 +1113,25 @@
       );
     }
 
-    // --- 2. API (ANÁLISE DE PERFIL) ---
     function SuitabilityAPI({ onComplete, currentProfile }) {
       const [step, setStep] = useState(0);
       const [answers, setAnswers] = useState({});
 
       const questions = [
         { id: 'q1', question: 'Qual o seu principal objetivo ao investir?', options: [
-          { label: 'Proteger meu patrimônio assumindo o menor risco possível.', value: 1 },
-          { label: 'Ter um ganho razoável, aceitando pequenas variações.', value: 2 },
-          { label: 'Maximizar meus ganhos a longo prazo, mesmo com alto risco.', value: 3 }
+          { label: 'Proteger o património com menor risco.', value: 1 },
+          { label: 'Ter um ganho razoável, aceitando variações.', value: 2 },
+          { label: 'Maximizar ganhos, mesmo com alto risco.', value: 3 }
         ]},
-        { id: 'q2', question: 'Se seus investimentos caíssem 20% em um mês, o que você faria?', options: [
-          { label: 'Sacaria tudo imediatamente para não perder mais.', value: 1 },
-          { label: 'Aguardaria o mercado se recuperar, mas ficaria preocupado.', value: 2 },
-          { label: 'Aproveitaria a queda para comprar mais investimentos baratos.', value: 3 }
+        { id: 'q2', question: 'Se os investimentos caírem 20% num mês, o que faria?', options: [
+          { label: 'Sacava tudo imediatamente.', value: 1 },
+          { label: 'Aguardaria a recuperação, preocupado.', value: 2 },
+          { label: 'Aproveitava a queda para comprar mais.', value: 3 }
         ]},
-        { id: 'q3', question: 'Por quanto tempo pretende deixar seu dinheiro investido?', options: [
-          { label: 'Menos de 1 ano (preciso do dinheiro em breve).', value: 1 },
+        { id: 'q3', question: 'Por quanto tempo pretende investir?', options: [
+          { label: 'Menos de 1 ano.', value: 1 },
           { label: 'De 1 a 5 anos.', value: 2 },
-          { label: 'Mais de 5 anos (foco no longo prazo).', value: 3 }
+          { label: 'Mais de 5 anos.', value: 3 }
         ]}
       ];
 
@@ -1317,9 +1155,8 @@
             <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl">
               <i className="fas fa-check-circle"></i>
             </div>
-            <h2 className="text-2xl font-bold text-slate-800 mb-2">Seu Perfil: {currentProfile.toUpperCase()}</h2>
-            <p className="text-slate-600 mb-8">Suas recomendações de investimentos já foram ajustadas.</p>
-            <button onClick={() => { setAnswers({}); setStep(0); onComplete(null); }} className="text-emerald-600 font-medium hover:underline flex items-center justify-center gap-2 mx-auto">
+            <h2 className="text-2xl font-bold text-slate-800 mb-2">O seu Perfil: {currentProfile.toUpperCase()}</h2>
+            <button onClick={() => { setAnswers({}); setStep(0); onComplete(null); }} className="text-emerald-600 font-medium hover:underline flex items-center justify-center gap-2 mx-auto mt-4">
               <i className="fas fa-sync-alt"></i> Refazer o teste
             </button>
           </div>
@@ -1349,13 +1186,11 @@
       );
     }
 
-    // --- 3. SIMULADOR COM GRÁFICO ---
     function Simulator({ profile, onSave }) {
       const [initial, setInitial] = useState('1000');
       const [monthly, setMonthly] = useState('200');
       const [months, setMonths] = useState('12');
       const [results, setResults] = useState(null);
-      const [timeline, setTimeline] = useState([]);
 
       const calculate = () => {
         const P = parseFloat(initial) || 0;
@@ -1376,7 +1211,7 @@
             else irRate = 0.15;
           }
           const tax = profit * irRate;
-          return { total: amount - tax, profit: profit - tax, invested };
+          return { total: amount - tax, profit: profit - tax, invested, color: '' };
         };
 
         const res = [
@@ -1388,23 +1223,6 @@
         ];
         res.sort((a, b) => b.total - a.total);
         setResults(res);
-
-        const bestTaxa = RATES.IPCA_MAIS;
-        const rMensal = Math.pow(1 + bestTaxa, 1/12) - 1;
-        let dataPontos = [];
-        let acumulado = P;
-        let investido = P;
-        
-        const step = Math.max(1, Math.floor(n / 10)); 
-        
-        for(let i = 0; i <= n; i+=step) {
-            if(i > 0) {
-               acumulado = P * Math.pow(1 + rMensal, i) + PMT * ((Math.pow(1 + rMensal, i) - 1) / rMensal);
-               investido = P + (PMT * i);
-            }
-            dataPontos.push({ mes: i, valor: acumulado, investido: investido });
-        }
-        setTimeline(dataPontos);
       };
 
       useEffect(() => { calculate(); }, [initial, monthly, months]);
@@ -1417,15 +1235,15 @@
             </h3>
             <div>
               <label className="block text-sm font-medium text-slate-600 mb-1">Valor Inicial (R$)</label>
-              <input type="number" value={initial} onChange={e => setInitial(e.target.value)} className="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
+              <input type="number" value={initial} onChange={e => setInitial(e.target.value)} className="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg outline-none" />
             </div>
             <div>
               <label className="block text-sm font-medium text-slate-600 mb-1">Aporte Mensal (R$)</label>
-              <input type="number" value={monthly} onChange={e => setMonthly(e.target.value)} className="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
+              <input type="number" value={monthly} onChange={e => setMonthly(e.target.value)} className="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg outline-none" />
             </div>
             <div>
               <label className="block text-sm font-medium text-slate-600 mb-1">Prazo (Meses)</label>
-              <input type="number" value={months} onChange={e => setMonths(e.target.value)} className="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
+              <input type="number" value={months} onChange={e => setMonths(e.target.value)} className="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg outline-none" />
               <div className="flex gap-2 mt-2">
                 {[12, 24, 60, 120].map(m => (
                   <button key={m} onClick={() => setMonths(m.toString())} className="text-xs px-2 py-1 bg-slate-100 rounded text-slate-600 hover:bg-slate-200 shadow-sm">{m}m</button>
@@ -1450,44 +1268,13 @@
                       R$ {results[0].total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </h2>
                     <p className="text-emerald-700 text-sm">
-                      No <strong>{results[0].name}</strong>, você teria R$ {results[0].profit.toLocaleString('pt-BR', {minimumFractionDigits: 2})} de lucro puro pós IR.
+                      No <strong>{results[0].name}</strong>, teria R$ {results[0].profit.toLocaleString('pt-BR', {minimumFractionDigits: 2})} de lucro puro pós IR.
                     </p>
                   </div>
                 </div>
 
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-                  <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
-                    <i className="fas fa-chart-bar text-blue-500"></i> Evolução Patrimonial
-                  </h3>
-                  <div className="h-48 flex items-end justify-between gap-1 mt-4">
-                    {timeline.map((pt, idx) => {
-                      const maxVal = timeline[timeline.length - 1].valor;
-                      const heightPercent = (pt.valor / maxVal) * 100;
-                      const invPercent = (pt.investido / pt.valor) * 100; 
-                      
-                      return (
-                        <div key={idx} className="w-full relative group flex flex-col justify-end" style={{height: `${heightPercent}%`}}>
-                          <div className="absolute bottom-full mb-2 hidden group-hover:block bg-slate-800 text-white text-xs p-2 rounded whitespace-nowrap z-10 shadow-lg">
-                            Mês {pt.mes}<br/>
-                            Total: R$ {pt.valor.toLocaleString('pt-BR', {minimumFractionDigits:0, maximumFractionDigits:0})}<br/>
-                            Juros: R$ {(pt.valor - pt.investido).toLocaleString('pt-BR', {minimumFractionDigits:0, maximumFractionDigits:0})}
-                          </div>
-                          <div className="w-full bg-emerald-400 rounded-t-sm relative overflow-hidden h-full flex flex-col justify-end transition-all hover:bg-emerald-300">
-                             <div className="w-full bg-slate-300" style={{height: `${invPercent}%`}}></div>
-                          </div>
-                          <span className="text-[10px] text-slate-400 mt-1 text-center truncate">M{pt.mes}</span>
-                        </div>
-                      )
-                    })}
-                  </div>
-                  <div className="flex gap-4 mt-4 text-xs justify-center">
-                    <div className="flex items-center gap-1"><div className="w-3 h-3 bg-slate-300 rounded"></div> Dinheiro Investido</div>
-                    <div className="flex items-center gap-1"><div className="w-3 h-3 bg-emerald-400 rounded"></div> Juros Compostos</div>
-                  </div>
-                </div>
-
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-                  <h3 className="text-lg font-bold text-slate-800 mb-6">Comparação Renda Fixa</h3>
+                  <h3 className="text-lg font-bold text-slate-800 mb-6">Comparação</h3>
                   <div className="space-y-6">
                     {results.map((item, idx) => {
                       const percent = (item.total / results[0].total) * 100;
@@ -1496,12 +1283,11 @@
                           <div className="flex justify-between items-end mb-2">
                             <div>
                               <p className="font-bold text-slate-800 flex items-center gap-2">
-                                {idx === 0 && <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">1º</span>} {item.name}
+                                {idx === 0 && <span className="text-xs bg-emerald-100 text-emerald-700 px-2 rounded-full">1º</span>} {item.name}
                               </p>
                             </div>
                             <div className="text-right">
-                              <p className="font-bold text-slate-800">R$ {item.total.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</p>
-                              <p className="text-xs text-emerald-600">+ R$ {item.profit.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</p>
+                              <p className="font-bold text-slate-800">R$ {item.total.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</p>
                             </div>
                           </div>
                           <div className="w-full bg-slate-100 rounded-full h-3">
@@ -1511,17 +1297,6 @@
                       );
                     })}
                   </div>
-                  
-                  <div className="mt-8 bg-slate-50 p-6 rounded-xl border border-slate-200">
-                    <h4 className="text-md font-bold text-slate-800 mb-4"><i className="fas fa-info-circle text-blue-500"></i> Por que rende assim?</h4>
-                    <div className="space-y-4 text-sm text-slate-600">
-                      <p><strong>Poupança:</strong> Rende só 0,5% a.m + TR. É isenta, mas a base de cálculo é baixa e perde pra quase todos.</p>
-                      <p><strong>Tesouro Selic:</strong> Rende a taxa básica (10,5%). Sofre IR regressivo. É o mais seguro do Brasil.</p>
-                      <p><strong>Tesouro IPCA+:</strong> Protege seu dinheiro da inflação. Rende a variação do IPCA (custo de vida) somado a uma taxa fixa. Essencial para prazos longos.</p>
-                      <p><strong>CDB (100% CDI):</strong> O CDI anda colado na Selic (10,4%). Empata com o Tesouro Selic e também sofre desconto de IR.</p>
-                      <p><strong>LCI/LCA (90% CDI):</strong> O percentual bruto é menor, mas é <strong>ISENTA de Imposto de Renda</strong>! Entrega mais dinheiro líquido no curto/médio prazo.</p>
-                    </div>
-                  </div>
                 </div>
               </>
             )}
@@ -1530,7 +1305,312 @@
       );
     }
 
-    // --- 4. CALCULADORA DE OBJETIVOS ---
+    function RebalanceamentoCarteira() {
+      const [ativos, setAtivos] = useState([
+        { id: 1, nome: 'Renda Fixa', atual: 5000, alvoPct: 50 },
+        { id: 2, nome: 'Ações BR', atual: 3500, alvoPct: 30 },
+        { id: 3, nome: 'FIIs', atual: 1000, alvoPct: 20 },
+      ]);
+      const [novoNome, setNewNome] = useState('');
+      const [novoAporte, setNovoAporte] = useState(1000);
+
+      const addAtivo = () => {
+        if(novoNome.trim() === '') return;
+        setAtivos([...ativos, { id: Date.now(), nome: novoNome, atual: 0, alvoPct: 0 }]);
+        setNewNome('');
+      };
+
+      const updateAtivo = (id, field, value) => {
+        setAtivos(ativos.map(a => a.id === id ? { ...a, [field]: Number(value) || 0 } : a));
+      };
+
+      const removeAtivo = (id) => {
+        setAtivos(ativos.filter(a => a.id !== id));
+      };
+
+      const totalAtual = ativos.reduce((acc, a) => acc + a.atual, 0);
+      const totalAlvoPct = ativos.reduce((acc, a) => acc + a.alvoPct, 0);
+      const novoTotalSugerido = totalAtual + (parseFloat(novoAporte) || 0);
+
+      return (
+        <div className="max-w-5xl mx-auto space-y-6">
+          <div className="mb-2">
+            <h2 className="text-3xl font-black text-slate-800 flex items-center gap-3 mb-2">
+              <i className="fas fa-balance-scale text-emerald-500"></i> Smart Portfolio (Rebalanceamento)
+            </h2>
+            <p className="text-slate-600 text-lg">Mantenha o risco controlado através do balanceamento matemático.</p>
+          </div>
+
+          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+            <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4 border-b pb-6">
+              <div className="w-full md:w-auto">
+                <label className="block text-sm font-bold text-slate-600 mb-1">Novo Aporte (Dinheiro Novo)</label>
+                <div className="relative">
+                  <span className="absolute left-3 top-3 text-slate-400 font-bold">R$</span>
+                  <input type="number" value={novoAporte} onChange={e => setNovoAporte(e.target.value)} className="pl-10 p-3 bg-emerald-50 text-emerald-900 font-black text-xl border border-emerald-200 rounded-lg w-full md:w-64 outline-none" />
+                </div>
+              </div>
+              
+              <div className="w-full md:w-auto text-right">
+                <p className="text-sm text-slate-500">Património Atual: <strong className="text-slate-800 text-lg">R$ {totalAtual.toLocaleString('pt-BR', {minimumFractionDigits:2})}</strong></p>
+                <p className="text-sm text-slate-500 mt-1">Total após Aporte: <strong className="text-indigo-600 text-lg">R$ {novoTotalSugerido.toLocaleString('pt-BR', {minimumFractionDigits:2})}</strong></p>
+              </div>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="bg-slate-100 text-slate-600 text-sm">
+                    <th className="p-3 rounded-tl-lg">Ativo / Classe</th>
+                    <th className="p-3">Valor Atual (R$)</th>
+                    <th className="p-3">% Alvo Ideal</th>
+                    <th className="p-3 border-l-2 border-indigo-200 bg-indigo-50 font-bold text-indigo-800">Ação a Tomar</th>
+                    <th className="p-3 rounded-tr-lg w-10"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {ativos.map((ativo) => {
+                    const pctAtual = totalAtual > 0 ? (ativo.atual / totalAtual) * 100 : 0;
+                    const valorIdeal = novoTotalSugerido * (ativo.alvoPct / 100);
+                    const diferenca = valorIdeal - ativo.atual;
+                    
+                    let acaoClass = "text-slate-500";
+                    let acaoText = "Manter";
+                    if (diferenca > 10) { acaoClass = "text-emerald-600 font-bold"; acaoText = `Comprar R$ ${diferenca.toFixed(2)}`; }
+                    if (diferenca < -10) { acaoClass = "text-red-500 font-bold"; acaoText = `Vender R$ ${Math.abs(diferenca).toFixed(2)}`; }
+
+                    return (
+                      <tr key={ativo.id} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                        <td className="p-3 font-medium text-slate-700">{ativo.nome}</td>
+                        <td className="p-3">
+                          <input type="number" value={ativo.atual} onChange={e => updateAtivo(ativo.id, 'atual', e.target.value)} className="w-24 p-2 border border-slate-200 rounded outline-none text-right" />
+                          <span className="text-xs text-slate-400 ml-2">({pctAtual.toFixed(1)}%)</span>
+                        </td>
+                        <td className="p-3">
+                          <div className="flex items-center gap-1">
+                            <input type="number" value={ativo.alvoPct} onChange={e => updateAtivo(ativo.id, 'alvoPct', e.target.value)} className="w-16 p-2 border border-slate-200 rounded outline-none text-right" />
+                            <span className="text-slate-500">%</span>
+                          </div>
+                        </td>
+                        <td className={`p-3 border-l-2 border-indigo-100 bg-indigo-50/30 ${acaoClass}`}>
+                          {acaoText}
+                        </td>
+                        <td className="p-3 text-center">
+                          <button onClick={() => removeAtivo(ativo.id)} className="text-red-400 hover:text-red-600"><i className="fas fa-trash"></i></button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+
+            {totalAlvoPct !== 100 && (
+              <div className="mt-4 p-3 bg-red-50 text-red-600 border border-red-200 rounded-lg text-sm flex items-center gap-2 font-bold">
+                <i className="fas fa-exclamation-triangle"></i>
+                Atenção: A soma dos Percentuais Alvo é {totalAlvoPct}%. O correto é exatamente 100%. Ajuste os valores.
+              </div>
+            )}
+
+            <div className="mt-6 flex gap-2">
+              <input type="text" placeholder="Nome do novo ativo (Ex: Ouro)" value={novoNome} onChange={e => setNewNome(e.target.value)} className="p-3 border border-slate-200 rounded-lg outline-none flex-1" />
+              <button onClick={addAtivo} className="bg-slate-800 text-white px-6 rounded-lg font-bold hover:bg-slate-700 transition">Adicionar Ativo</button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function CalculadoraFinanciamento() {
+      const [valorFinanciado, setValorFinanciado] = useState(300000);
+      const [taxaAnual, setTaxaAnual] = useState(10.5);
+      const [anos, setAnos] = useState(30);
+
+      const calcularTabelas = () => {
+        const n = anos * 12;
+        const i = (Math.pow(1 + (taxaAnual / 100), 1 / 12)) - 1; 
+        const PV = parseFloat(valorFinanciado) || 0;
+        if (n <= 0 || i <= 0 || PV <= 0) return null;
+
+        const pmtPrice = PV * (i * Math.pow(1 + i, n)) / (Math.pow(1 + i, n) - 1);
+        const jurosTotalPrice = (pmtPrice * n) - PV;
+
+        const amortizacaoSac = PV / n;
+        let jurosTotalSac = 0;
+        let saldoDevedor = PV;
+        const primeiraParcelaSac = amortizacaoSac + (saldoDevedor * i);
+        
+        for (let mes = 1; mes <= n; mes++) {
+          jurosTotalSac += (saldoDevedor * i);
+          saldoDevedor -= amortizacaoSac;
+        }
+        const ultimaParcelaSac = amortizacaoSac + (amortizacaoSac * i); 
+
+        return {
+          price: { parcela: pmtPrice, totalJuros: jurosTotalPrice, totalPago: PV + jurosTotalPrice },
+          sac: { primParcela: primeiraParcelaSac, ultParcela: ultimaParcelaSac, totalJuros: jurosTotalSac, totalPago: PV + jurosTotalSac }
+        };
+      };
+
+      const resultados = calcularTabelas();
+
+      return (
+        <div className="max-w-5xl mx-auto space-y-6">
+          <div className="mb-2">
+            <h2 className="text-3xl font-black text-slate-800 flex items-center gap-3 mb-2">
+              <i className="fas fa-home text-blue-500"></i> Financiamento (SAC vs. PRICE)
+            </h2>
+            <p className="text-slate-600 text-lg">Descubra a verdade sobre os financiamentos bancários. Veja a diferença matemática gigante entre amortizar a sua dívida pelo sistema SAC ou pagar parcelas fixas pela Tabela Price.</p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 lg:col-span-1 h-fit">
+              <h3 className="font-bold text-slate-800 mb-4 border-b pb-2">Dados do Empréstimo</h3>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-slate-600 mb-1">Valor do Imóvel/Carro (R$)</label>
+                  <input type="number" value={valorFinanciado} onChange={e => setValorFinanciado(e.target.value)} className="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg outline-none" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-600 mb-1">Taxa de Juros Efetiva (% ao Ano)</label>
+                  <input type="number" step="0.1" value={taxaAnual} onChange={e => setTaxaAnual(e.target.value)} className="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg outline-none" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-600 mb-1">Prazo (Anos)</label>
+                  <input type="number" value={anos} onChange={e => setAnos(e.target.value)} className="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg outline-none" />
+                </div>
+              </div>
+            </div>
+
+            {resultados && (
+              <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-emerald-50 p-6 rounded-2xl shadow-sm border border-emerald-200">
+                  <h3 className="text-xl font-black text-emerald-800 mb-1">Sistema SAC</h3>
+                  <p className="text-xs text-emerald-600 font-medium mb-4">(Amortização Constante)</p>
+                  
+                  <div className="space-y-4">
+                    <div className="bg-white p-3 rounded-lg border border-emerald-100">
+                      <p className="text-xs text-slate-500 uppercase font-bold">A Parcela</p>
+                      <p className="text-sm text-slate-700 mt-1">Começa alta em: <strong className="text-emerald-700">R$ {resultados.sac.primParcela.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2})}</strong></p>
+                      <p className="text-sm text-slate-700">E cai até: <strong className="text-emerald-700">R$ {resultados.sac.ultParcela.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2})}</strong></p>
+                    </div>
+                    
+                    <div>
+                      <p className="text-sm text-slate-600">Total de Juros Pagos ao Banco:</p>
+                      <h4 className="text-2xl font-black text-red-500">R$ {resultados.sac.totalJuros.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2})}</h4>
+                    </div>
+                    
+                    <div className="border-t border-emerald-200 pt-3">
+                      <p className="text-xs text-slate-600 uppercase font-bold">Custo Total (Imóvel + Juros)</p>
+                      <p className="text-lg font-bold text-slate-800">R$ {resultados.sac.totalPago.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2})}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-blue-50 p-6 rounded-2xl shadow-sm border border-blue-200">
+                  <h3 className="text-xl font-black text-blue-800 mb-1">Tabela PRICE</h3>
+                  <p className="text-xs text-blue-600 font-medium mb-4">(Parcelas Fixas - Estilo Francês)</p>
+                  
+                  <div className="space-y-4">
+                    <div className="bg-white p-3 rounded-lg border border-blue-100">
+                      <p className="text-xs text-slate-500 uppercase font-bold">A Parcela</p>
+                      <p className="text-sm text-slate-700 mt-1">Sempre o mesmo valor de:</p>
+                      <p className="text-lg font-black text-blue-700">R$ {resultados.price.parcela.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2})}</p>
+                    </div>
+                    
+                    <div>
+                      <p className="text-sm text-slate-600">Total de Juros Pagos ao Banco:</p>
+                      <h4 className="text-2xl font-black text-red-500">R$ {resultados.price.totalJuros.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2})}</h4>
+                    </div>
+                    
+                    <div className="border-t border-blue-200 pt-3">
+                      <p className="text-xs text-slate-600 uppercase font-bold">Custo Total (Imóvel + Juros)</p>
+                      <p className="text-lg font-bold text-slate-800">R$ {resultados.price.totalPago.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2})}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="md:col-span-2 bg-slate-800 p-4 rounded-xl text-white mt-2">
+                  <p className="text-sm font-bold text-yellow-400 mb-1"><i className="fas fa-lightbulb mr-2"></i> Conclusão Matemática:</p>
+                  <p className="text-sm text-slate-300">
+                    O sistema <strong className="text-white">PRICE</strong> seduz por ter a prestação inicial mais baixa, mas no longo prazo paga muito mais juros. 
+                    O sistema <strong className="text-white">SAC</strong> é sempre mais barato no total porque abate a dívida principal (amortização) de forma agressiva desde o primeiro mês, fazendo os juros despencarem. Diferença neste cenário: <strong className="text-red-400">R$ {(resultados.price.totalJuros - resultados.sac.totalJuros).toLocaleString('pt-BR', {minimumFractionDigits:2})}</strong> a mais deitados à rua na Price.
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    function JurosCompostos() {
+      const [capital, setCapital] = useState(10000);
+      const [taxa, setTaxa] = useState(10);
+      const [anos, setAnos] = useState(20);
+      
+      const dados = useMemo(() => {
+        let arr = [];
+        const r = parseFloat(taxa)/100;
+        const c = parseFloat(capital);
+        const t = parseInt(anos);
+        for(let i=1; i<=t; i+= (t>20? 2 : 1)) {
+          const js = c + (c * r * i);
+          const jc = c * Math.pow((1+r), i);
+          arr.push({ ano: i, simples: js, composto: jc });
+        }
+        return arr;
+      }, [capital, taxa, anos]);
+
+      const maxVal = dados.length > 0 ? dados[dados.length-1].composto : 0;
+
+      return (
+        <div className="max-w-5xl mx-auto space-y-6">
+          <div className="mb-2">
+            <h2 className="text-3xl font-black text-slate-800 flex items-center gap-3 mb-2">
+              <i className="fas fa-chart-line text-emerald-500"></i> A Magia dos Juros Compostos
+            </h2>
+            <p className="text-slate-600 text-lg">"Os Juros Compostos são a oitava maravilha do mundo." (Albert Einstein). Veja a diferença visual entre o crescimento linear e o exponencial.</p>
+          </div>
+
+          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 flex flex-col md:flex-row gap-4">
+            <div className="flex-1">
+              <label className="text-xs font-bold text-slate-500">Capital (R$)</label>
+              <input type="number" value={capital} onChange={e=>setCapital(e.target.value)} className="w-full p-2 border rounded" />
+            </div>
+            <div className="flex-1">
+              <label className="text-xs font-bold text-slate-500">Taxa (% ao ano)</label>
+              <input type="number" value={taxa} onChange={e=>setTaxa(e.target.value)} className="w-full p-2 border rounded" />
+            </div>
+            <div className="flex-1">
+              <label className="text-xs font-bold text-slate-500">Prazo (Anos)</label>
+              <input type="number" value={anos} onChange={e=>setAnos(e.target.value)} className="w-full p-2 border rounded" />
+            </div>
+          </div>
+
+          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 h-80 flex items-end justify-between gap-1 relative">
+            {dados.map((d, i) => (
+              <div key={i} className="flex flex-col items-center justify-end w-full group relative h-full">
+                <div className="absolute bottom-full mb-2 hidden group-hover:block bg-slate-800 text-white p-2 rounded text-xs whitespace-nowrap z-10">
+                  Ano {d.ano}<br/>Composto: R$ {d.composto.toFixed(0)}<br/>Simples: R$ {d.simples.toFixed(0)}
+                </div>
+                
+                <div className="w-full relative flex items-end" style={{height: `${(d.composto/maxVal)*100}%`}}>
+                   <div className="absolute bottom-0 w-full bg-emerald-400 opacity-50 rounded-t h-full"></div>
+                   <div className="absolute bottom-0 w-full bg-blue-500 rounded-t" style={{height: `${(d.simples/d.composto)*100}%`}}></div>
+                </div>
+                <span className="text-[10px] text-slate-400 mt-2">A{d.ano}</span>
+              </div>
+            ))}
+          </div>
+          <div className="flex justify-center gap-6 mt-2 text-sm font-bold">
+            <div className="flex items-center gap-2"><div className="w-4 h-4 bg-emerald-400 opacity-50 rounded"></div> Juros Compostos (Exponencial)</div>
+            <div className="flex items-center gap-2"><div className="w-4 h-4 bg-blue-500 rounded"></div> Juros Simples (Linear)</div>
+          </div>
+        </div>
+      );
+    }
+
     function CalculadoraObjetivos() {
       const [objetivo, setObjetivo] = useState('Carro Novo');
       const [valorObjetivo, setValorObjetivo] = useState('80000');
@@ -1558,7 +1638,7 @@
             <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2 mb-2">
               <i className="fas fa-flag-checkered text-amber-500"></i> Planejador de Objetivos
             </h2>
-            <p className="text-slate-600 text-sm">Diga o que você quer comprar e quando. Nossa Inteligência dirá exatamente quanto você precisa economizar por mês para chegar lá.</p>
+            <p className="text-slate-600 text-sm">Diga o que quer comprar e quando. Nossa Inteligência dirá exatamente quanto precisa economizar por mês para chegar lá.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -1587,19 +1667,19 @@
                 
                 {possivel ? (
                   <>
-                    <p className="text-slate-600 mb-2">Você precisará investir mensalmente:</p>
+                    <p className="text-slate-600 mb-2">Precisará de investir mensalmente:</p>
                     <h2 className="text-5xl font-black text-amber-600 mb-4">
                       R$ {aporteNecessario.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits:2})}
                     </h2>
                     <p className="text-sm text-amber-700 leading-relaxed bg-amber-100 p-4 rounded-lg">
-                      Se você aplicar este valor todo mês em um investimento conservador atrelado à taxa Selic (rendendo aprox. {((taxaAnual)*100).toFixed(1)}% ao ano), os juros compostos trabalharão a seu favor e você terá <strong>R$ {parseFloat(valorObjetivo).toLocaleString('pt-BR')}</strong> em {prazoAnos} anos.
+                      Se aplicar este valor todo o mês num investimento conservador (rendendo aprox. {((taxaAnual)*100).toFixed(1)}% ao ano), terá <strong>R$ {parseFloat(valorObjetivo).toLocaleString('pt-BR')}</strong> em {prazoAnos} anos.
                     </p>
                   </>
                 ) : (
                   <div className="text-amber-700">
                     <i className="fas fa-check-circle text-4xl mb-4 text-emerald-500"></i>
-                    <p className="font-bold text-xl">Você já atingiu esse objetivo!</p>
-                    <p className="text-sm mt-2">O dinheiro que você já tem guardado, com os juros do período, ultrapassa o valor do objetivo.</p>
+                    <p className="font-bold text-xl">Já atingiu esse objetivo!</p>
+                    <p className="text-sm mt-2">O dinheiro guardado, com os juros do período, ultrapassa o valor do objetivo.</p>
                   </div>
                 )}
               </div>
@@ -1609,7 +1689,6 @@
       );
     }
 
-    // --- 5. INDEPENDÊNCIA FINANCEIRA ---
     function IndependenciaFinanceira() {
       const [gastoMensal, setGastoMensal] = useState('5000');
       const [patrimonioAtual, setPatrimonioAtual] = useState('0');
@@ -1645,7 +1724,7 @@
             <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2 mb-2">
               <i className="fas fa-bullseye text-blue-500"></i> Calculadora de Aposentadoria (FIRE)
             </h2>
-            <p className="text-slate-600 text-sm">Descubra quanto dinheiro você precisa acumular para viver apenas dos rendimentos, protegendo seu poder de compra da inflação.</p>
+            <p className="text-slate-600 text-sm">Descubra quanto dinheiro precisa acumular para viver apenas dos rendimentos, protegendo o seu poder de compra da inflação.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -1653,35 +1732,33 @@
               <div>
                 <label className="block text-sm font-medium text-slate-600 mb-1">Renda Mensal Desejada (R$)</label>
                 <input type="number" value={gastoMensal} onChange={e => setGastoMensal(e.target.value)} className="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
-                <p className="text-xs text-slate-400 mt-1">Quanto você precisa por mês para viver bem?</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-600 mb-1">Quanto vai investir por mês? (R$)</label>
                 <input type="number" value={aporteMensal} onChange={e => setAporteMensal(e.target.value)} className="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-600 mb-1">Patrimônio Atual (R$)</label>
+                <label className="block text-sm font-medium text-slate-600 mb-1">Património Atual (R$)</label>
                 <input type="number" value={patrimonioAtual} onChange={e => setPatrimonioAtual(e.target.value)} className="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-600 mb-1">Taxa de Juros REAL (% ao ano)</label>
                 <input type="number" value={taxaReal} onChange={e => setTaxaReal(e.target.value)} className="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
-                <p className="text-xs text-slate-400 mt-1">Rentabilidade ACIMA da inflação (Padrão histórico: 4% a 6%).</p>
               </div>
             </div>
 
             <div className="space-y-6">
               <div className="bg-slate-900 text-white p-6 rounded-xl shadow-lg border border-slate-800">
-                <p className="text-slate-400 text-sm font-medium mb-1">Seu "Número Mágico" é:</p>
+                <p className="text-slate-400 text-sm font-medium mb-1">O Seu "Número Mágico" é:</p>
                 <h2 className="text-4xl font-black text-emerald-400 mb-2">
                   R$ {metaPatrimonio > 0 && isFinite(metaPatrimonio) ? metaPatrimonio.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits:2}) : '0,00'}
                 </h2>
                 <p className="text-slate-300 text-sm leading-relaxed">
-                  Ao atingir este valor, uma taxa real de {taxaReal}% a.a. irá gerar exatos <strong className="text-white">R$ {parseFloat(gastoMensal || 0).toLocaleString('pt-BR')}</strong> por mês de forma passiva, sem que você precise mexer no dinheiro principal.
+                  Ao atingir este valor, gerará <strong className="text-white">R$ {parseFloat(gastoMensal || 0).toLocaleString('pt-BR')}</strong> por mês de forma passiva.
                 </p>
               </div>
 
-              {mesesNecessarios !== Infinity && metaPatrimonio > 0 ? (
+              {mesesNecessarios !== Infinity && metaPatrimonio > 0 && (
                 <div className="bg-blue-50 border border-blue-200 p-6 rounded-xl">
                   <p className="text-blue-800 text-sm font-bold mb-2 uppercase tracking-wide">Tempo Estimado</p>
                   <div className="flex items-end gap-2">
@@ -1690,13 +1767,6 @@
                     <span className="text-5xl font-black text-blue-600">{meses}</span>
                     <span className="text-blue-800 font-medium pb-1">meses</span>
                   </div>
-                  <p className="text-sm text-blue-600 mt-4">
-                    Mantendo aportes de R$ {parseFloat(aporteMensal||0).toLocaleString('pt-BR')}/mês, você será financeiramente livre em aproximadamente {anos} anos.
-                  </p>
-                </div>
-              ) : (
-                <div className="bg-red-50 border border-red-200 p-6 rounded-xl text-red-700 text-sm">
-                  Com os valores informados (sem aportes suficientes), você não atingirá o objetivo. Aumente o valor investido mensalmente.
                 </div>
               )}
             </div>
@@ -1705,7 +1775,6 @@
       );
     }
 
-    // --- NOVA ABA: QUIZ DO INVESTIDOR (GAMIFICAÇÃO) ---
     function QuizInvestidor() {
       const [currentQuestion, setCurrentQuestion] = useState(0);
       const [score, setScore] = useState(0);
@@ -1717,10 +1786,7 @@
         setSelectedOption(index);
         const correct = index === QUIZ_DATA[currentQuestion].correta;
         setIsCorrect(correct);
-        
-        if (correct) {
-          setScore(score + 1);
-        }
+        if (correct) setScore(score + 1);
 
         setTimeout(() => {
           const nextQuestion = currentQuestion + 1;
@@ -1731,15 +1797,11 @@
           } else {
             setShowScore(true);
           }
-        }, 4000); // 4 segundos para ler a explicação da certificação
+        }, 4000); 
       };
 
       const restartQuiz = () => {
-        setCurrentQuestion(0);
-        setScore(0);
-        setShowScore(false);
-        setSelectedOption(null);
-        setIsCorrect(null);
+        setCurrentQuestion(0); setScore(0); setShowScore(false); setSelectedOption(null); setIsCorrect(null);
       };
 
       return (
@@ -1755,10 +1817,10 @@
             <div className="bg-white p-10 rounded-2xl shadow-lg border border-gray-200 text-center animate-fade-in">
               <i className={`fas ${score >= (QUIZ_DATA.length * 0.7) ? 'fa-trophy text-yellow-400' : 'fa-book-reader text-blue-400'} text-6xl mb-4`}></i>
               <h3 className="text-2xl font-bold text-slate-800 mb-2">O seu Resultado</h3>
-              <p className="text-lg text-slate-600 mb-6">Você acertou <strong className="text-indigo-600 text-2xl">{score}</strong> de {QUIZ_DATA.length} perguntas.</p>
+              <p className="text-lg text-slate-600 mb-6">Acertou <strong className="text-indigo-600 text-2xl">{score}</strong> de {QUIZ_DATA.length} perguntas.</p>
               
               {score >= (QUIZ_DATA.length * 0.7) && <p className="text-emerald-600 font-bold mb-6 bg-emerald-50 p-3 rounded-lg">Aprovado! Fez mais de 70% da prova. O seu certificado está garantido!</p>}
-              {score < (QUIZ_DATA.length * 0.7) && <p className="text-red-600 font-bold mb-6 bg-red-50 p-3 rounded-lg">Reprovado (Abaixo de 70%). Mas não desista, os erros ensinam mais que os acertos. Volte ao Dicionário e tente outra vez.</p>}
+              {score < (QUIZ_DATA.length * 0.7) && <p className="text-red-600 font-bold mb-6 bg-red-50 p-3 rounded-lg">Reprovado (Abaixo de 70%). Não desista, os erros ensinam mais que os acertos. Volte ao Dicionário.</p>}
               
               <button onClick={restartQuiz} className="bg-indigo-600 text-white font-bold py-3 px-8 rounded-xl hover:bg-indigo-700 transition shadow-md">
                 Tentar Novamente <i className="fas fa-redo ml-2"></i>
@@ -1824,7 +1886,6 @@
       );
     }
 
-    // --- NOVA ABA: GUIA DE TRIBUTAÇÃO E IMPOSTOS ---
     function TributacaoImpostos() {
       return (
         <div className="max-w-5xl mx-auto space-y-8">
@@ -1836,7 +1897,6 @@
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
               <h3 className="text-xl font-bold text-slate-800 mb-3 border-b pb-2"><i className="fas fa-stopwatch text-orange-500 mr-2"></i>IOF (O Imposto Relâmpago)</h3>
               <p className="text-sm text-slate-600 mb-4">O Imposto sobre Operações Financeiras incide <strong>apenas nos primeiros 29 dias</strong> do investimento. É uma penalidade para quem saca o dinheiro muito rápido.</p>
@@ -1849,7 +1909,7 @@
                   <div className="flex justify-between text-sm bg-emerald-50 p-2 rounded text-emerald-700 font-bold border border-emerald-200"><span>Saque no 30º Dia</span><span>0% (Isento)</span></div>
                 </div>
               </div>
-              <p className="text-xs text-slate-400 mt-3"><i className="fas fa-lightbulb text-yellow-400"></i> Dica de Ouro: Nunca resgate um investimento de renda fixa (CDB, Tesouro) antes de completar 30 dias!</p>
+              <p className="text-xs text-slate-400 mt-3"><i className="fas fa-lightbulb text-yellow-400"></i> Dica de Ouro: Nunca resgate um investimento de renda fixa antes de completar 30 dias!</p>
             </div>
 
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
@@ -1870,11 +1930,9 @@
                 </table>
               </div>
             </div>
-
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
             <div className="bg-slate-900 p-6 rounded-2xl shadow-lg border border-slate-800 text-white relative overflow-hidden">
               <div className="absolute -right-4 -top-4 opacity-10 text-9xl"><i className="fas fa-ghost"></i></div>
               <h3 className="text-xl font-bold text-red-400 mb-3 border-b border-slate-700 pb-2 relative z-10"><i className="fas fa-spider mr-2"></i>O Fantasma do Come-Cotas</h3>
@@ -1908,13 +1966,11 @@
                 </li>
               </ul>
             </div>
-
           </div>
         </div>
       );
     }
 
-    // --- NOVA ABA: PSICOLOGIA FINANCEIRA (FINANÇAS COMPORTAMENTAIS) ---
     function FinancasComportamentais() {
       return (
         <div className="max-w-5xl mx-auto space-y-6">
@@ -1926,7 +1982,6 @@
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
             <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden group hover:shadow-lg transition-all">
               <div className="bg-purple-100 p-6 flex justify-center items-center h-40">
                 <i className="fas fa-sheep text-6xl text-purple-500 group-hover:scale-110 transition-transform"></i>
@@ -1965,14 +2020,11 @@
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       );
     }
 
-
-    // --- 6. SISTEMA FINANCEIRO NACIONAL (SFN) ---
     function SistemaFinanceiroNacional() {
       const [searchTerm, setSearchTerm] = useState('');
       const [expandedId, setExpandedId] = useState(null);
@@ -2045,7 +2097,6 @@
       );
     }
 
-    // --- 7. INSTITUIÇÕES FINANCEIRAS ---
     function InstituicoesFinanceiras() {
       const [searchTerm, setSearchTerm] = useState('');
       const [expandedId, setExpandedId] = useState(null);
@@ -2112,7 +2163,60 @@
       );
     }
 
-    // --- 8. DICIONÁRIO COMPLETO ---
+    function AnaliseFundamentalista() {
+      const [searchTerm, setSearchTerm] = useState('');
+      const [expandedId, setExpandedId] = useState(null);
+      
+      const filtered = FUNDAMENTALISTA_DATA.filter(i => 
+        i.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        i.conceito.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+
+      return (
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-6">
+            <h2 className="text-3xl font-black text-slate-800 flex items-center gap-2 mb-2">
+              <i className="fas fa-magnifying-glass-chart text-blue-600"></i> Indicadores Fundamentalistas
+            </h2>
+            <p className="text-slate-600 text-lg">Não compre ações às cegas. Entenda os múltiplos de mercado que os grandes investidores de Wall Street usam para encontrar empresas baratas.</p>
+          </div>
+          
+          <div className="space-y-4 mt-6">
+            {filtered.map(item => (
+              <div key={item.id} className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <button onClick={() => setExpandedId(expandedId === item.id ? null : item.id)} className="w-full flex justify-between p-5 hover:bg-slate-50">
+                  <span className="font-bold text-slate-800 text-lg">{item.title}</span>
+                  <i className={`fas fa-chevron-down text-slate-400 transition-transform ${expandedId === item.id ? 'rotate-180' : ''}`}></i>
+                </button>
+                {expandedId === item.id && (
+                  <div className="px-5 pb-6 pt-2 border-t border-slate-100 text-sm animate-fade-in space-y-5">
+                    <div>
+                      <p className="font-bold text-blue-800 mb-1"><i className="fas fa-book mr-1"></i> Conceito</p>
+                      <p className="text-slate-700 leading-relaxed bg-blue-50 p-3 rounded-lg border border-blue-100">{item.conceito}</p>
+                    </div>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div>
+                        <p className="font-bold text-amber-700 mb-1"><i className="fas fa-calculator mr-1"></i> Como é calculado?</p>
+                        <p className="text-slate-600 leading-relaxed font-mono bg-slate-100 p-2 rounded">{item.calculo}</p>
+                      </div>
+                      <div>
+                        <p className="font-bold text-emerald-700 mb-1"><i className="fas fa-eye mr-1"></i> Como interpretar</p>
+                        <p className="text-slate-600 leading-relaxed">{item.leitura}</p>
+                      </div>
+                    </div>
+                    <div className="bg-slate-800 text-slate-300 p-4 rounded-lg">
+                      <p className="font-bold text-white mb-1"><i className="fas fa-lightbulb text-yellow-400 mr-1"></i> Exemplo Prático:</p>
+                      <p className="leading-relaxed text-sm">{item.exemplo}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
     function Dictionary() {
       const [searchTerm, setSearchTerm] = useState('');
       const [expandedId, setExpandedId] = useState(null);
@@ -2168,7 +2272,6 @@
       );
     }
 
-    // --- 9. COTAÇÕES E NOTÍCIAS ---
     function MarketStocks({ stocks }) {
       return (
         <div className="max-w-4xl mx-auto">
