@@ -258,6 +258,159 @@
           'Case 1 (BDR): Você compra AAPL34 (BDR da Apple no Brasil). Se a ação da Apple nos EUA subir 5% e o Dólar subir 2% contra o Real, seu BDR vai subir aproximadamente 7% em Reais.',
           'Case 2 (ADR): O inverso. A Petrobras emite ADRs na bolsa de Nova York para que os investidores americanos possam investir nela pagando em dólares.'
         ]
+      },
+      {
+        id: 'cricra', title: 'CRI e CRA',
+        definition: 'Certificados de Recebíveis Imobiliários (CRI) e do Agronegócio (CRA). São títulos de dívida emitidos por Securitizadoras que "empacotam" dívidas de imóveis ou de fazendas e vendem para investidores.',
+        howItYields: 'Semelhante a uma LCI/LCA, rendem taxas atreladas ao CDI, IPCA ou prefixadas. A grande vantagem é que são ISENTOS de Imposto de Renda. Porém, NÃO possuem garantia do FGC.',
+        basis: 'Fluxo de pagamentos de devedores (Ex: Aluguéis de um galpão logístico ou parcelas de financiamento de tratores).',
+        cases: [
+          'Case 1: Uma construtora vende apartamentos na planta financiados. Para antecipar o dinheiro, ela repassa essas dívidas para uma securitizadora que emite um CRI pagando IPCA + 6% isento de IR aos investidores.',
+          'Case 2 (Risco): Se os compradores dos apartamentos pararem de pagar as prestações, o fluxo de dinheiro seca e os investidores do CRI podem tomar calote, já que não há proteção do FGC.'
+        ]
+      },
+      {
+        id: 'coe', title: 'COE (Certificado de Operações Estruturadas)',
+        definition: 'É um "pacote" que mescla Renda Fixa e Renda Variável num único produto. Muito comum em corretoras, oferecendo a chance de ganhos da bolsa com a segurança da renda fixa.',
+        howItYields: 'A maior atração é o "Capital Protegido". O banco garante que, na pior das hipóteses, você recebe de volta 100% do que investiu (mas sem juros). Sofre tributação regressiva de IR.',
+        basis: 'Derivativos estruturados por bancos. Eles usam grande parte do seu dinheiro na renda fixa para garantir o principal, e usam o restinho para comprar opções de alto risco (ex: apostar na alta da Apple).',
+        cases: [
+          'Case 1 (Cenário Bom): Você compra um COE apostando nas ações da Disney. Em 3 anos, a Disney sobe 40%. Você recebe seu dinheiro de volta + 40% de lucro (menos IR).',
+          'Case 2 (Cenário Ruim): As ações da Disney despencam 50%. Como o COE tem Capital Protegido, você não perde metade do dinheiro. Recebe de volta exatamente o valor investido, mas perdeu 3 anos de juros da inflação (custo de oportunidade).'
+        ]
+      },
+      {
+        id: 'lf', title: 'LF (Letra Financeira)',
+        definition: 'Título de renda fixa emitido por instituições financeiras para captar recursos de longo prazo. A diferença para o CDB é que a LF é voltada para grandes investidores e não permite saque rápido.',
+        howItYields: 'Rende de forma prefixada, % do CDI ou IPCA+. Possui IR regressivo. A grande diferença é: NÃO TEM FGC e o prazo mínimo legal de vencimento é de 2 anos.',
+        basis: 'Necessidade dos bancos de travar dinheiro de investidores por longos períodos para estruturar financiamentos pesados.',
+        cases: [
+          'Case 1: Um banco precisa de caixa firme por 4 anos. Ele emite uma LF pagando 115% do CDI (taxa muito maior que a de um CDB normal). Como o ticket mínimo era historicamente R$ 50 mil e não há proteção do FGC, o banco paga esse "prêmio de risco" maior.',
+          'Case 2: Você precisa do dinheiro da LF no mês seguinte para uma emergência médica. Como o prazo mínimo legal é de 2 anos, você simplesmente não consegue resgatar de volta com o banco antes dessa data.'
+        ]
+      },
+      {
+        id: 'etf', title: 'ETF (Exchange Traded Funds - Fundos de Índice)',
+        definition: 'Fundos de investimento passivos que são negociados diretamente na Bolsa de Valores, exatamente como se fossem ações. Eles "copiam" a performance de um índice inteiro.',
+        howItYields: 'Se o índice subir, o ETF sobe na mesma proporção. Eles são elogiados por terem taxas de administração baixíssimas em comparação com fundos ativos.',
+        basis: 'Composição algorítmica. O robô do fundo apenas compra as mesmas ações que compõem o índice alvo (ex: Ibovespa, S&P 500).',
+        cases: [
+          'Case 1: Você quer investir nas 500 maiores empresas dos EUA, mas não tem dinheiro para comprar ações da Apple, Amazon, Tesla uma a uma. Você compra uma cota do ETF IVVB11 (S&P 500) na bolsa brasileira e, instantaneamente, seu dinheiro está diversificado nessas 500 empresas.',
+          'Case 2: Você compra BOVA11, que copia o Ibovespa (Bolsa do Brasil). Se a economia brasileira for bem e a média das ações subir 10%, o seu BOVA11 subirá 10% (descontando apenas uma taxa de administração minúscula de 0,3% ao ano).'
+        ]
+      },
+      {
+        id: 'criptomoedas', title: 'Criptomoedas e Ativos Digitais',
+        definition: 'Moedas digitais descentralizadas que utilizam criptografia para garantir a segurança das transações e não são emitidas por nenhum governo ou Banco Central.',
+        howItYields: 'Extrema volatilidade. Rende única e exclusivamente pela lei da oferta e demanda no mercado aberto, 24 horas por dia, 7 dias por semana.',
+        basis: 'Tecnologia Blockchain (um livro-razão público, global e imutável que registra todas as transações) e adoção pelos usuários.',
+        cases: [
+          'Case 1 (Bitcoin): Criado com escassez matemática (só existirão 21 milhões de moedas). Investidores compram acreditando que seja o "ouro digital", uma reserva de valor protegida da impressão desenfreada de dinheiro por governos.',
+          'Case 2 (Ethereum e Smart Contracts): Uma empresa cria um aplicativo financeiro que roda sozinho na internet, sem servidores de empresas. Para usar o app, as pessoas precisam gastar a moeda "Ether" (ETH) para pagar a taxa de processamento da rede global.'
+        ]
+      }
+    ];
+
+    // --- NOVOS DADOS: INSTITUIÇÕES FINANCEIRAS ---
+    const INSTITUICOES_DATA = [
+      {
+        id: 'bancos_multiplos',
+        title: 'Bancos Múltiplos',
+        whatTheyDo: 'São as maiores instituições do país. Para ser "Múltiplo", o banco precisa ter, no mínimo, duas carteiras de serviços diferentes, sendo uma delas obrigatoriamente a Comercial (conta corrente) ou a de Investimento.',
+        requisitos: 'Autorização do Banco Central (Bacen), constituição como Sociedade Anônima (S/A), capital social mínimo altíssimo e estrutura complexa de compliance e governança.',
+        compromissos: 'Fornecer liquidez ao sistema, recolher depósitos compulsórios ao Banco Central, garantir segurança das operações e seguir as regras de Basiléia para prevenção de falências.',
+        exemplo: 'Itaú Unibanco, Banco Bradesco, Banco Santander.',
+        case: 'Um cliente entra no Itaú. No mesmo aplicativo, ele usa a conta corrente (Carteira Comercial), financia um imóvel (Carteira Imobiliária), pede um empréstimo para o carro (Crédito, Financiamento e Investimento) e compra ações da Bolsa (Carteira de Investimento). É um "supermercado" financeiro completo.'
+      },
+      {
+        id: 'bancos_comerciais',
+        title: 'Bancos Comerciais',
+        whatTheyDo: 'O banco tradicional clássico. O seu foco principal é captar recursos por meio de depósitos à vista (Conta Corrente) e depósitos a prazo (CDBs), fornecendo crédito de CURTO e MÉDIO prazo para o comércio, indústrias e pessoas físicas.',
+        requisitos: 'Autorização do Bacen. Tem o poder exclusivo (junto com os múltiplos e cooperativas) de "criar moeda" através do multiplicador bancário (emprestar o dinheiro que está parado na conta corrente de outros).',
+        compromissos: 'Manter a liquidez diária para que qualquer cliente consiga sacar seu dinheiro do caixa eletrônico a qualquer momento.',
+        exemplo: 'Banco da Amazônia (BASA), Banco do Nordeste (BNB).',
+        case: 'O dono de uma padaria precisa de dinheiro rápido para pagar o 13º salário dos funcionários. Ele vai a um Banco Comercial, que usa o dinheiro parado na conta corrente de outros clientes para liberar um empréstimo de Capital de Giro para o padeiro pagar em 6 meses.'
+      },
+      {
+        id: 'bancos_investimento',
+        title: 'Bancos de Investimento',
+        whatTheyDo: 'Instituições focadas em captar dinheiro a PRAZO. Eles estruturam grandes operações corporativas, fusões e aquisições (M&A), IPOs (Abertura de Capital na Bolsa) e administram fortunas.',
+        requisitos: 'Proibidos de ter conta corrente tradicional (depósito à vista). Captam recursos apenas por fundos, debêntures, CDBs e repasses externos. Autorização do Bacen e CVM.',
+        compromissos: 'Atuar como estruturadores (Underwriters) de dívidas e ações de grandes empresas, ajudando o país a crescer financiando grandes indústrias a médio e longo prazo.',
+        exemplo: 'BTG Pactual, Credit Suisse Brasil, Goldman Sachs.',
+        case: 'A startup Nubank cresceu muito e quer vender ações na Bolsa de Valores de Nova York (fazer um IPO). Eles contratam um Banco de Investimento, que avalia a empresa, estrutura toda a burocracia, encontra megainvestidores mundiais e executa a venda no dia do lançamento.'
+      },
+      {
+        id: 'caixa_economica',
+        title: 'Caixa Econômica (Federal)',
+        whatTheyDo: 'Instituição com características de Banco Comercial, mas com forte apelo social. Tem o monopólio exclusivo de diversas operações públicas no Brasil.',
+        requisitos: 'Empresa Pública federal (100% do governo). Segue regras do Bacen e também atende a diretrizes de ministérios e políticas de Estado.',
+        compromissos: 'Centralizar o Fundo de Garantia (FGTS), administrar as loterias federais, deter o monopólio do penhor civil (empréstimo sob joias) e ser o principal operador do Sistema Financeiro da Habitação (Minha Casa Minha Vida).',
+        exemplo: 'Caixa Econômica Federal (CEF). (É a única que restou no Brasil, antigamente os estados também tinham suas "Caixas").',
+        case: 'O governo federal decide lançar um programa de construção de 1 milhão de casas populares subsidiadas. O dinheiro do fundo público é repassado para a Caixa Econômica, que fará a triagem das famílias, liberará os contratos de financiamento super baratos e pagará as construtoras.'
+      },
+      {
+        id: 'cooperativas',
+        title: 'Cooperativas de Crédito',
+        whatTheyDo: 'Instituições financeiras formadas pela associação de pessoas de uma mesma categoria ou região para prestarem serviços financeiros exclusivamente aos seus associados (cooperados).',
+        requisitos: 'Não visam lucro. Cada cliente é também "dono" (tem direito a voto em assembleia, sendo 1 CPF = 1 voto, independente de quanto dinheiro tem).',
+        compromissos: 'Oferecer crédito mais barato e taxas melhores aos cooperados. Os "lucros" do ano (chamados de sobras) devem ser obrigatoriamente devolvidos e repartidos entre os associados.',
+        exemplo: 'Sicredi, Sicoob, Unicred.',
+        case: 'Vários agricultores de uma cidade fundam uma Cooperativa. Eles depositam dinheiro lá. Quando um deles precisa comprar um trator, a cooperativa empresta com juros muito menores que um banco comercial. No fim do ano, os juros que a cooperativa lucrou são devolvidos para a conta corrente de todos os agricultores associados.'
+      },
+      {
+        id: 'financeiras',
+        title: 'Financeiras (Soc. de Crédito, Financiamento e Investimento)',
+        whatTheyDo: 'Focadas em conceder empréstimos pessoais e financiamentos para aquisição de bens, serviços e capital de giro, muitas vezes para públicos de maior risco que os bancos recusam.',
+        requisitos: 'Proibidas de ter conta corrente. Captam dinheiro emitindo Letras de Câmbio (LC) e RDBs. Possuem custos operacionais menores que bancos.',
+        compromissos: 'Análise de crédito arrojada. Como emprestam para perfis mais arriscados, geralmente cobram juros (CET) mais altos que a média bancária para compensar a inadimplência.',
+        exemplo: 'BV Financeira, Crefisa, Omni, Aymoré.',
+        case: 'Uma pessoa está com o nome sujo e não consegue cartão no Itaú, mas precisa financiar uma geladeira nova. A loja a encaminha para uma Financeira (ex: Crefisa), que aprova o crédito, cobra um carnê em 12 vezes com juros mais altos, mas resolve o problema do consumidor na hora da compra.'
+      },
+      {
+        id: 'bndes',
+        title: 'BNDES (Banco Nacional de Desenv. Econômico e Social)',
+        whatTheyDo: 'É o principal instrumento de financiamento de longo prazo e fomento do Governo Federal para realizar investimentos em todos os segmentos da economia brasileira.',
+        requisitos: 'Empresa Pública Federal vinculada ao Ministério do Desenvolvimento. Financiado por recursos do Tesouro Nacional, FAT (Fundo de Amparo ao Trabalhador) e emissão de títulos no exterior.',
+        compromissos: 'Apoiar a inovação, desenvolvimento regional, obras de infraestrutura gigantescas (rodovias, portos, energia) e preservação ambiental, cobrando taxas de juros menores (subsidiadas) do que o mercado de balcão privado.',
+        exemplo: 'BNDES.',
+        case: 'Um grupo empresarial quer construir a Usina Hidrelétrica de Belo Monte. Nenhum banco de investimento privado no mundo tem dinheiro suficiente ou coragem para assumir o risco de um empréstimo de 30 anos para a obra. O BNDES entra, financia bilhões de reais a taxas subsidiadas, garantindo que o país tenha energia no futuro.'
+      },
+      {
+        id: 'fgc',
+        title: 'Fundo Garantidor de Créditos (FGC)',
+        whatTheyDo: 'NÃO é um banco. É uma associação civil privada, sem fins lucrativos, que atua como o "seguro" oficial do dinheiro dos brasileiros. Ele protege os investidores e correntistas caso uma instituição financeira quebre.',
+        requisitos: 'Todos os bancos e financeiras são OBRIGADOS a ser associados ao FGC e pagar uma contribuição mensal de 0,01% sobre todos os depósitos de clientes para encher o "cofre" do Fundo.',
+        compromissos: 'Em caso de intervenção ou falência de um banco, o FGC garante a devolução do dinheiro aos clientes, com um limite de até R$ 250.000,00 por CPF/CNPJ por banco (limitado a R$ 1 milhão total a cada 4 anos).',
+        exemplo: 'FGC. E para cooperativas, existe a versão delas, o FGCoop.',
+        case: 'Você tem R$ 100 mil no Banco Neon e R$ 100 mil na NuConta. O Banco Neon quebra e as portas fecham. Você não perde um centavo. Em algumas semanas, o FGC aciona o seguro, pede seus dados e transfere seus R$ 100 mil originais (mais juros devidos até a data da quebra) para o seu outro banco.'
+      },
+      {
+        id: 'corretoras',
+        title: 'Corretoras e Distribuidoras (CTVM e DTVM)',
+        whatTheyDo: 'Atuam como "shoppings financeiros" e intermediários. Ninguém consegue ir direto na porta da B3 (Bolsa de Valores) e comprar uma ação. Você precisa de uma Corretora para intermediar a ordem.',
+        requisitos: 'Fiscalizadas rigorosamente pelo Bacen e pela CVM. Na maioria dos casos, não podem emprestar dinheiro (salvo operações de margem). As Corretoras apenas recebem seu dinheiro para repassar aos produtos.',
+        compromissos: 'Garantir que a ordem de compra/venda de ações do cliente chegue na Bolsa em milissegundos. Distribuir CDBs e LCIs de dezenas de bancos diferentes num único aplicativo.',
+        exemplo: 'XP Investimentos, BTG Digital, Clear, Rico, Genial.',
+        case: 'Um banco pequeno do Nordeste quer captar dinheiro, mas não tem agências em São Paulo. Ele cadastra seus CDBs na prateleira da XP Investimentos. Você, morando no Sul, abre a conta na Corretora XP e compra o CDB desse banco pequeno do Nordeste, ganhando uma taxa excelente. A XP atuou como a "Distribuidora".'
+      },
+      {
+        id: 'bancos_cambio',
+        title: 'Bancos de Câmbio',
+        whatTheyDo: 'São bancos ultrassegmentados. Eles operam exclusivamente na compra, venda e transferências internacionais de moeda estrangeira (Dólar, Euro, etc.).',
+        requisitos: 'Não podem receber depósitos em conta corrente de clientes comuns para uso no Brasil (apenas contas vinculadas a operações de câmbio). Regulamentados pelo Bacen focados em comércio exterior.',
+        compromissos: 'Facilitar a exportação e importação de empresas brasileiras, fechar contratos de câmbio, realizar pagamentos internacionais via remessas (Swift) e prover papel-moeda (dinheiro vivo estrangeiro).',
+        exemplo: 'Travelex Bank, Banco Rendimento, MS Bank.',
+        case: 'Uma fábrica no interior de São Paulo compra turbinas da Alemanha que custam 5 milhões de Euros. Em vez de usar um banco tradicional (que cobra taxas abusivas), a fábrica negocia com um Banco de Câmbio. O banco fecha a cotação do Euro, pega os Reais da fábrica e faz o envio (wire transfer) direto para a conta do fornecedor alemão.'
+      },
+      {
+        id: 'sci_ape',
+        title: 'Crédito Imobiliário (SCI) e Poupança e Empréstimo (APE)',
+        whatTheyDo: 'Eram instituições clássicas do século passado focadas exclusivamente em tijolo e cimento. Elas captam dinheiro via Poupança (APE) ou Letras Imobiliárias (SCI) e usam 100% disso para financiar casas e construtoras.',
+        requisitos: 'Integrantes do Sistema Brasileiro de Poupança e Empréstimo (SBPE). As APEs não têm clientes, mas "associados", muito semelhante às cooperativas, mas focado no ramo habitacional.',
+        compromissos: 'Diminuir o déficit habitacional brasileiro. (Nota histórica: Hoje quase todas foram compradas por Bancos Múltiplos, que incorporaram a carteira Imobiliária, mas a figura jurídica ainda existe).',
+        exemplo: 'Poupex (Associação de Poupança e Empréstimo), Companhia Hipotecária Brasileira (CHB).',
+        case: 'Um Sargento do Exército quer comprar a casa própria. Em vez do banco tradicional, ele vai à Poupex (uma APE forte no meio militar), que capta dinheiro da caderneta de poupança para oferecer a ele uma taxa de financiamento da casa em 30 anos subsidiada pelo governo.'
       }
     ];
 
@@ -400,7 +553,8 @@
               <NavItem icon="fa-flag-checkered" label="Simulador de Objetivos" active={activeTab === 'objetivos'} onClick={() => changeTab('objetivos')} />
               <NavItem icon="fa-bullseye" label="Viver de Renda" active={activeTab === 'independencia'} onClick={() => changeTab('independencia')} />
               
-              <div className="pt-4 pb-2 px-2 text-xs font-bold text-slate-500 uppercase tracking-wider">Mercado</div>
+              <div className="pt-4 pb-2 px-2 text-xs font-bold text-slate-500 uppercase tracking-wider">Educação & Mercado</div>
+              <NavItem icon="fa-university" label="Instituições" active={activeTab === 'instituicoes'} onClick={() => changeTab('instituicoes')} />
               <NavItem icon="fa-book-open" label="Dicionário" active={activeTab === 'dicionario'} onClick={() => changeTab('dicionario')} />
               <NavItem icon="fa-chart-area" label="Cotações" active={activeTab === 'cotacoes'} onClick={() => changeTab('cotacoes')} />
               <NavItem icon="fa-newspaper" label="Notícias" active={activeTab === 'noticias'} onClick={() => changeTab('noticias')} />
@@ -419,7 +573,8 @@
               <h2 className="text-xl font-semibold text-slate-700 capitalize">
                 {activeTab === 'api' ? 'Análise de Perfil de Investidor' : 
                  activeTab === 'independencia' ? 'Independência Financeira' : 
-                 activeTab === 'objetivos' ? 'Planejador de Objetivos' : activeTab}
+                 activeTab === 'objetivos' ? 'Planejador de Objetivos' : 
+                 activeTab === 'instituicoes' ? 'Guia de Instituições Financeiras' : activeTab}
               </h2>
               {profile && (
                 <div className="flex items-center gap-2 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-sm font-medium border border-emerald-200 shadow-sm">
@@ -440,6 +595,7 @@
                   {activeTab === 'simulador' && <Simulator profile={profile} onSave={handleSaveSimulation} />}
                   {activeTab === 'objetivos' && <CalculadoraObjetivos />}
                   {activeTab === 'independencia' && <IndependenciaFinanceira />}
+                  {activeTab === 'instituicoes' && <InstituicoesFinanceiras />}
                   {activeTab === 'dicionario' && <Dictionary />}
                   {activeTab === 'cotacoes' && <MarketStocks stocks={stocks} />}
                   {activeTab === 'noticias' && <NewsFeed news={NEWS_FEED} />}
@@ -462,7 +618,6 @@
 
     // --- 1. DASHBOARD INTELIGENTE ---
     function Dashboard({ profile, simulations, goToTab }) {
-      // Inteligência de Insights baseada na Selic e Perfil
       const getSmartInsight = () => {
         const selicAlta = RATES.SELIC > 0.085;
         if (!profile) return "Faça o teste de perfil para receber análises personalizadas do nosso algoritmo.";
@@ -479,7 +634,6 @@
       return (
         <div className="max-w-5xl mx-auto space-y-6">
           
-          {/* Robô Analista Virtual */}
           <div className="bg-gradient-to-r from-blue-900 to-slate-900 text-white p-6 rounded-xl shadow-md flex gap-4 items-start">
             <div className="bg-blue-500/20 p-3 rounded-full shrink-0">
               <i className="fas fa-robot text-blue-300 text-2xl"></i>
@@ -672,7 +826,7 @@
       const [monthly, setMonthly] = useState('200');
       const [months, setMonths] = useState('12');
       const [results, setResults] = useState(null);
-      const [timeline, setTimeline] = useState([]); // Dados para o Gráfico
+      const [timeline, setTimeline] = useState([]);
 
       const calculate = () => {
         const P = parseFloat(initial) || 0;
@@ -706,14 +860,12 @@
         res.sort((a, b) => b.total - a.total);
         setResults(res);
 
-        // Gerar dados para o Gráfico de Evolução (apenas para o melhor produto)
-        const bestTaxa = RATES.IPCA_MAIS; // Usando a maior taxa para exemplo de curva
+        const bestTaxa = RATES.IPCA_MAIS;
         const rMensal = Math.pow(1 + bestTaxa, 1/12) - 1;
         let dataPontos = [];
         let acumulado = P;
         let investido = P;
         
-        // Pega até 10 pontos de dados para não travar o navegador
         const step = Math.max(1, Math.floor(n / 10)); 
         
         for(let i = 0; i <= n; i+=step) {
@@ -774,7 +926,6 @@
                   </div>
                 </div>
 
-                {/* GRÁFICO VISUAL DE EVOLUÇÃO (CSS PURO) */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
                   <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
                     <i className="fas fa-chart-bar text-blue-500"></i> Evolução Patrimonial
@@ -783,20 +934,16 @@
                     {timeline.map((pt, idx) => {
                       const maxVal = timeline[timeline.length - 1].valor;
                       const heightPercent = (pt.valor / maxVal) * 100;
-                      const invPercent = (pt.investido / pt.valor) * 100; // Porcentagem do dinheiro "tirado do bolso" em relação ao total
+                      const invPercent = (pt.investido / pt.valor) * 100; 
                       
                       return (
                         <div key={idx} className="w-full relative group flex flex-col justify-end" style={{height: `${heightPercent}%`}}>
-                          {/* Tooltip Hover */}
                           <div className="absolute bottom-full mb-2 hidden group-hover:block bg-slate-800 text-white text-xs p-2 rounded whitespace-nowrap z-10 shadow-lg">
                             Mês {pt.mes}<br/>
                             Total: R$ {pt.valor.toLocaleString('pt-BR', {minimumFractionDigits:0, maximumFractionDigits:0})}<br/>
                             Juros: R$ {(pt.valor - pt.investido).toLocaleString('pt-BR', {minimumFractionDigits:0, maximumFractionDigits:0})}
                           </div>
-                          
-                          {/* Barra Principal (Total) */}
                           <div className="w-full bg-emerald-400 rounded-t-sm relative overflow-hidden h-full flex flex-col justify-end transition-all hover:bg-emerald-300">
-                             {/* Barra Interna (Investido do Bolso) */}
                              <div className="w-full bg-slate-300" style={{height: `${invPercent}%`}}></div>
                           </div>
                           <span className="text-[10px] text-slate-400 mt-1 text-center truncate">M{pt.mes}</span>
@@ -854,22 +1001,19 @@
       );
     }
 
-    // --- NOVA ABA: CALCULADORA DE OBJETIVOS (MATEMÁTICA REVERSA) ---
+    // --- 4. CALCULADORA DE OBJETIVOS ---
     function CalculadoraObjetivos() {
       const [objetivo, setObjetivo] = useState('Carro Novo');
       const [valorObjetivo, setValorObjetivo] = useState('80000');
       const [prazoAnos, setPrazoAnos] = useState('3');
       const [valorInicial, setValorInicial] = useState('5000');
       
-      // Cálculo Reverso: Quanto poupar por mês? (Fórmula PMT)
-      const taxaAnual = RATES.CDI; // Usaremos o CDI como média conservadora
+      const taxaAnual = RATES.CDI; 
       const rMensal = Math.pow(1 + taxaAnual, 1/12) - 1;
       const nMeses = parseInt(prazoAnos) * 12 || 1;
       const FV = parseFloat(valorObjetivo) || 0;
       const PV = parseFloat(valorInicial) || 0;
       
-      // FV = PV*(1+r)^n + PMT*[((1+r)^n - 1)/r]
-      // PMT = [FV - PV*(1+r)^n] * r / [(1+r)^n - 1]
       let aporteNecessario = 0;
       const fatorJuros = Math.pow(1 + rMensal, nMeses);
       
@@ -936,14 +1080,13 @@
       );
     }
 
-    // --- NOVA ABA: INDEPENDÊNCIA FINANCEIRA (VIVER DE RENDA) ---
+    // --- 5. INDEPENDÊNCIA FINANCEIRA ---
     function IndependenciaFinanceira() {
       const [gastoMensal, setGastoMensal] = useState('5000');
       const [patrimonioAtual, setPatrimonioAtual] = useState('0');
       const [aporteMensal, setAporteMensal] = useState('1000');
-      const [taxaReal, setTaxaReal] = useState('6'); // % a.a. acima da inflação
+      const [taxaReal, setTaxaReal] = useState('6'); 
 
-      // Cálculos Matemáticos
       const taxaRealMensal = Math.pow(1 + (parseFloat(taxaReal)/100), 1/12) - 1;
       const metaPatrimonio = parseFloat(gastoMensal) / taxaRealMensal;
 
@@ -1033,7 +1176,74 @@
       );
     }
 
-    // --- 4. DICIONÁRIO ---
+    // --- NOVA ABA: INSTITUIÇÕES FINANCEIRAS ---
+    function InstituicoesFinanceiras() {
+      const [searchTerm, setSearchTerm] = useState('');
+      const [expandedId, setExpandedId] = useState(null);
+      
+      const filtered = INSTITUICOES_DATA.filter(i => 
+        i.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        i.whatTheyDo.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+
+      return (
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2 mb-2">
+              <i className="fas fa-university text-blue-600"></i> Guia de Instituições Financeiras
+            </h2>
+            <p className="text-slate-600 text-sm">Entenda como o Sistema Financeiro Nacional é estruturado, quem faz o quê, e como cada instituição impacta o seu dinheiro e a economia.</p>
+          </div>
+          
+          <div className="relative mb-6">
+            <i className="fas fa-search absolute left-4 top-4 text-slate-400"></i>
+            <input type="text" placeholder="Busque por Comercial, Múltiplo, BNDES, FGC, Corretoras..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-blue-500 outline-none shadow-sm" />
+          </div>
+          
+          <div className="space-y-4">
+            {filtered.map(item => (
+              <div key={item.id} className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <button onClick={() => setExpandedId(expandedId === item.id ? null : item.id)} className="w-full flex justify-between p-5 hover:bg-slate-50">
+                  <span className="font-bold text-slate-800 text-lg">{item.title}</span>
+                  <i className={`fas fa-chevron-down text-slate-400 transition-transform ${expandedId === item.id ? 'rotate-180' : ''}`}></i>
+                </button>
+                {expandedId === item.id && (
+                  <div className="px-5 pb-6 pt-2 border-t border-slate-100 text-sm animate-fade-in space-y-5">
+                    
+                    <div>
+                      <p className="font-bold text-blue-800 mb-1"><i className="fas fa-briefcase mr-1"></i> O que fazem?</p>
+                      <p className="text-slate-700 leading-relaxed bg-blue-50 p-3 rounded-lg border border-blue-100">{item.whatTheyDo}</p>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div>
+                        <p className="font-bold text-amber-700 mb-1"><i className="fas fa-clipboard-list mr-1"></i> Requisitos</p>
+                        <p className="text-slate-600 leading-relaxed">{item.requisitos}</p>
+                      </div>
+                      <div>
+                        <p className="font-bold text-emerald-700 mb-1"><i className="fas fa-handshake mr-1"></i> Compromissos</p>
+                        <p className="text-slate-600 leading-relaxed">{item.compromissos}</p>
+                      </div>
+                    </div>
+
+                    <div className="border-t border-slate-100 pt-4">
+                      <p className="text-slate-700 mb-2"><strong className="text-slate-900">Exemplos no Brasil:</strong> {item.exemplo}</p>
+                      <div className="bg-slate-800 text-slate-300 p-4 rounded-lg">
+                        <p className="font-bold text-white mb-1"><i className="fas fa-lightbulb text-yellow-400 mr-1"></i> Case Prático:</p>
+                        <p className="leading-relaxed text-sm">{item.case}</p>
+                      </div>
+                    </div>
+
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // --- 6. DICIONÁRIO COMPLETO ---
     function Dictionary() {
       const [searchTerm, setSearchTerm] = useState('');
       const [expandedId, setExpandedId] = useState(null);
@@ -1049,7 +1259,7 @@
           </div>
           <div className="relative mb-6">
             <i className="fas fa-search absolute left-4 top-4 text-slate-400"></i>
-            <input type="text" placeholder="Busque por CDB, LCI, FII, Swap..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-emerald-500 outline-none shadow-sm" />
+            <input type="text" placeholder="Busque por CDB, LCI, FII, Swap, ETF..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-emerald-500 outline-none shadow-sm" />
           </div>
           <div className="space-y-4">
             {filtered.map(item => (
@@ -1089,7 +1299,7 @@
       );
     }
 
-    // --- 5. COTAÇÕES E NOTÍCIAS ---
+    // --- 7. COTAÇÕES E NOTÍCIAS ---
     function MarketStocks({ stocks }) {
       return (
         <div className="max-w-4xl mx-auto">
