@@ -107,7 +107,7 @@
       {
         id: 'cdi', title: 'CDI (Certificado de Depósito Interbancário)',
         definition: 'Não é um investimento comprável. O CDI é a taxa de juros dos empréstimos diários que os bancos fazem entre si para fechar o caixa do dia no azul.',
-        howItYields: 'Não rende diretamente para você, é o "termômetro" usado para balizar outros investimentos. Anda cerca de 0,10% abaixo da taxa Selic.',
+        howItYields: 'Não rende diretamente para você, é o "termômetro" usado para balizar outros investments. Anda cerca de 0,10% abaixo da taxa Selic.',
         basis: 'Baseado estritamente na Taxa Selic definida pelo Banco Central (Copom).',
         cases: [
           'Case 1: BC define a Selic em 10,50%. Automaticamente o mercado ajusta o CDI para aproximadamente 10,40%.',
@@ -413,7 +413,7 @@
       }
     ];
 
-    // --- NOVOS DADOS: ESTRUTURA DO SFN ---
+    // --- NOVOS DADOS: ESTRUTURA DO SFN E MACROECONOMIA ---
     const SFN_DATA = [
       {
         id: 'sfn',
@@ -492,11 +492,35 @@
         title: 'PIB (Produto Interno Bruto)',
         whatItIs: 'Não é uma instituição, mas é o indicador macroeconômico mais importante de um país. Representa a soma (em dinheiro) de todos os bens e serviços finais produzidos no país durante um ano.',
         whatTheyDo: 'Mede o tamanho e a riqueza da economia. Se o PIB cresce, o país está produzindo mais, gerando empregos e riqueza. Se o PIB cai (duas vezes seguidas), o país entra em "Recessão Técnica".',
-        howTheyDoIt: 'O IBGE calcula o PIB usando a fórmula: Consumo das Famílias + Gastos do Governo + Investimentos das Empresas + (Exportações - Importações).',
+        howTheyDoIt: 'O IBGE calcula o PIB usando a fórmula: Consumo das Famílias + Gastos do Governo + Investimentos das Empresas + (Exportações - Importações). A base matemática oficial sob a Ótica da Despesa é expressa pela equação: PIB = C + I + G + (X - M). Onde C é o Consumo privado; I é o Investimento (Formação Bruta de Capital Fixo das empresas); G são os Gastos do Governo; X são as Exportações; e M as Importações. Também pode ser calculado pela Ótica da Oferta (valor adicionado de cada setor da indústria, agro e serviços) e pela Ótica da Renda (soma de salários, juros, aluguéis e lucros distribuídos).',
         composition: 'Engloba a indústria, a agropecuária e o setor de serviços.',
         cases: [
           'Case 1: No final de 2023, o IBGE anunciou que o PIB cresceu 2,9%. Isso atrai investidores estrangeiros para a Bolsa de Valores (B3), pois mostra que as empresas brasileiras estão lucrando e crescendo.',
           'Case 2: Na crise de 2015, o PIB brasileiro caiu quase 3,5%. Empresas fecharam, o desemprego subiu e os lucros das empresas listadas na CVM despencaram, gerando queda generalizada no mercado financeiro.'
+        ]
+      },
+      {
+        id: 'ipca',
+        title: 'IPCA (Índice Nacional de Preços ao Consumidor Amplo)',
+        whatItIs: 'É a inflação oficial do Brasil. Mede a variação do custo de vida médio de famílias com renda mensal de 1 a 40 salários mínimos, abrangendo as principais regiões metropolitanas do país.',
+        whatTheyDo: 'Serve como o termômetro principal e oficial da economia. Sua maior responsabilidade é balizar as decisões do Banco Central: se o IPCA sobe, significa que a inflação está alta, obrigando o Bacen a subir a Taxa Selic para esfriar o consumo.',
+        howTheyDoIt: 'O IBGE (Instituto Brasileiro de Geografia e Estatística) pesquisa todos os meses o preço de uma "cesta" de produtos e serviços (arroz, feijão, gasolina, energia, aluguel, saúde) para ver o que ficou mais caro ou mais barato.',
+        composition: 'Calculado pelo IBGE. A cesta de produtos é dividida em grandes grupos de consumo das famílias: Alimentação e Bebidas, Transportes, Habitação, Saúde, Vestuário, etc.',
+        cases: [
+          'Case 1: Tesouro IPCA+. Se você compra esse título, o governo te paga uma taxa fixa (ex: 6%) MAIS a variação do IPCA do período. Se a inflação oficial fechar o ano em 10%, seu dinheiro rende 16%, garantindo que seu poder de compra não seja corroído pela alta dos preços.',
+          'Case 2: Efeito na Selic. O IPCA começa a bater 8% ao ano (quando a meta oficial era 3%). O Copom (Bacen) faz uma reunião de emergência e sobe a Taxa Selic de 10% para 12% para encarecer os empréstimos, fazendo as pessoas pararem de consumir em excesso, forçando os preços do IPCA a caírem.'
+        ]
+      },
+      {
+        id: 'igpm',
+        title: 'IGP-M (Índice Geral de Preços - Mercado)',
+        whatItIs: 'Conhecido popularmente como a "Inflação do Aluguel". É um indicador macroeconômico focado em medir o movimento dos preços de forma mais ampla que o IPCA, pegando o ciclo todo: desde a porta da fábrica/fazenda até o consumidor final.',
+        whatTheyDo: 'É responsável por servir de base legal para reajustar grande parte dos contratos da economia brasileira, como aluguéis de imóveis residenciais e comerciais, tarifas de energia elétrica, pedágios, mensalidades de escolas e planos de saúde.',
+        howTheyDoIt: 'É calculado pela FGV (Fundação Getulio Vargas). Diferente do IPCA que olha só para a prateleira do mercado, o IGP-M olha muito para os custos de produção no atacado (que sofrem forte impacto imediato da cotação do Dólar e das commodities internacionais).',
+        composition: 'Sua fórmula matemática é uma soma exata de 3 outros índices: 60% do IPA-M (Índice de Preços ao Produtor Amplo - Atacado), 30% do IPC-M (Índice de Preços ao Consumidor - Varejo) e 10% do INCC-M (Índice Nacional de Custo da Construção).',
+        cases: [
+          'Case 1 (Reajuste de Aluguel): Você mora de aluguel pagando R$ 2.000 e o contrato vence este mês. No ano, o Dólar explodiu e fez o IGP-M fechar em altos 20% (mesmo com o IPCA estando baixo). Seu aluguel sofrerá um reajuste de 20%, indo imediatamente para R$ 2.400.',
+          'Case 2 (Efeito do Atacado e Dólar): Houve uma guerra no exterior e o preço do minério de ferro e da soja disparou em dólares. Como 60% do IGP-M é composto pelo Índice do Produtor Amplo (IPA), essa alta internacional de preços contamina o IGP-M quase instantaneamente, fazendo-o subir muito mais rápido e de forma mais volátil que a inflação comum (IPCA).'
         ]
       },
       {
@@ -1352,14 +1376,14 @@
         <div className="max-w-4xl mx-auto">
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2 mb-2">
-              <i className="fas fa-sitemap text-indigo-600"></i> Estrutura do SFN
+              <i className="fas fa-sitemap text-indigo-600"></i> Estrutura do SFN e Macroeconomia
             </h2>
-            <p className="text-slate-600 text-sm">Conheça o Sistema Financeiro Nacional. Quem manda, quem fiscaliza e como o dinheiro do país é organizado.</p>
+            <p className="text-slate-600 text-sm">Conheça o Sistema Financeiro Nacional, os indicadores econômicos oficiais, quem manda, quem fiscaliza e como o dinheiro do país é organizado.</p>
           </div>
           
           <div className="relative mb-6">
             <i className="fas fa-search absolute left-4 top-4 text-slate-400"></i>
-            <input type="text" placeholder="Busque por SFN, CMN, BACEN, CVM, COAF, B3..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-indigo-500 outline-none shadow-sm" />
+            <input type="text" placeholder="Busque por IPCA, PIB, IGP-M, SFN, CMN, BACEN..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-indigo-500 outline-none shadow-sm" />
           </div>
           
           <div className="space-y-4">
@@ -1383,7 +1407,7 @@
                         <p className="text-slate-600 leading-relaxed">{item.whatTheyDo}</p>
                       </div>
                       <div>
-                        <p className="font-bold text-amber-700 mb-1"><i className="fas fa-cogs mr-1"></i> Como fazem</p>
+                        <p className="font-bold text-amber-700 mb-1"><i className="fas fa-cogs mr-1"></i> Como fazem / Cálculo</p>
                         <p className="text-slate-600 leading-relaxed">{item.howTheyDoIt}</p>
                       </div>
                     </div>
