@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulador de Investimentos</title>
+  
+  <!-- Tailwind CSS para o Visual -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- FontAwesome para os Ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- React & ReactDOM -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  
+  <!-- Babel para converter o código React dentro do navegador -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Firebase (Opcional, para salvar dados se configurado) -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+  <style>
+    /* Estilos extras barra de rolagem */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+  </style>
+</head>
+<body class="bg-gray-50 text-slate-800 font-sans">
+  
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useMemo } = React;
+
+    // --- CONFIGURAÇÃO FIREBASE ---
+    let auth, db, appId = 'simulador-invest-app';
+    try {
+      // Tenta usar configuração do ambiente se existir
+      const configStr = typeof __firebase_config !== 'undefined' ? __firebase_config : null;
+      if (configStr) {
+        firebase.initializeApp(JSON.parse(configStr));
+        auth = firebase.auth();
+        db = firebase.firestore();
+        appId = typeof __app_id !== 'undefined' ? __app_id : appId;
+      }
+    } catch (e) {
+      console.warn("Executando sem banco de dados na nuvem.");
+    }
+
+    // --- DADOS DO DICIONÁRIO E NOTÍCIAS ---
+    const NEWS_FEED = [
+      { id: 1, source: 'InfoMoney', time: 'Agora', title: 'Copom decide manter a taxa Selic em 10,50% ao ano, em decisão unânime.', impact: 'high' },
+      { id: 2, source: 'Valor Econômico', time: '10 min atrás', title: 'Bolsa opera em alta puxada por commodities e bancos.', impact: 'medium' },
+      { id: 3, source: 'Exame', time: '1 hora atrás', title: 'Tesouro Direto: taxas disparam com aversão a risco no exterior.', impact: 'high' },
+      { id: 4, source: 'Suno Notícias', time: '2 horas atrás', title: 'Fundos Imobiliários: IFIX renova máxima histórica em pregão agitado.', impact: 'low' },
+    ];
+
+    const INITIAL_STOCKS = [
+      { symbol: 'PETR4', name: 'Petrobras', price: 38.50, type: 'Ação' },
+      { symbol: 'VALE3', name: 'Vale', price: 62.10, type: 'Ação' },
+      { symbol: 'ITUB4', name: 'Itaú Unibanco', price: 34.20, type: 'Ação' },
+      { symbol: 'IVVB11', name: 'S&P 500 BRL', price: 295.40, type: 'ETF' },
+      { symbol: 'BOVA11', name: 'Ibovespa ETF', price: 125.30, type: 'ETF' },
+      { symbol: 'AAPL34', name: 'Apple BDR', price: 45.80, type: 'BDR' },
+      { symbol: 'MSFT34', name: 'Microsoft BDR', price: 58.90, type: 'BDR' },
+    ];
+
+    const DICTIONARY_DATA = [
+      {
+        id: 'cdb', title: 'CDB (Certificado de Depósito Bancário)',
+        definition: 'É um título de renda fixa emitido por bancos. Na prática, você está emprestando dinheiro para o banco, e em troca, ele devolve o valor acrescido de juros no futuro.',
+        howItYields: 'Pode render de forma Prefixada (taxa definida no início), Pós-fixada (acompanhando um indicador, quase sempre o CDI) ou Híbrida (Inflação + taxa fixa). O rendimento sofre desconto de Imposto de Renda (IR) regressivo (de 22,5% a 15%).',
+        basis: 'Geralmente atrelado ao CDI, que por sua vez segue a taxa básica de juros (Selic).',
+        cases: [
+          'Case 1: Você aplica R$ 1.000 num CDB 100% do CDI. Se o CDI for 10% no ano, seu dinheiro rende R$ 100 antes de descontar o IR.',
+          'Case 2: Você aplica num CDB Prefixado de 12% a.a. Não importa se a Selic cair para 2% ou subir para 20%, ao final de 1 ano você terá exatamente 12% de lucro bruto.'
+        ]
+      },
+      {
+        id: 'ltn', title: 'LTN (Tesouro Prefixado)',
+        definition: 'Letra do Tesouro Nacional. É um título público onde você empresta dinheiro para o Governo Federal com uma rentabilidade exata e travada desde o dia da compra.',
+        howItYields: 'Rende uma taxa fixa anual (ex: 11% ao ano). Sofre IR regressivo. Se você resgatar antes do vencimento, o título sofre "marcação a mercado", podendo resultar em lucro antecipado ou até prejuízo.',
+        basis: 'Baseado na projeção futura da taxa de juros (curva de juros) no momento da compra.',
+        cases: [
+          'Case 1 (Ficando até o fim): Você compra 1 título por R$ 800 que promete pagar R$ 1.000 no vencimento (daqui 3 anos). No vencimento, recebe R$ 1.000, independente da economia.',
+          'Case 2 (Resgate antecipado): Você comprou a 11% a.a. Uma crise acontece e novos títulos pagam 15% a.a. Se vender agora, terá prejuízo pois ninguém pagará o preço cheio.'
+        ]
+      },
+      {
+        id: 'ntnb', title: 'NTN-B (Tesouro IPCA+)',
+        definition: 'Nota do Tesouro Nacional série B. Título do governo que protege o investidor contra a inflação, garantindo sempre um ganho real (acima do aumento dos preços).',
+        howItYields: 'Rende a variação da inflação (IPCA) do período somada a uma taxa fixa (ex: IPCA + 6%).',
+        basis: 'Baseado no índice oficial de inflação (IPCA) mais um prêmio de risco definido no dia da compra.',
+        cases: [
+          'Case 1: Você investe em IPCA + 5%. Se a inflação do ano for 20%, seu dinheiro renderá 25% (20% para cobrir a inflação e 5% de lucro real).',
+          'Case 2: Juntando para aposentadoria. Garante que o dinheiro não perderá poder de compra e ainda crescerá acima da inflação.'
+        ]
+      },
+      {
+        id: 'cdi', title: 'CDI (Certificado de Depósito Interbancário)',
+        definition: 'Não é um investimento comprável. O CDI é a taxa de juros dos empréstimos diários que os bancos fazem entre si para fechar o caixa do dia no azul.',
+        howItYields: 'Não rende diretamente para você, é o "termômetro" usado para balizar outros investimentos. Anda cerca de 0,10% abaixo da taxa Selic.',
+        basis: 'Baseado estritamente na Taxa Selic definida pelo Banco Central (Copom).',
+        cases: [
+          'Case 1: BC define a Selic em 10,50%. Automaticamente o mercado ajusta o CDI para aproximadamente 10,40%.',
+          'Case 2: Gerente oferece fundo que rende "80% do CDI". Se o CDI for 10% no ano, esse fundo renderá apenas 8%.'
+        ]
+      },
+      {
+        id: 'lcilca', title: 'LCI e LCA (Letras de Crédito Imobiliário / Agronegócio)',
+        definition: 'Títulos emitidos por bancos para captar dinheiro especificamente para financiar o setor imobiliário ou o agronegócio.',
+        howItYields: 'A mágica é a ISENÇÃO DE IMPOSTO DE RENDA para pessoa física. Pagam um percentual menor do CDI (ex: 90%), mas o lucro vai 100% para você.',
+        basis: 'Estimuladas pelo governo para baratear o crédito para moradia e agricultura.',
+        cases: [
+          'Case 1: LCI a 90% do CDI x CDB a 100% do CDI. A LCI (isenta) acaba entregando mais dinheiro líquido que o CDB na maioria dos casos após o IR do CDB.',
+          'Case 2: Você tem um dinheiro para usar daqui a 9 meses. A LCI exige carência mínima, então ela se encaixa perfeitamente no seu objetivo de resgate limpo de impostos.'
+        ]
+      },
+      {
+        id: 'rdb', title: 'RDB (Recibo de Depósito Bancário)',
+        definition: 'Quase idêntico ao CDB, mas com uma diferença crucial: RDBs geralmente são INTRANSFERÍVEIS antes do vencimento.',
+        howItYields: 'Rende igual ao CDB. Muito comum em contas de pagamento (como NuConta e financeiras menores).',
+        basis: 'Financiar as operações de empréstimos, com garantia do FGC.',
+        cases: [
+          'Case 1: Dinheiro na caixinha do banco digital rende em RDB a 100% do CDI. Como o app garante a liquidez (ele recompra), ser "intransferível" não afeta.',
+          'Case 2: Aplicando num RDB fechado por 5 anos, você está travado até a data final, sem poder vender no mercado secundário.'
+        ]
+      },
+      {
+        id: 'lc', title: 'LC (Letra de Câmbio)',
+        definition: 'Apesar do nome, não tem a ver com moeda estrangeira. São títulos emitidos por "Financeiras" para financiar empréstimos e carnês de lojas.',
+        howItYields: 'Como financeiras têm mais risco que grandes bancos, as LCs oferecem taxas maiores (ex: 115% do CDI). Sofrem IR.',
+        basis: 'Carteira de empréstimos pessoais da instituição emissora.',
+        cases: [
+          'Case 1: Você investe a 118% do CDI, ganha bem mais que num banco tradicional, e ainda tem garantia do FGC até R$ 250 mil.',
+          'Case 2: A financeira fale. Acionando a garantia do FGC, você recebe seu dinheiro de volta.'
+        ]
+      },
+      {
+        id: 'debentures', title: 'Debêntures',
+        definition: 'Títulos de dívida emitidos por EMPRESAS PRIVADAS (Vale, Petrobras) para captar dinheiro para grandes projetos.',
+        howItYields: 'Prefixado, CDI ou Inflação. NÃO TEM garantia do FGC. Risco é atrelado à saúde da empresa.',
+        basis: 'Projeto da empresa. As "Debêntures Incentivadas" (infraestrutura) são isentas de IR para pessoa física.',
+        cases: [
+          'Case 1: Debênture incentivada pagando IPCA + 7% isento de IR. Excelente, mas se a empresa falir, você perde tudo (sem FGC).',
+          'Case 2: Locadora de carros emite debêntures a 120% do CDI. Pagam IR, mas atraem investidores que confiam na empresa.'
+        ]
+      },
+      {
+        id: 'acao', title: 'Ações',
+        definition: 'A menor fração do capital social de uma empresa. Você se torna sócio (acionista) do negócio.',
+        howItYields: 'Rende pela Valorização da Cotação e pela Distribuição de Proventos (Dividendos e Juros sobre Capital Próprio).',
+        basis: 'Lucratividade da empresa, gestão e cenário macroeconômico.',
+        cases: [
+          'Case 1 (Valorização): Compra 100 ações a R$ 20. Empresa anuncia contrato, preço vai a R$ 30. Você vende e lucra R$ 1.000.',
+          'Case 2 (Dividendos): Compra ações de transmissão de energia. Cai na conta R$ 3,00 por ação como "aluguel" semestral do seu investimento.'
+        ]
+      },
+      {
+        id: 'termo', title: 'Contratos a Termo',
+        definition: 'Acordo para comprar ou vender uma ação numa data futura, mas por um preço já combinado hoje.',
+        howItYields: 'Você lucra com a diferença. Forma de operar alavancado (pagando apenas margem de garantia).',
+        basis: 'Expectativa direcional forte sobre um ativo.',
+        cases: [
+          'Case 1: Compra a termo para daqui 30 dias por R$ 51. Se no dia a ação estiver R$ 60, você compra por 51, vende por 60 e embolsa R$ 9 de lucro.',
+          'Case 2: Travou compra a R$ 51. Ação desaba para R$ 40. Você é OBRIGADO a comprar por 51, tendo prejuízo de R$ 11.'
+        ]
+      },
+      {
+        id: 'opcoes', title: 'Mercado de Opções',
+        definition: 'Contratos que dão o DIREITO (não obrigação) de comprar (Call) ou vender (Put) um ativo por preço fixo no futuro, mediante pagamento de um "seguro" (Prêmio).',
+        howItYields: 'O comprador arrisca apenas o "seguro". O vendedor recebe o prêmio, mas assume o risco da diferença.',
+        basis: 'Volatilidade da ação, tempo até vencimento e distância do preço atual para o strike.',
+        cases: [
+          'Case 1 (Call): Compra Call de R$ 32 pagando R$ 0,50. Ação vai pra R$ 40. Exerce o direito de comprar a R$ 32, transformando R$ 0,50 num lucro gigante.',
+          'Case 2 (Put): Tem medo que ação caia. Compra Put (seguro) por R$ 1,00 para vender a R$ 38. Ação cai pra R$ 20, mas você pode vender por R$ 38.'
+        ]
+      },
+      {
+        id: 'futuro', title: 'Mercado Futuro',
+        definition: 'Compromisso de comprar/vender ativos (Dólar, Índice, Milho) no futuro. Ocorre o "ajuste diário" (lucros/prejuízos na conta todo dia).',
+        howItYields: 'Especulação (Day Trade) ou Proteção (Hedge). Ganho vem da variação de pontos ou centavos.',
+        basis: 'Contratos padronizados pela Bolsa (B3).',
+        cases: [
+          'Case 1 (Proteção): Produtor de café vende contratos futuros a R$ 1.000 para se proteger da queda do preço da saca.',
+          'Case 2 (Day Trade): Acha que dólar sobe. Compra WDO (Mini Dólar). Cada ponto que sobe, ganha R$ 10. Zera no fim do dia.'
+        ]
+      },
+      {
+        id: 'swap', title: 'Swap',
+        definition: 'Acordo onde duas partes "trocam" indexadores de risco (Ex: Trocar risco da taxa Selic pelo Dólar).',
+        howItYields: 'Calculam a diferença no fim do contrato. Quem render mais, recebe a diferença do outro.',
+        basis: 'Gestão de risco de tesourarias de bancos e multinacionais.',
+        cases: [
+          'Case 1: Empresa tem dívida em Dólar e vendas em Reais. Faz Swap Cambial trocando risco de Dólar por CDI.',
+          'Case 2: Banco Central faz Swaps Cambiais para segurar a cotação do dólar sem gastar reservas em espécie.'
+        ]
+      },
+      {
+        id: 'clube', title: 'Clube de Investimento',
+        definition: '"Condomínio" de pessoas físicas (máx 50, amigos/família) para investir em ações juntos.',
+        howItYields: 'Rende igual carteira de ações. Dilui custos e acessa operações maiores.',
+        basis: 'Regulamentação CVM, exige gestor e administrador.',
+        cases: [
+          'Case 1: 10 amigos juntam R$ 10 mil cada. Com R$ 100 mil votam quais ações comprar e dividem os lucros.',
+          'Case 2: Tributação favorável. O clube recolhe IR de 15% apenas no resgate, permitindo girar ações sem impostos intermediários.'
+        ]
+      },
+      {
+        id: 'fundos', title: 'Fundos de Investimento (Geral)',
+        definition: 'Veículo coletivo onde várias pessoas colocam dinheiro nas mãos de um Gestor Profissional que decide onde aplicar, cobrando Taxa de Administração.',
+        howItYields: 'Depende do tipo (Renda Fixa, Ações, FIIs).',
+        basis: 'Estratégia do gestor. Maioria sofre "Come-Cotas" (IR semestral), exceto fundos de ações e FIIs.',
+        cases: [
+          'Case 1 (Ações): Não sabe escolher. Compra cotas, o gestor escolhe 30 ações. Se a carteira sobe 20%, sua cota sobe 20%.',
+          'Case 2 (FII): Compra cotas de Fundo Imobiliário. Todo mês o lucro dos aluguéis dos prédios cai na sua conta isento de IR.'
+        ]
+      },
+      {
+        id: 'previdencia', title: 'Previdência Privada (VGBL e PGBL)',
+        definition: 'Fundos de longo prazo para aposentadoria. Têm benefícios fiscais e não entram em inventário.',
+        howItYields: 'Gestor investe em Renda Fixa ou Ações. Tributação Progressiva ou Regressiva (cai a 10% após 10 anos).',
+        basis: 'Incentivo do governo. PGBL abate até 12% da renda tributável. VGBL incide IR só sobre o lucro.',
+        cases: [
+          'Case 1 (PGBL): Ganha R$ 100 mil/ano. Aplica R$ 12 mil. A Receita calcula seu imposto como se ganhasse R$ 88 mil, gerando restituição.',
+          'Case 2 (VGBL): Põe R$ 500 mil pro filho de beneficiário. Se faltar, dinheiro vai direto pra conta dele sem inventário.'
+        ]
+      },
+      {
+        id: 'poupanca', title: 'Poupança',
+        definition: 'Aplicação tradicional do Brasil. Simples e segura, mas possui um dos piores rendimentos.',
+        howItYields: 'Isenta de IR e taxas. Se Selic > 8,5%, rende 0,5% a.m + TR. Se Selic <= 8,5%, rende 70% da Selic + TR. Rende só no "aniversário".',
+        basis: 'Regra de remuneração ditada pelo Banco Central.',
+        cases: [
+          'Case 1: Saca dinheiro no dia 29, mas depositou no dia 05. Não completou o aniversário, perde TODO o rendimento do mês.',
+          'Case 2: Selic a 10,5%. Poupança rende aprox. 6,17% a.a., perdendo feio para o Tesouro Selic.'
+        ]
+      },
+      {
+        id: 'drs', title: 'DRs, BDRs e ADRs',
+        definition: 'Certificados que representam ações estrangeiras negociadas no mercado local.',
+        howItYields: 'Rende de acordo com a variação da ação original no país dela + a variação cambial (Dólar/Real).',
+        basis: 'Instituição compra ações lá fora, guarda num cofre e emite "recibos" (BDRs) na bolsa brasileira.',
+        cases: [
+          'Case 1 (BDR): Compra AAPL34 (Apple). Se Apple sobe 5% nos EUA e Dólar sobe 2%, seu BDR sobe aprox. 7% em Reais.',
+          'Case 2 (ADR): Petrobras emite ADRs em Nova York para americanos investirem nela pagando em dólares.'
+        ]
+      }
+    ];
+
+    const RATES = { SELIC: 0.105, CDI: 0.104, POUPANCA: 0.0617, IPCA: 0.045 };
+
+    // ==========================================
+    // COMPONENTE PRINCIPAL (APP)
+    // ==========================================
+    function App() {
+      const [user, setUser] = useState(null);
+      const [activeTab, setActiveTab] = useState('dashboard');
+      const [profile, setProfile] = useState(null);
+      const [simulations, setSimulations] = useState([]);
+      const [loadingDb, setLoadingDb] = useState(false);
+      const [stocks, setStocks] = useState(INITIAL_STOCKS);
+      const [sidebarOpen, setSidebarOpen] = useState(false); // Mobile menu
+
+      // Autenticação e Banco de Dados
+      useEffect(() => {
+        if (!auth) return;
+        setLoadingDb(true);
+
+        const initAuth = async () => {
+          try {
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+              await auth.signInWithCustomToken(__initial_auth_token);
+            } else {
+              await auth.signInAnonymously();
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        };
+        initAuth();
+
+        const unsubscribe = auth.onAuthStateChanged((currentUser) => {
+          setUser(currentUser);
+          if (!currentUser) setLoadingDb(false);
+        });
+        return () => unsubscribe();
+      }, []);
+
+      useEffect(() => {
+        if (!user || !db) return;
+
+        // Buscar Perfil
+        const profileRef = db.collection('artifacts').doc(appId)
+                             .collection('users').doc(user.uid)
+                             .collection('profile').doc('data');
+                             
+        profileRef.get().then((docSnap) => {
+          if (docSnap.exists) setProfile(docSnap.data().result);
+          setLoadingDb(false);
+        }).catch(console.error);
+
+        // Escutar Simulações
+        const simRef = db.collection('artifacts').doc(appId)
+                         .collection('users').doc(user.uid)
+                         .collection('simulations');
+                         
+        const unsubscribeSims = simRef.onSnapshot((snapshot) => {
+          const simData = [];
+          snapshot.forEach((doc) => simData.push({ id: doc.id, ...doc.data() }));
+          simData.sort((a, b) => (b.createdAt?.toMillis() || 0) - (a.createdAt?.toMillis() || 0));
+          setSimulations(simData);
+        }, console.error);
+
+        return () => unsubscribeSims();
+      }, [user]);
+
+      // Motor de Flutuação de Mercado
+      useEffect(() => {
+        const interval = setInterval(() => {
+          setStocks(currentStocks => currentStocks.map(stock => {
+            const changePercent = (Math.random() - 0.5) * 0.01; 
+            return {
+              ...stock,
+              price: stock.price * (1 + changePercent),
+              change: changePercent * 100
+            };
+          }));
+        }, 5000);
+        return () => clearInterval(interval);
+      }, []);
+
+      const handleSaveProfile = async (result) => {
+        setProfile(result);
+        if (user && db) {
+          const profileRef = db.collection('artifacts').doc(appId)
+                               .collection('users').doc(user.uid)
+                               .collection('profile').doc('data');
+          await profileRef.set({ result, updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
+        }
+        setActiveTab('dashboard');
+        window.scrollTo(0,0);
+      };
+
+      const handleSaveSimulation = async (simData) => {
+        if (user && db) {
+          const simRef = db.collection('artifacts').doc(appId)
+                           .collection('users').doc(user.uid)
+                           .collection('simulations');
+          await simRef.add({ ...simData, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+          alert('Simulação salva com sucesso!');
+        }
+      };
+
+      const changeTab = (tab) => {
+        setActiveTab(tab);
+        setSidebarOpen(false); // Fechar menu mobile ao clicar
+        window.scrollTo(0,0);
+      };
+
+      return (
+        <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row font-sans text-slate-800">
+          
+          {/* BOTÃO MENU MOBILE */}
+          <div className="md:hidden bg-slate-900 text-white p-4 flex justify-between items-center z-20">
+            <div className="flex items-center gap-2 font-bold text-lg">
+              <i className="fas fa-chart-line text-emerald-400"></i> InvestSim
+            </div>
+            <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-2">
+              <i className={`fas ${sidebarOpen ? 'fa-times' : 'fa-bars'} text-xl`}></i>
+            </button>
+          </div>
+
+          {/* MENU LATERAL */}
+          <aside className={`w-full md:w-64 bg-slate-900 text-slate-300 flex-col shadow-xl z-10 md:min-h-screen transition-all ${sidebarOpen ? 'flex' : 'hidden md:flex'}`}>
+            <div className="p-6 hidden md:flex items-center gap-3 text-white border-b border-slate-800">
+              <i className="fas fa-chart-line text-emerald-400 text-2xl"></i>
+              <h1 className="text-xl font-bold tracking-tight">InvestSim</h1>
+            </div>
+            
+            <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto flex flex-col">
+              <NavItem icon="fa-chart-pie" label="Dashboard" active={activeTab === 'dashboard'} onClick={() => changeTab('dashboard')} />
+              <NavItem icon="fa-user-check" label="Perfil (API)" active={activeTab === 'api'} onClick={() => changeTab('api')} />
+              <NavItem icon="fa-wallet" label="Simulador" active={activeTab === 'simulador'} onClick={() => changeTab('simulador')} />
+              <NavItem icon="fa-book-open" label="Dicionário" active={activeTab === 'dicionario'} onClick={() => changeTab('dicionario')} />
+              <NavItem icon="fa-chart-area" label="Cotações" active={activeTab === 'cotacoes'} onClick={() => changeTab('cotacoes')} />
+              <NavItem icon="fa-newspaper" label="Notícias" active={activeTab === 'noticias'} onClick={() => changeTab('noticias')} />
+            </nav>
+            
+            <div className="p-4 border-t border-slate-800 text-xs text-slate-500 text-center">
+              {user ? 'Sessão Ativa' : 'Modo Visitante'}
+            </div>
+          </aside>
+
+          {/* ÁREA PRINCIPAL */}
+          <main className="flex-1 flex flex-col overflow-hidden h-screen">
+            <header className="bg-white p-4 shadow-sm border-b border-gray-200 flex justify-between items-center z-0 hidden md:flex">
+              <h2 className="text-xl font-semibold text-slate-700 capitalize">
+                {activeTab === 'api' ? 'Análise de Perfil de Investidor' : activeTab}
+              </h2>
+              {profile && (
+                <div className="flex items-center gap-2 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-sm font-medium border border-emerald-200">
+                  <i className="fas fa-check-circle"></i> Perfil: {profile.charAt(0).toUpperCase() + profile.slice(1)}
+                </div>
+              )}
+            </header>
+
+            <div className="flex-1 overflow-y-auto p-4 md:p-8 bg-slate-50">
+              {loadingDb && !user ? (
+                <div className="flex items-center justify-center h-full text-slate-400">
+                  <i className="fas fa-spinner fa-spin mr-2"></i> Carregando...
+                </div>
+              ) : (
+                <>
+                  {activeTab === 'dashboard' && <Dashboard profile={profile} simulations={simulations} goToTab={changeTab} />}
+                  {activeTab === 'api' && <SuitabilityAPI onComplete={handleSaveProfile} currentProfile={profile} />}
+                  {activeTab === 'simulador' && <Simulator profile={profile} onSave={handleSaveSimulation} />}
+                  {activeTab === 'dicionario' && <Dictionary />}
+                  {activeTab === 'cotacoes' && <MarketStocks stocks={stocks} />}
+                  {activeTab === 'noticias' && <NewsFeed news={NEWS_FEED} />}
+                </>
+              )}
+            </div>
+          </main>
+        </div>
+      );
+    }
+
+    // ==========================================
+    // COMPONENTES DAS PÁGINAS
+    // ==========================================
+
+    function NavItem({ icon, label, active, onClick }) {
+      return (
+        <button onClick={onClick} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors text-left ${active ? 'bg-emerald-500/10 text-emerald-400' : 'hover:bg-slate-800 hover:text-white'}`}>
+          <i className={`fas ${icon} w-5 text-center`}></i>
+          <span className="font-medium">{label}</span>
+        </button>
+      );
+    }
+
+    // --- 1. DASHBOARD ---
+    function Dashboard({ profile, simulations, goToTab }) {
+      return (
+        <div className="max-w-5xl mx-auto space-y-6 animate-fade-in">
+          {!profile ? (
+            <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+              <div>
+                <h3 className="text-lg font-bold text-blue-800">Descubra seu Perfil de Investidor</h3>
+                <p className="text-blue-600">Preencha o formulário para receber recomendações personalizadas.</p>
+              </div>
+              <button onClick={() => goToTab('api')} className="bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition">
+                Fazer Análise
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm col-span-1 md:col-span-2">
+                <h3 className="text-lg font-bold text-slate-800 mb-2">Carteira Recomendada ({profile})</h3>
+                <p className="text-slate-600 text-sm mb-4">Com base no seu perfil, sugerimos a seguinte distribuição:</p>
+                
+                {profile === 'conservador' && (
+                  <div className="space-y-3">
+                    <PortfolioBar label="Renda Fixa Pós-Fixada (Tesouro Selic/CDB)" percent={70} color="bg-emerald-500" />
+                    <PortfolioBar label="Renda Fixa Prefixada/Inflação (LCI/IPCA)" percent={20} color="bg-blue-500" />
+                    <PortfolioBar label="Caixa/Liquidez" percent={10} color="bg-slate-400" />
+                  </div>
+                )}
+                {profile === 'moderado' && (
+                  <div className="space-y-3">
+                    <PortfolioBar label="Renda Fixa (CDBs, LCI/LCA)" percent={50} color="bg-emerald-500" />
+                    <PortfolioBar label="Ações Brasileiras / FIIs" percent={30} color="bg-violet-500" />
+                    <PortfolioBar label="Investimentos Internacionais" percent={20} color="bg-amber-500" />
+                  </div>
+                )}
+                {profile === 'arrojado' && (
+                  <div className="space-y-3">
+                    <PortfolioBar label="Renda Variável (Ações/FIIs)" percent={50} color="bg-violet-500" />
+                    <PortfolioBar label="Investimentos Internacionais / Cripto" percent={30} color="bg-amber-500" />
+                    <PortfolioBar label="Renda Fixa (Oportunidade)" percent={20} color="bg-emerald-500" />
+                  </div>
+                )}
+              </div>
+              
+              <div className="bg-slate-900 text-white p-6 rounded-xl shadow-sm flex flex-col justify-center items-center text-center">
+                <i className="fas fa-wallet text-emerald-400 text-4xl mb-4"></i>
+                <h3 className="text-xl font-bold mb-2">Pronto para investir?</h3>
+                <p className="text-slate-400 text-sm mb-6">Compare produtos financeiros.</p>
+                <button onClick={() => goToTab('simulador')} className="w-full bg-emerald-500 text-slate-900 font-bold py-3 rounded-lg hover:bg-emerald-400 transition">
+                  Abrir Simulador
+                </button>
+              </div>
+            </div>
+          )}
+
+          <div>
+            <h3 className="text-lg font-bold text-slate-800 mb-4">Suas Simulações Recentes</h3>
+            {simulations.length === 0 ? (
+              <div className="bg-white border border-gray-200 rounded-xl p-8 text-center text-slate-500">
+                Você ainda não salvou nenhuma simulação.
+              </div>
+            ) : (
+              <div className="bg-white border border-gray-200 rounded-xl overflow-x-auto shadow-sm">
+                <table className="w-full text-left text-sm min-w-[500px]">
+                  <thead className="bg-slate-50 border-b border-gray-200 text-slate-600">
+                    <tr>
+                      <th className="p-4">Inicial</th>
+                      <th className="p-4">Mensal</th>
+                      <th className="p-4">Prazo</th>
+                      <th className="p-4">Melhor Produto (Liq.)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {simulations.slice(0, 5).map((sim, i) => (
+                      <tr key={sim.id || i} className="border-b border-gray-100 last:border-0 hover:bg-slate-50">
+                        <td className="p-4 font-medium">R$ {parseFloat(sim.initial).toLocaleString('pt-BR')}</td>
+                        <td className="p-4">R$ {parseFloat(sim.monthly).toLocaleString('pt-BR')}</td>
+                        <td className="p-4">{sim.months} meses</td>
+                        <td className="p-4 text-emerald-600 font-bold">
+                          R$ {parseFloat(sim.bestResult).toLocaleString('pt-BR', {minimumFractionDigits: 2})}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    function PortfolioBar({ label, percent, color }) {
+      return (
+        <div>
+          <div className="flex justify-between text-xs font-medium text-slate-600 mb-1">
+            <span>{label}</span>
+            <span>{percent}%</span>
+          </div>
+          <div className="w-full bg-slate-100 rounded-full h-2.5">
+            <div className={`${color} h-2.5 rounded-full`} style={{ width: `${percent}%` }}></div>
+          </div>
+        </div>
+      );
+    }
+
+    // --- 2. API (ANÁLISE DE PERFIL) ---
+    function SuitabilityAPI({ onComplete, currentProfile }) {
+      const [step, setStep] = useState(0);
+      const [answers, setAnswers] = useState({});
+
+      const questions = [
+        { id: 'q1', question: 'Qual o seu principal objetivo ao investir?', options: [
+          { label: 'Proteger meu patrimônio assumindo o menor risco possível.', value: 1 },
+          { label: 'Ter um ganho razoável, aceitando pequenas variações.', value: 2 },
+          { label: 'Maximizar meus ganhos a longo prazo, mesmo com alto risco.', value: 3 }
+        ]},
+        { id: 'q2', question: 'Se seus investimentos caíssem 20% em um mês, o que você faria?', options: [
+          { label: 'Sacaria tudo imediatamente para não perder mais.', value: 1 },
+          { label: 'Aguardaria o mercado se recuperar, mas ficaria preocupado.', value: 2 },
+          { label: 'Aproveitaria a queda para comprar mais investimentos baratos.', value: 3 }
+        ]},
+        { id: 'q3', question: 'Por quanto tempo pretende deixar seu dinheiro investido?', options: [
+          { label: 'Menos de 1 ano (preciso do dinheiro em breve).', value: 1 },
+          { label: 'De 1 a 5 anos.', value: 2 },
+          { label: 'Mais de 5 anos (foco no longo prazo).', value: 3 }
+        ]}
+      ];
+
+      const handleSelect = (qId, value) => {
+        const newAnswers = { ...answers, [qId]: value };
+        setAnswers(newAnswers);
+        
+        if (step < questions.length - 1) {
+          setTimeout(() => setStep(step + 1), 300);
+        } else {
+          const totalScore = Object.values(newAnswers).reduce((a, b) => a + b, 0);
+          let result = 'conservador';
+          if (totalScore >= 5 && totalScore <= 7) result = 'moderado';
+          if (totalScore >= 8) result = 'arrojado';
+          setTimeout(() => onComplete(result), 500);
+        }
+      };
+
+      if (currentProfile) {
+        return (
+          <div className="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-sm text-center border border-gray-200">
+            <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl">
+              <i className="fas fa-check-circle"></i>
+            </div>
+            <h2 className="text-2xl font-bold text-slate-800 mb-2">Seu Perfil: {currentProfile.toUpperCase()}</h2>
+            <p className="text-slate-600 mb-8">Suas recomendações de investimentos já foram ajustadas.</p>
+            <button onClick={() => { setAnswers({}); setStep(0); onComplete(null); }} className="text-emerald-600 font-medium hover:underline flex items-center justify-center gap-2 mx-auto">
+              <i className="fas fa-sync-alt"></i> Refazer o teste
+            </button>
+          </div>
+        );
+      }
+
+      const currentQ = questions[step];
+      return (
+        <div className="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-sm border border-gray-200">
+          <div className="mb-8 flex justify-between items-center text-sm font-medium text-slate-400">
+            <span>Questão {step + 1} de {questions.length}</span>
+            <div className="flex gap-1">
+              {questions.map((_, i) => (
+                <div key={i} className={`h-2 w-8 rounded-full ${i <= step ? 'bg-emerald-500' : 'bg-slate-100'}`} />
+              ))}
+            </div>
+          </div>
+          <h3 className="text-xl font-bold text-slate-800 mb-6">{currentQ.question}</h3>
+          <div className="space-y-3">
+            {currentQ.options.map((opt, i) => (
+              <button key={i} onClick={() => handleSelect(currentQ.id, opt.value)} className="w-full text-left p-4 rounded-xl border-2 border-slate-100 hover:border-emerald-500 hover:bg-emerald-50 transition-all font-medium text-slate-700">
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // --- 3. SIMULADOR ---
+    function Simulator({ profile, onSave }) {
+      const [initial, setInitial] = useState('1000');
+      const [monthly, setMonthly] = useState('200');
+      const [months, setMonths] = useState('12');
+      const [results, setResults] = useState(null);
+
+      const calculate = () => {
+        const P = parseFloat(initial) || 0;
+        const PMT = parseFloat(monthly) || 0;
+        const n = parseInt(months) || 1;
+
+        const calcFV = (taxaAnual, isentoIR = false) => {
+          const r = Math.pow(1 + taxaAnual, 1/12) - 1;
+          const amount = P * Math.pow(1 + r, n) + PMT * ((Math.pow(1 + r, n) - 1) / r);
+          const invested = P + (PMT * n);
+          const profit = amount - invested;
+          
+          let irRate = 0;
+          if (!isentoIR) {
+            if (n <= 6) irRate = 0.225;
+            else if (n <= 12) irRate = 0.20;
+            else if (n <= 24) irRate = 0.175;
+            else irRate = 0.15;
+          }
+          const tax = profit * irRate;
+          return { total: amount - tax, profit: profit - tax, invested };
+        };
+
+        const res = [
+          { name: 'Poupança', ...calcFV(RATES.POUPANCA, true), color: 'bg-blue-400' },
+          { name: 'Tesouro Selic', ...calcFV(RATES.SELIC, false), color: 'bg-emerald-500' },
+          { name: 'CDB (100% CDI)', ...calcFV(RATES.CDI, false), color: 'bg-violet-500' },
+          { name: 'LCI/LCA (90% CDI)', ...calcFV(RATES.CDI * 0.90, true), color: 'bg-amber-500' },
+        ];
+        res.sort((a, b) => b.total - a.total);
+        setResults(res);
+      };
+
+      useEffect(() => { calculate(); }, [initial, monthly, months]);
+
+      return (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-1 bg-white p-6 rounded-xl shadow-sm border border-gray-200 h-fit space-y-6">
+            <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
+              <i className="fas fa-sliders-h text-emerald-500"></i> Parâmetros
+            </h3>
+            <div>
+              <label className="block text-sm font-medium text-slate-600 mb-1">Valor Inicial (R$)</label>
+              <input type="number" value={initial} onChange={e => setInitial(e.target.value)} className="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-600 mb-1">Aporte Mensal (R$)</label>
+              <input type="number" value={monthly} onChange={e => setMonthly(e.target.value)} className="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-600 mb-1">Prazo (Meses)</label>
+              <input type="number" value={months} onChange={e => setMonths(e.target.value)} className="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
+              <div className="flex gap-2 mt-2">
+                {[12, 24, 60, 120].map(m => (
+                  <button key={m} onClick={() => setMonths(m.toString())} className="text-xs px-2 py-1 bg-slate-100 rounded text-slate-600 hover:bg-slate-200">{m}m</button>
+                ))}
+              </div>
+            </div>
+            <button onClick={() => onSave({initial, monthly, months, bestResult: results[0].total})} className="w-full bg-slate-900 text-white font-medium py-3 rounded-lg hover:bg-slate-800 transition flex items-center justify-center gap-2">
+              <i className="fas fa-save"></i> Salvar Simulação
+            </button>
+          </div>
+
+          <div className="lg:col-span-2 space-y-6">
+            {results && (
+              <>
+                <div className="bg-emerald-50 border border-emerald-200 p-6 rounded-xl flex items-center gap-4">
+                  <div className="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center text-white shrink-0 shadow-lg text-xl">
+                    <i className="fas fa-trophy"></i>
+                  </div>
+                  <div>
+                    <p className="text-emerald-800 text-sm font-medium mb-1">A Melhor Opção Rendou (Líquido):</p>
+                    <h2 className="text-3xl font-black text-emerald-900">
+                      R$ {results[0].total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                    </h2>
+                    <p className="text-emerald-700 text-sm">
+                      No <strong>{results[0].name}</strong>, você teria R$ {results[0].profit.toLocaleString('pt-BR', {minimumFractionDigits: 2})} de lucro puro pós IR.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                  <h3 className="text-lg font-bold text-slate-800 mb-6">Comparação</h3>
+                  <div className="space-y-6">
+                    {results.map((item, idx) => {
+                      const percent = (item.total / results[0].total) * 100;
+                      return (
+                        <div key={item.name}>
+                          <div className="flex justify-between items-end mb-2">
+                            <div>
+                              <p className="font-bold text-slate-800 flex items-center gap-2">
+                                {idx === 0 && <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">1º</span>} {item.name}
+                              </p>
+                            </div>
+                            <div className="text-right">
+                              <p className="font-bold text-slate-800">R$ {item.total.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</p>
+                              <p className="text-xs text-emerald-600">+ R$ {item.profit.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</p>
+                            </div>
+                          </div>
+                          <div className="w-full bg-slate-100 rounded-full h-3">
+                            <div className={`${item.color} h-3 rounded-full transition-all duration-1000`} style={{ width: `${percent}%` }}></div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  
+                  {/* EXPLICAÇÃO MATEMÁTICA */}
+                  <div className="mt-8 bg-slate-50 p-6 rounded-xl border border-slate-200">
+                    <h4 className="text-md font-bold text-slate-800 mb-4"><i className="fas fa-info-circle text-blue-500"></i> Por que rende assim?</h4>
+                    <div className="space-y-4 text-sm text-slate-600">
+                      <p><strong>Poupança:</strong> Rende só 0,5% a.m + TR. É isenta, mas a base de cálculo é tão baixa que perde pra quase todos.</p>
+                      <p><strong>Tesouro Selic:</strong> Rende a taxa básica de juros (10,5%). Sofre IR regressivo no saque.</p>
+                      <p><strong>CDB (100% CDI):</strong> O CDI anda colado na Selic (10,4%). Empata com o Tesouro e também sofre desconto de Imposto de Renda.</p>
+                      <p><strong>LCI/LCA (90% CDI):</strong> O percentual bruto é menor, mas é <strong>ISENTA de Imposto de Renda</strong>! Por não pagar leão, entrega mais dinheiro líquido no curto/médio prazo.</p>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    // --- 4. DICIONÁRIO ---
+    function Dictionary() {
+      const [searchTerm, setSearchTerm] = useState('');
+      const [expandedId, setExpandedId] = useState(null);
+      const filtered = DICTIONARY_DATA.filter(i => i.title.toLowerCase().includes(searchTerm.toLowerCase()) || i.definition.toLowerCase().includes(searchTerm.toLowerCase()));
+
+      return (
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2 mb-2">
+              <i className="fas fa-book-open text-emerald-500"></i> Dicionário
+            </h2>
+            <p className="text-slate-600 text-sm">Entenda como funciona cada produto.</p>
+          </div>
+          <div className="relative mb-6">
+            <i className="fas fa-search absolute left-4 top-4 text-slate-400"></i>
+            <input type="text" placeholder="Busque por CDB, LCI, Termo..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-emerald-500 outline-none" />
+          </div>
+          <div className="space-y-4">
+            {filtered.map(item => (
+              <div key={item.id} className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <button onClick={() => setExpandedId(expandedId === item.id ? null : item.id)} className="w-full flex justify-between p-5 hover:bg-slate-50">
+                  <span className="font-bold text-slate-800">{item.title}</span>
+                  <i className={`fas fa-chevron-down text-slate-400 transition-transform ${expandedId === item.id ? 'rotate-180' : ''}`}></i>
+                </button>
+                {expandedId === item.id && (
+                  <div className="px-5 pb-5 pt-2 border-t border-slate-100 text-sm">
+                    <p className="text-slate-700 mb-4"><strong>Definição:</strong> {item.definition}</p>
+                    <div className="grid md:grid-cols-2 gap-4 bg-slate-50 p-4 rounded mb-4">
+                      <p><strong>Como rende?</strong> {item.howItYields}</p>
+                      <p><strong>Baseado em que?</strong> {item.basis}</p>
+                    </div>
+                    <ul className="space-y-2 text-slate-600">
+                      {item.cases.map((c, i) => <li key={i}><strong>Ex. {i+1}:</strong> {c}</li>)}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // --- 5. COTAÇÕES E NOTÍCIAS ---
+    function MarketStocks({ stocks }) {
+      return (
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl font-bold text-slate-800 mb-6">Mercado ao Vivo (Simulado)</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {stocks.map(stock => {
+              const isUp = stock.change >= 0;
+              return (
+                <div key={stock.symbol} className="bg-white p-5 rounded-xl border border-gray-200">
+                  <div className="flex justify-between items-start mb-2">
+                    <span className="font-bold text-lg">{stock.symbol}</span>
+                    <i className={`fas ${isUp ? 'fa-arrow-trend-up text-emerald-500' : 'fa-arrow-trend-down text-red-500'}`}></i>
+                  </div>
+                  <p className="text-xs text-slate-500 mb-2">{stock.name}</p>
+                  <div className="flex justify-between items-end">
+                    <span className="text-xl font-black">R$ {stock.price.toFixed(2)}</span>
+                    <span className={`text-sm font-bold ${isUp ? 'text-emerald-500' : 'text-red-500'}`}>{isUp?'+':''}{stock.change.toFixed(2)}%</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      );
+    }
+
+    function NewsFeed({ news }) {
+      return (
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl font-bold text-slate-800 mb-6"><i className="fas fa-newspaper text-blue-500"></i> Plantão de Notícias</h2>
+          <div className="space-y-4">
+            {news.map(item => (
+              <div key={item.id} className="bg-white p-6 rounded-xl border border-gray-200 hover:bg-slate-50">
+                <div className="text-xs text-slate-500 mb-1">{item.source} • {item.time}</div>
+                <h3 className="font-bold text-slate-800">{item.title}</h3>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // --- INICIAR A APLICAÇÃO ---
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
